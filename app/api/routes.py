@@ -42,7 +42,9 @@ def init_services(
     _reporter = reporter
 
 
-def _get_services() -> tuple[DefectClassifier, SeverityScorer, PreprocessingPipeline, ReportGenerator]:
+def _get_services() -> tuple[
+    DefectClassifier, SeverityScorer, PreprocessingPipeline, ReportGenerator
+]:
     if any(s is None for s in (_classifier, _scorer, _pipeline, _reporter)):
         raise HTTPException(status_code=503, detail="Services not initialised")
     return _classifier, _scorer, _pipeline, _reporter  # type: ignore[return-value]
@@ -119,10 +121,7 @@ async def list_defect_classes() -> ClassesResponse:
     from app.models.classifier import DEFECT_DESCRIPTIONS
 
     return ClassesResponse(
-        classes=[
-            {"type": dt.value, "description": DEFECT_DESCRIPTIONS[dt]}
-            for dt in DefectType
-        ]
+        classes=[{"type": dt.value, "description": DEFECT_DESCRIPTIONS[dt]} for dt in DefectType]
     )
 
 
@@ -287,7 +286,7 @@ async def generate_synthetic_demo() -> dict[str, Any]:
         y1 = min(224, cy + r + 1)
         x1 = min(224, cx + r + 1)
         my, mx = mask[: y1 - y0, : x1 - x0].shape
-        img_arr[y0 : y0 + my, x0 : x0 + mx][mask[: my, : mx]] = 30
+        img_arr[y0 : y0 + my, x0 : x0 + mx][mask[:my, :mx]] = 30
 
     image = Image.fromarray(img_arr)
     detection = classifier.predict(image)

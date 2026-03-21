@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-import io
-
 import pytest
-import pytest_asyncio
 from fastapi.testclient import TestClient
 from PIL import Image
 
@@ -30,7 +27,7 @@ class TestRootEndpoint:
         assert response.status_code == 200
 
     def test_root_has_service_key(self, client: TestClient) -> None:
-        data = response = client.get("/")
+        response = client.get("/")
         assert "service" in response.json()
 
     def test_root_has_docs_link(self, client: TestClient) -> None:

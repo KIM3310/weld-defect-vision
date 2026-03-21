@@ -11,7 +11,7 @@ quality levels:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 import numpy as np
 from PIL import Image
@@ -19,14 +19,14 @@ from PIL import Image
 from app.models.classifier import DefectType, DetectionResult
 
 
-class SeverityLevel(str, Enum):
+class SeverityLevel(StrEnum):
     """ISO 5817 aligned severity classification."""
 
-    CRITICAL = "critical"   # Level A – immediate action required
-    HIGH = "high"           # Level B – NDE required
-    MEDIUM = "medium"       # Level C – document and monitor
-    LOW = "low"             # Level D – within acceptance limits
-    NONE = "none"           # No defect detected
+    CRITICAL = "critical"  # Level A – immediate action required
+    HIGH = "high"  # Level B – NDE required
+    MEDIUM = "medium"  # Level C – document and monitor
+    LOW = "low"  # Level D – within acceptance limits
+    NONE = "none"  # No defect detected
 
 
 SEVERITY_THRESHOLDS: dict[SeverityLevel, tuple[float, float]] = {
@@ -39,12 +39,12 @@ SEVERITY_THRESHOLDS: dict[SeverityLevel, tuple[float, float]] = {
 
 # Base severity weights per defect type (domain knowledge from AWS D1.1)
 _BASE_SEVERITY: dict[DefectType, float] = {
-    DefectType.CRACK: 90.0,               # Always critical per code
-    DefectType.INCOMPLETE_FUSION: 75.0,    # Structural integrity risk
-    DefectType.UNDERCUT: 55.0,            # Stress concentration
-    DefectType.POROSITY: 40.0,            # Depends on distribution
-    DefectType.OVERLAP: 30.0,             # Surface discontinuity
-    DefectType.SPATTER: 15.0,             # Cosmetic / minor
+    DefectType.CRACK: 90.0,  # Always critical per code
+    DefectType.INCOMPLETE_FUSION: 75.0,  # Structural integrity risk
+    DefectType.UNDERCUT: 55.0,  # Stress concentration
+    DefectType.POROSITY: 40.0,  # Depends on distribution
+    DefectType.OVERLAP: 30.0,  # Surface discontinuity
+    DefectType.SPATTER: 15.0,  # Cosmetic / minor
     DefectType.NO_DEFECT: 0.0,
 }
 
@@ -62,8 +62,7 @@ SEVERITY_ACTIONS: dict[SeverityLevel, str] = {
         "Re-inspect after next pass. Engineer disposition required."
     ),
     SeverityLevel.LOW: (
-        "PASS – Defect within acceptance criteria. "
-        "Record in inspection log for traceability."
+        "PASS – Defect within acceptance criteria. Record in inspection log for traceability."
     ),
     SeverityLevel.NONE: "PASS – No defect detected. Weld meets quality standards.",
 }
@@ -73,11 +72,11 @@ SEVERITY_ACTIONS: dict[SeverityLevel, str] = {
 class SeverityResult:
     """Output of severity assessment."""
 
-    score: float                  # 0-100 continuous score
+    score: float  # 0-100 continuous score
     level: SeverityLevel
     defect_type: DefectType
     confidence: float
-    area_fraction: float          # Estimated defect area as fraction of weld area
+    area_fraction: float  # Estimated defect area as fraction of weld area
     recommended_action: str
     contributing_factors: list[str]
 

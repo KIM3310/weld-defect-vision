@@ -4,16 +4,15 @@ from __future__ import annotations
 
 import json
 
-import pytest
-from PIL import Image
-
 from app.models.classifier import DefectType, DetectionResult
 from app.models.severity import SeverityLevel, SeverityResult
 from app.reporting.generator import InspectionReport, ReportGenerator
-from tests.conftest import make_image_no_defect, make_image_porosity, image_to_bytes
+from tests.conftest import image_to_bytes, make_image_no_defect
 
 
-def _make_detection(defect: DefectType = DefectType.POROSITY, confidence: float = 0.82) -> DetectionResult:
+def _make_detection(
+    defect: DefectType = DefectType.POROSITY, confidence: float = 0.82
+) -> DetectionResult:
     probs = {d.value: 0.0 for d in DefectType}
     probs[defect.value] = confidence
     probs[DefectType.NO_DEFECT.value] = 1.0 - confidence

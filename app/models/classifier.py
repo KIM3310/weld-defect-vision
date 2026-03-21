@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 
-class DefectType(str, Enum):
+class DefectType(StrEnum):
     """ISO 6520-1 aligned welding defect categories."""
 
     CRACK = "crack"
@@ -135,9 +135,7 @@ class DefectClassifier:
     ) -> None:
         self.demo_mode = demo_mode
         self.device = torch.device(
-            device
-            if device
-            else ("cuda" if torch.cuda.is_available() else "cpu")
+            device if device else ("cuda" if torch.cuda.is_available() else "cpu")
         )
 
         self._model: WeldDefectCNN | None = None
@@ -162,7 +160,9 @@ class DefectClassifier:
                     self._model.load_state_dict(state)
                     logger.info("Loaded model weights from %s", path)
                 except Exception as exc:
-                    logger.warning("Could not load weights from %s: %s – using demo mode", path, exc)
+                    logger.warning(
+                        "Could not load weights from %s: %s – using demo mode", path, exc
+                    )
                     self.demo_mode = True
             else:
                 logger.info("No checkpoint at %s – activating demo mode", path)
@@ -203,7 +203,7 @@ class DefectClassifier:
         pred_idx = int(np.argmax(probs))
         defect_type = self._classes[pred_idx]
         confidence = float(probs[pred_idx])
-        class_probs = {cls.value: float(p) for cls, p in zip(self._classes, probs)}
+        class_probs = {cls.value: float(p) for cls, p in zip(self._classes, probs, strict=True)}
 
         return DetectionResult(
             defect_type=defect_type,
@@ -222,11 +222,13 @@ class DefectClassifier:
         dark_pixel_ratio = float((gray < 50).mean())
         bright_pixel_ratio = float((gray > 200).mean())
 
-        probs = self._heuristic_probs(mean_intensity, std_intensity, dark_pixel_ratio, bright_pixel_ratio, image)
+        probs = self._heuristic_probs(
+            mean_intensity, std_intensity, dark_pixel_ratio, bright_pixel_ratio, image
+        )
         pred_idx = int(np.argmax(probs))
         defect_type = self._classes[pred_idx]
 
-        class_probs = {cls.value: float(p) for cls, p in zip(self._classes, probs)}
+        class_probs = {cls.value: float(p) for cls, p in zip(self._classes, probs, strict=True)}
         return DetectionResult(
             defect_type=defect_type,
             confidence=float(probs[pred_idx]),
@@ -266,7 +268,9 @@ class DefectClassifier:
         scores[idx[DefectType.CRACK]] = crack_score
 
         # Porosity: clustered dark spots → dark_ratio moderate
-        scores[idx[DefectType.POROSITY]] = min(1.0, dark_ratio * 10) * (1 - min(1.0, dark_ratio * 40))
+        scores[idx[DefectType.POROSITY]] = min(1.0, dark_ratio * 10) * (
+            1 - min(1.0, dark_ratio * 40)
+        )
 
         # Undercut: dark edge regions, lower mean
         scores[idx[DefectType.UNDERCUT]] = max(0.0, 1.0 - mean / 150.0) * min(1.0, dark_ratio * 15)

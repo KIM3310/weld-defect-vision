@@ -114,9 +114,7 @@ class TestPreprocessingPipelineProcess:
             pipeline.process("not_an_image")  # type: ignore[arg-type]
 
     @pytest.mark.parametrize("fmt", ["PNG", "JPEG"])
-    def test_process_various_formats(
-        self, pipeline: PreprocessingPipeline, fmt: str
-    ) -> None:
+    def test_process_various_formats(self, pipeline: PreprocessingPipeline, fmt: str) -> None:
         buf = io.BytesIO()
         img = make_image_no_defect()
         img.save(buf, format=fmt)

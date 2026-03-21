@@ -82,7 +82,9 @@ if "reporter" not in st.session_state:
 
 
 @st.cache_resource(show_spinner="Loading AI model...")
-def load_services() -> tuple[DefectClassifier, PreprocessingPipeline, SeverityScorer, ReportGenerator]:
+def load_services() -> tuple[
+    DefectClassifier, PreprocessingPipeline, SeverityScorer, ReportGenerator
+]:
     classifier = DefectClassifier(model_path=None, demo_mode=False)
     pipeline = PreprocessingPipeline(target_size=(224, 224), apply_clahe=True)
     scorer = SeverityScorer()

@@ -16,14 +16,20 @@ from tests.conftest import (
     make_image_crack,
     make_image_no_defect,
     make_image_porosity,
-    make_image_spatter,
-    make_image_undercut,
 )
 
 
 class TestDefectType:
     def test_all_expected_types_exist(self) -> None:
-        expected = {"crack", "porosity", "undercut", "incomplete_fusion", "overlap", "spatter", "no_defect"}
+        expected = {
+            "crack",
+            "porosity",
+            "undercut",
+            "incomplete_fusion",
+            "overlap",
+            "spatter",
+            "no_defect",
+        }
         actual = {d.value for d in DefectType}
         assert actual == expected
 
@@ -150,7 +156,6 @@ class TestDefectClassifierPredict:
 
 class TestWeldDefectCNN:
     def test_model_instantiation(self) -> None:
-        import torch
 
         model = WeldDefectCNN(num_classes=7, pretrained=False)
         assert model is not None

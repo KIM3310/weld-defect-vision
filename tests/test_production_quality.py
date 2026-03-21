@@ -6,7 +6,6 @@ that would matter in a real shipbuilding inspection environment.
 
 from __future__ import annotations
 
-import io
 import json
 
 import numpy as np
@@ -14,11 +13,10 @@ import pytest
 from PIL import Image
 
 from app.models.classifier import DefectClassifier, DefectType, DetectionResult
-from app.models.severity import SeverityLevel, SeverityScorer
+from app.models.severity import SeverityScorer
 from app.preprocessing.pipeline import PreprocessingPipeline
 from app.reporting.generator import ReportGenerator
 from tests.conftest import (
-    image_to_bytes,
     make_image_crack,
     make_image_no_defect,
     make_image_porosity,
@@ -26,14 +24,15 @@ from tests.conftest import (
     make_image_undercut,
 )
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
 
 
 @pytest.fixture(scope="module")
-def full_pipeline() -> tuple[DefectClassifier, PreprocessingPipeline, SeverityScorer, ReportGenerator]:
+def full_pipeline() -> tuple[
+    DefectClassifier, PreprocessingPipeline, SeverityScorer, ReportGenerator
+]:
     clf = DefectClassifier(demo_mode=True)
     pipe = PreprocessingPipeline(target_size=(224, 224), apply_clahe=True)
     scorer = SeverityScorer()
@@ -193,9 +192,7 @@ class TestEdgeCases:
         assert 0.0 <= result.confidence <= 1.0
 
     def test_rgba_image_handled(self) -> None:
-        rgba = Image.fromarray(
-            np.full((224, 224, 4), 200, dtype=np.uint8), mode="RGBA"
-        )
+        rgba = Image.fromarray(np.full((224, 224, 4), 200, dtype=np.uint8), mode="RGBA")
         pipe = PreprocessingPipeline()
         result = pipe.process(rgba)
         assert result.image.mode == "RGB"

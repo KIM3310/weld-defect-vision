@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import pytest
-from PIL import Image
 
 from app.models.classifier import DefectType, DetectionResult
 from app.models.severity import (
@@ -21,16 +20,14 @@ from tests.conftest import (
 )
 
 
-def _make_detection(
-    defect: DefectType, confidence: float = 0.9
-) -> DetectionResult:
+def _make_detection(defect: DefectType, confidence: float = 0.9) -> DetectionResult:
     return DetectionResult(defect_type=defect, confidence=confidence)
 
 
 class TestSeverityLevel:
     def test_all_levels_exist(self) -> None:
         expected = {"critical", "high", "medium", "low", "none"}
-        assert {l.value for l in SeverityLevel} == expected
+        assert {level.value for level in SeverityLevel} == expected
 
     def test_actions_for_all_levels(self) -> None:
         for level in SeverityLevel:

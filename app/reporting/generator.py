@@ -7,7 +7,6 @@ following IIW (International Institute of Welding) documentation standards.
 from __future__ import annotations
 
 import base64
-import io
 import json
 import logging
 from dataclasses import dataclass, field
