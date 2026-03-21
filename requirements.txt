@@ -1,0 +1,34 @@
+# Core framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+
+# ML / Computer Vision
+torch>=2.3.0
+torchvision>=0.18.0
+opencv-python>=4.10.0
+Pillow>=10.3.0
+numpy>=1.26.0
+
+# Dashboard
+streamlit>=1.36.0
+
+# HTTP client (for dashboard <-> API, tests)
+httpx>=0.27.0
+
+# API utilities
+python-multipart>=0.0.9
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# Reporting
+jinja2>=3.1.4
+matplotlib>=3.9.0
+scipy>=1.13.0
+
+# Dev / Quality
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
+pytest-cov>=5.0.0
+ruff>=0.5.0
+mypy>=1.10.0
+types-Pillow>=10.2.0
