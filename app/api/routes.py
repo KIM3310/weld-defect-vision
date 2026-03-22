@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Annotated, Any
+from typing import TYPE_CHECKING, Annotated, Any
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import HTMLResponse
@@ -13,6 +13,9 @@ from app.models.classifier import DefectClassifier, DefectType
 from app.models.severity import SeverityScorer
 from app.preprocessing.pipeline import PreprocessingPipeline
 from app.reporting.generator import ReportGenerator
+
+if TYPE_CHECKING:
+    from app.chatbot.assistant import ChatSession
 
 logger = logging.getLogger(__name__)
 
@@ -269,7 +272,7 @@ async def batch_inspect(
 # ---------------------------------------------------------------------------
 
 # In-memory chat sessions (use Redis in production for persistence)
-_chat_sessions: dict[str, object] = {}
+_chat_sessions: dict[str, ChatSession] = {}
 
 
 class ChatRequest(BaseModel):
