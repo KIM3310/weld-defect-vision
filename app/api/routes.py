@@ -278,8 +278,9 @@ async def generate_synthetic_demo() -> dict[str, Any]:
     img_arr[80:144, :] = 200
     # simulated dark pores
     for _ in range(15):
-        cx, cy = rng.integers(10, 214), rng.integers(85, 139)
-        r = rng.integers(3, 8)
+        cx = int(rng.integers(10, 214))
+        cy = int(rng.integers(85, 139))
+        r = int(rng.integers(3, 8))
         y, x = np.ogrid[-r : r + 1, -r : r + 1]
         mask = x * x + y * y <= r * r
         y0, x0 = max(0, cy - r), max(0, cx - r)

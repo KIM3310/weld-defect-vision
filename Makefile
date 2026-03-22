@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test test-cov quality-check clean run-api run-dashboard help
+.PHONY: install lint format typecheck test test-cov quality-check verify verify-strict clean run-api run-dashboard help
 
 PYTHON := python3
 PYTEST := $(PYTHON) -m pytest
@@ -36,6 +36,10 @@ test-cov: ## Run tests with coverage report
 quality-check: lint typecheck test ## Run all quality gates (lint + typecheck + test)
 	@echo ""
 	@echo "All quality gates passed."
+
+verify: lint test ## Run the default verification gate
+
+verify-strict: quality-check ## Run the strict verification gate (includes mypy)
 
 clean: ## Remove build artifacts and caches
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true

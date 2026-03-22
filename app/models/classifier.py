@@ -6,7 +6,7 @@ import logging
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 import torch
@@ -98,7 +98,7 @@ class WeldDefectCNN(nn.Module):
         self.backbone = backbone
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.backbone(x)
+        return cast(torch.Tensor, self.backbone(x))
 
 
 # ---------------------------------------------------------------------------
@@ -291,7 +291,8 @@ class DefectClassifier:
 
         # Softmax normalisation
         scores = np.exp(scores * 3.0)
-        return scores / scores.sum()
+        normalized = scores / scores.sum()
+        return np.asarray(normalized, dtype=np.float32)
 
     # ------------------------------------------------------------------
     # Utility
