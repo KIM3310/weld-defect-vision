@@ -25,9 +25,7 @@ from PIL import Image
 
 logger = logging.getLogger(__name__)
 
-DISCLAIMER = (
-    "AI-assisted tool. All findings must be confirmed by certified welding inspector."
-)
+DISCLAIMER = "AI-assisted tool. All findings must be confirmed by certified welding inspector."
 
 # Severity ordering for prioritization (higher index = higher priority)
 _SEVERITY_PRIORITY: dict[str, int] = {
@@ -313,9 +311,7 @@ class InspectionAgent:
                 else:
                     failed += 1
             except Exception as exc:
-                logger.error(
-                    "Failed to process weld %s: %s", record.weld_joint_id, exc
-                )
+                logger.error("Failed to process weld %s: %s", record.weld_joint_id, exc)
                 results.append(
                     InspectionResult(
                         weld_joint_id=record.weld_joint_id or "unknown",

@@ -220,9 +220,8 @@ class TestChatMethod:
         session = self._make_session()
         assistant.chat(session, "test")
         call_args = mock_client.chat.completions.create.call_args
-        messages = (
-            call_args.kwargs.get("messages")
-            or (call_args.args[0] if call_args.args else call_args.kwargs["messages"])
+        messages = call_args.kwargs.get("messages") or (
+            call_args.args[0] if call_args.args else call_args.kwargs["messages"]
         )
         system_content = messages[0]["content"]
         assert "crack" in system_content

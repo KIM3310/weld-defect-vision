@@ -143,15 +143,22 @@ class TestDetermineActionItems:
 
     def test_undercut_specific_actions(self):
         actions = _determine_action_items("undercut", "high", "Review params")
-        assert any("AWS" in a or "parameter" in a.lower() or "current" in a.lower() for a in actions)
+        assert any(
+            "AWS" in a or "parameter" in a.lower() or "current" in a.lower() for a in actions
+        )
 
     def test_overlap_specific_actions(self):
         actions = _determine_action_items("overlap", "medium", "Grind")
-        assert any("grind" in a.lower() or "blend" in a.lower() or "wire" in a.lower() for a in actions)
+        assert any(
+            "grind" in a.lower() or "blend" in a.lower() or "wire" in a.lower() for a in actions
+        )
 
     def test_spatter_specific_actions(self):
         actions = _determine_action_items("spatter", "low", "Clean")
-        assert any("spatter" in a.lower() or "shielding" in a.lower() or "arc" in a.lower() for a in actions)
+        assert any(
+            "spatter" in a.lower() or "shielding" in a.lower() or "arc" in a.lower()
+            for a in actions
+        )
 
     def test_recommended_action_included(self):
         actions = _determine_action_items("porosity", "medium", "Custom inspector note")

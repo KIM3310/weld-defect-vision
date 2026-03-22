@@ -17,9 +17,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-DISCLAIMER = (
-    "AI-assisted tool. All findings must be confirmed by certified welding inspector."
-)
+DISCLAIMER = "AI-assisted tool. All findings must be confirmed by certified welding inspector."
 
 SYSTEM_PROMPT_TEMPLATE = """You are a welding inspection AI assistant specializing in weld defect interpretation and AWS D1.1 structural welding standards.
 You help welding engineers and certified inspectors understand weld defect classifications, severity assessments, and repair procedures.
@@ -114,9 +112,7 @@ class WeldingAssistant:
         return SYSTEM_PROMPT_TEMPLATE.format(
             defect_type=inspection_context.get("defect_type", "Not available"),
             severity=inspection_context.get("severity", "Not available"),
-            recommended_action=inspection_context.get(
-                "recommended_action", "Not available"
-            ),
+            recommended_action=inspection_context.get("recommended_action", "Not available"),
             disclaimer=DISCLAIMER,
         )
 
@@ -143,9 +139,7 @@ class WeldingAssistant:
             "severity": severity,
             "recommended_action": recommended_action,
         }
-        return ChatSession(
-            inspection_context=inspection_context, session_id=session_id
-        )
+        return ChatSession(inspection_context=inspection_context, session_id=session_id)
 
     def chat(self, session: ChatSession, message: str) -> str:
         """Send a message and get a welding AI response.
