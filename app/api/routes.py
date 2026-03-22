@@ -264,6 +264,192 @@ async def batch_inspect(
     }
 
 
+# ---------------------------------------------------------------------------
+# Clinical AI Chatbot
+# ---------------------------------------------------------------------------
+
+# In-memory chat sessions (use Redis in production for persistence)
+_chat_sessions: dict[str, object] = {}
+
+
+class ChatRequest(BaseModel):
+    """Request body for POST /api/v1/chat."""
+
+    session_id: str | None = None
+    message: str
+    defect_type: str = "unknown"
+    severity: str = "unknown"
+    recommended_action: str = ""
+
+
+class ChatResponse(BaseModel):
+    """Response from POST /api/v1/chat."""
+
+    session_id: str
+    reply: str
+    disclaimer: str
+
+
+@router.post("/chat", response_model=ChatResponse, tags=["ai-assistant"])
+async def chat_with_assistant(body: ChatRequest) -> ChatResponse:
+    """Chat with the welding inspection AI assistant about a defect result.
+
+    Maintains multi-turn conversation history per session_id.
+    Requires OPENAI_API_KEY environment variable to be set.
+
+    DISCLAIMER: This is an AI-assisted tool. All findings must be confirmed
+    by a certified welding inspector.
+    """
+    import uuid  # noqa: PLC0415
+
+    from app.chatbot.assistant import WeldingAssistant  # noqa: PLC0415
+
+    try:
+        assistant = WeldingAssistant()
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    session_id = body.session_id or str(uuid.uuid4())
+    if session_id in _chat_sessions:
+        session = _chat_sessions[session_id]
+    else:
+        session = assistant.create_session(
+            defect_type=body.defect_type,
+            severity=body.severity,
+            recommended_action=body.recommended_action,
+            session_id=session_id,
+        )
+        _chat_sessions[session_id] = session
+
+    try:
+        reply = assistant.chat(session, body.message)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    return ChatResponse(
+        session_id=session_id,
+        reply=reply,
+        disclaimer=assistant.get_disclaimer(),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Batch Inspection Agent
+# ---------------------------------------------------------------------------
+
+_inspection_agent: object | None = None
+
+
+class AgentInspectRequest(BaseModel):
+    """Request body for POST /api/v1/agent/inspect."""
+
+    weld_joint_ids: list[str] = []
+
+
+@router.post("/agent/inspect", tags=["ai-agent"])
+async def run_inspection_agent(
+    files: Annotated[list[UploadFile], File(description="Batch of weld images")],
+    weld_joint_ids: Annotated[str, Form(description="Comma-separated weld joint IDs")] = "",
+) -> dict[str, Any]:
+    """Run the AI inspection agent on a batch of weld images.
+
+    Orchestrates the full inspection workflow:
+    - Classifies each weld image for defect type
+    - Scores severity per AWS D1.1 / ISO 5817
+    - Prioritizes welds by severity (critical first)
+    - Flags welds requiring immediate repair
+    - Generates a natural language summary via OpenAI
+
+    Requires OPENAI_API_KEY environment variable to be set.
+    Maximum batch size: 20 images.
+
+    DISCLAIMER: This is an AI-assisted tool. All findings must be confirmed
+    by a certified welding inspector.
+    """
+    import io  # noqa: PLC0415
+    import uuid  # noqa: PLC0415
+
+    from app.agent.orchestrator import InspectionAgent, WeldRecord  # noqa: PLC0415
+
+    if len(files) > 20:
+        raise HTTPException(
+            status_code=400,
+            detail="Batch size exceeds maximum of 20 images.",
+        )
+
+    joint_id_list = [j.strip() for j in weld_joint_ids.split(",") if j.strip()]
+
+    try:
+        agent = InspectionAgent()
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    records = []
+    for i, upload_file in enumerate(files):
+        try:
+            raw_bytes = await upload_file.read()
+            image = Image.open(io.BytesIO(raw_bytes)).convert("RGB")
+            joint_id = joint_id_list[i] if i < len(joint_id_list) else str(uuid.uuid4())
+            records.append(WeldRecord(image=image, weld_joint_id=joint_id))
+        except Exception:
+            records.append(
+                WeldRecord(
+                    image=Image.new("RGB", (224, 224), color=(128, 128, 128)),
+                    weld_joint_id=f"invalid_{i}",
+                )
+            )
+
+    session = agent.run_inspection(records)
+
+    results_out = [
+        {
+            "weld_joint_id": r.weld_joint_id,
+            "report_id": r.report_id,
+            "status": r.status,
+            "defect_type": r.defect_type,
+            "severity": r.severity,
+            "severity_score": r.severity_score,
+            "flagged_urgent": r.flagged_urgent,
+            "action_items": r.action_items,
+            "error": r.error,
+        }
+        for r in session.results
+    ]
+
+    return {
+        "session_id": session.session_id,
+        "status": session.status.value,
+        "total_welds": session.total_welds,
+        "succeeded": session.succeeded,
+        "failed": session.failed,
+        "urgent_cases": session.urgent_cases,
+        "summary": session.summary,
+        "action_items": session.action_items,
+        "results": results_out,
+        "disclaimer": session.disclaimer,
+    }
+
+
+@router.get("/agent/status", tags=["ai-agent"])
+async def agent_status() -> dict[str, Any]:
+    """Get the current status of the inspection agent.
+
+    Returns agent readiness and disclaimer information.
+    Requires OPENAI_API_KEY environment variable to be set.
+    """
+    import os  # noqa: PLC0415
+
+    from app.agent.orchestrator import DISCLAIMER  # noqa: PLC0415
+
+    api_key_set = bool(os.environ.get("OPENAI_API_KEY"))
+    return {
+        "agent": "inspection_agent",
+        "api_key_configured": api_key_set,
+        "status": "ready" if api_key_set else "unavailable",
+        "disclaimer": DISCLAIMER,
+    }
+
+
 @router.get("/demo/synthetic", tags=["demo"])
 async def generate_synthetic_demo() -> dict[str, Any]:
     """Generate a synthetic weld image, run inspection, and return result (demo only)."""
