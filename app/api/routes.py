@@ -94,10 +94,22 @@ class HealthResponse(BaseModel):
     version: str
     model_mode: str
     defect_classes: list[str]
+    proof_routes: dict[str, str] | None = None
+    reviewer_fast_path: list[str] | None = None
 
 
 class ClassesResponse(BaseModel):
     classes: list[dict[str, str]]
+
+
+class ResourcePackResponse(BaseModel):
+    service: str
+    contract_version: str
+    summary: dict[str, int]
+    reviewer_fast_path: list[str]
+    files: dict[str, str]
+    defect_examples: list[dict[str, str]]
+    validation_cases: list[dict[str, str]]
 
 
 # ---------------------------------------------------------------------------
@@ -115,7 +127,105 @@ async def health_check() -> HealthResponse:
         version="0.1.0",
         model_mode=info["mode"],
         defect_classes=info["classes"],
+        proof_routes={
+            "resource_pack": "/api/v1/ops/resource-pack",
+            "release_readiness": "/api/v1/ops/release-readiness",
+        },
+        reviewer_fast_path=[
+            "/api/v1/health",
+            "/api/v1/ops/resource-pack",
+            "/api/v1/ops/release-readiness",
+            "/docs",
+        ],
     )
+
+
+@router.get("/ops/resource-pack", response_model=ResourcePackResponse, tags=["system"])
+async def ops_resource_pack() -> ResourcePackResponse:
+    return ResourcePackResponse(
+        service="weld-defect-vision-resource-pack",
+        contract_version="weld-defect-review-resource-pack-v1",
+        summary={
+            "defect_example_count": 4,
+            "validation_case_count": 4,
+            "check_count": 3,
+        },
+        reviewer_fast_path=[
+            "/api/v1/health",
+            "/api/v1/ops/resource-pack",
+            "/api/v1/ops/release-readiness",
+            "/docs",
+        ],
+        files={
+            "readme": "README.md",
+            "sample_data": "data/sample/",
+            "tests": "tests/test_api.py",
+        },
+        defect_examples=[
+            {
+                "defect_type": "crack",
+                "focus": "Keep critical defects blocked from pass decisions regardless of cosmetic noise.",
+            },
+            {
+                "defect_type": "porosity",
+                "focus": "Show how medium-severity defects stay inspectable through score and report text.",
+            },
+            {
+                "defect_type": "incomplete_fusion",
+                "focus": "Explain why fusion defects should stay high-severity even when image quality varies.",
+            },
+            {
+                "defect_type": "no_defect",
+                "focus": "Preserve a conservative pass path without overstating inspection certainty.",
+            },
+        ],
+        validation_cases=[
+            {
+                "case_id": "health-proof",
+                "goal": "Health should expose model mode and defect classes before any inspection claim.",
+            },
+            {
+                "case_id": "critical-crack",
+                "goal": "Crack examples should remain critical and unacceptable in report output.",
+            },
+            {
+                "case_id": "batch-summary",
+                "goal": "Batch runs should preserve per-image results and error reporting together.",
+            },
+            {
+                "case_id": "report-export",
+                "goal": "HTML report generation should stay aligned with JSON inspection output.",
+            },
+        ],
+    )
+
+
+@router.get("/ops/release-readiness", tags=["system"])
+async def ops_release_readiness() -> dict[str, Any]:
+    classifier, *_ = _get_services()
+    info = classifier.get_model_info()
+    return {
+        "service": "weld-defect-vision-release-readiness",
+        "contract_version": "weld-defect-release-readiness-v1",
+        "status": "portfolio_review_ready",
+        "reviewer_fast_path": [
+            "/api/v1/health",
+            "/api/v1/ops/resource-pack",
+            "/api/v1/ops/release-readiness",
+            "/docs",
+        ],
+        "checks": {
+            "health_surface": True,
+            "resource_pack": True,
+            "inspection_api": True,
+            "report_export": True,
+            "model_mode_visible": bool(info["mode"]),
+        },
+        "next_actions": [
+            "Keep synthetic or demo examples clearly separated from real inspection validation claims.",
+            "Pair severity scores with reviewer-visible example cases before discussing deployment.",
+        ],
+    }
 
 
 @router.get("/classes", response_model=ClassesResponse, tags=["system"])

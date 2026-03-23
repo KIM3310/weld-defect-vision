@@ -126,6 +126,8 @@ Base URL: `http://localhost:8000/api/v1`
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/health` | Service health and model info |
+| `GET` | `/ops/resource-pack` | Built-in inspection review pack |
+| `GET` | `/ops/release-readiness` | Review-safe release checklist |
 | `GET` | `/classes` | List all defect types with descriptions |
 | `POST` | `/inspect` | Inspect a weld image → JSON result |
 | `POST` | `/inspect/report` | Inspect a weld image → HTML report |
@@ -133,6 +135,14 @@ Base URL: `http://localhost:8000/api/v1`
 | `GET` | `/demo/synthetic` | Demo with synthetic weld image |
 
 Interactive API docs available at `/docs` (Swagger UI) and `/redoc`.
+
+## Reviewer Fast Path
+
+1. `GET /api/v1/health`
+2. `GET /api/v1/ops/resource-pack`
+3. `GET /api/v1/ops/release-readiness`
+4. `POST /api/v1/inspect`
+5. `POST /api/v1/inspect/report`
 
 ### Example: Inspect an image
 

@@ -85,4 +85,6 @@ async def root() -> dict[str, str]:
         "version": "0.1.0",
         "docs": "/docs",
         "health": "/api/v1/health",
+        "ops_resource_pack": "/api/v1/ops/resource-pack",
+        "ops_release_readiness": "/api/v1/ops/release-readiness",
     }

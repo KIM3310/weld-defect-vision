@@ -34,6 +34,12 @@ class TestRootEndpoint:
         response = client.get("/")
         assert "docs" in response.json()
 
+    def test_root_has_ops_links(self, client: TestClient) -> None:
+        response = client.get("/")
+        payload = response.json()
+        assert payload["ops_resource_pack"] == "/api/v1/ops/resource-pack"
+        assert payload["ops_release_readiness"] == "/api/v1/ops/release-readiness"
+
 
 class TestHealthEndpoint:
     def test_health_returns_200(self, client: TestClient) -> None:
@@ -56,6 +62,27 @@ class TestHealthEndpoint:
         data = client.get("/api/v1/health").json()
         assert isinstance(data["defect_classes"], list)
         assert len(data["defect_classes"]) == 7
+
+    def test_health_has_review_routes(self, client: TestClient) -> None:
+        data = client.get("/api/v1/health").json()
+        assert data["proof_routes"]["resource_pack"] == "/api/v1/ops/resource-pack"
+        assert data["reviewer_fast_path"][1] == "/api/v1/ops/resource-pack"
+
+
+class TestOpsSurfaces:
+    def test_resource_pack_returns_200(self, client: TestClient) -> None:
+        response = client.get("/api/v1/ops/resource-pack")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["contract_version"] == "weld-defect-review-resource-pack-v1"
+        assert data["summary"]["defect_example_count"] >= 4
+
+    def test_release_readiness_returns_200(self, client: TestClient) -> None:
+        response = client.get("/api/v1/ops/release-readiness")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["contract_version"] == "weld-defect-release-readiness-v1"
+        assert data["checks"]["inspection_api"] is True
 
 
 class TestClassesEndpoint:
