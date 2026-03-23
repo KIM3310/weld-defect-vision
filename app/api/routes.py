@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Any
 
+import yaml  # type: ignore[import-untyped]
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import HTMLResponse
 from PIL import Image
@@ -106,6 +108,7 @@ class ResourcePackResponse(BaseModel):
     service: str
     contract_version: str
     summary: dict[str, int]
+    external_data: dict[str, Any] | None = None
     reviewer_fast_path: list[str]
     files: dict[str, str]
     defect_examples: list[dict[str, str]]
@@ -142,6 +145,9 @@ async def health_check() -> HealthResponse:
 
 @router.get("/ops/resource-pack", response_model=ResourcePackResponse, tags=["system"])
 async def ops_resource_pack() -> ResourcePackResponse:
+    external_dir = Path(__file__).resolve().parents[2] / "data" / "external" / "welding_defect_object_detection"
+    yaml_path = external_dir / "data.yaml"
+    yaml_data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) if yaml_path.exists() else {}
     return ResourcePackResponse(
         service="weld-defect-vision-resource-pack",
         contract_version="weld-defect-review-resource-pack-v1",
@@ -149,6 +155,12 @@ async def ops_resource_pack() -> ResourcePackResponse:
             "defect_example_count": 4,
             "validation_case_count": 4,
             "check_count": 3,
+        },
+        external_data={
+            "present": external_dir.exists(),
+            "path": "data/external/welding_defect_object_detection",
+            "sample_image_count": len(list(external_dir.glob('*.jpg'))) if external_dir.exists() else 0,
+            "yaml_classes": len(yaml_data.get("names", [])) if isinstance(yaml_data, dict) else 0,
         },
         reviewer_fast_path=[
             "/api/v1/health",
