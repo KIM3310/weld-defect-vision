@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.pytest_cache/
+.ruff_cache/
+
+# Data & outputs
+data/images/
+data/labels/
+runs/
+outputs/
+checkpoints/*.pt
+
+# IDE
+.vscode/
+.idea/

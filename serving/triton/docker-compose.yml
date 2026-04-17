@@ -1,0 +1,47 @@
+services:
+  triton:
+    image: nvcr.io/nvidia/tritonserver:25.01-py3
+    command: >
+      tritonserver
+      --model-repository=/models
+      --allow-metrics=true
+      --metrics-port=8002
+      --strict-model-config=true
+      --log-verbose=1
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    volumes:
+      - ./model_repository:/models:ro
+    shm_size: "2gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v2/health/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  client-example:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    depends_on:
+      triton:
+        condition: service_healthy
+    command: ["python", "serving/client_example.py", "--triton-url", "triton:8001", "--image", "/data/sample.jpg"]
+    volumes:
+      - ./sample_data:/data:ro
+    profiles:
+      - example

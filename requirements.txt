@@ -1,0 +1,16 @@
+ultralytics>=8.3.0
+torch>=2.2.0
+torchvision>=0.17.0
+opencv-python-headless>=4.9.0
+pillow>=10.2.0
+numpy>=1.26.0
+pandas>=2.2.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+fastapi>=0.115.0
+uvicorn>=0.34.0
+python-multipart>=0.0.9
+pydantic>=2.10.0
+pytest>=8.3.0
+pytest-cov>=6.0.0
+ruff>=0.9.0

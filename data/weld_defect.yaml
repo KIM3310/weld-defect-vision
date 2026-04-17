@@ -1,0 +1,27 @@
+# YOLOv8 dataset configuration for weld defect detection
+# Dataset: Weld defect images with bounding box annotations
+#
+# Expected directory structure:
+#   data/
+#   ├── weld_defect.yaml  (this file)
+#   ├── images/
+#   │   ├── train/
+#   │   ├── val/
+#   │   └── test/
+#   └── labels/
+#       ├── train/        (YOLO format: class x_center y_center width height)
+#       ├── val/
+#       └── test/
+
+path: data
+train: images/train
+val: images/val
+test: images/test
+
+nc: 5
+names:
+  0: crack
+  1: porosity
+  2: spatter
+  3: undercut
+  4: overlap

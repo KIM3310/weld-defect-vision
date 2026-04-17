@@ -1,0 +1,57 @@
+name: "weld_defect"
+platform: "tensorrt_plan"
+max_batch_size: 16
+
+input [
+  {
+    name: "images"
+    data_type: TYPE_FP16
+    format: FORMAT_NCHW
+    dims: [ 3, 640, 640 ]
+  }
+]
+
+output [
+  {
+    name: "output0"
+    data_type: TYPE_FP16
+    dims: [ 9, 8400 ]
+  }
+]
+
+instance_group [
+  {
+    count: 2
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]
+
+dynamic_batching {
+  preferred_batch_size: [ 4, 8, 16 ]
+  max_queue_delay_microseconds: 10000
+}
+
+version_policy: { latest: { num_versions: 1 } }
+
+model_warmup [
+  {
+    name: "random_warmup"
+    batch_size: 1
+    inputs {
+      key: "images"
+      value: {
+        data_type: TYPE_FP16
+        dims: [ 3, 640, 640 ]
+        random_data: true
+      }
+    }
+  }
+]
+
+parameters [
+  {
+    key: "model_version_label"
+    value: { string_value: "weld_defect_yolov8s_int8" }
+  }
+]

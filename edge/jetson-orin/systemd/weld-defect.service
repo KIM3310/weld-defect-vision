@@ -1,0 +1,50 @@
+[Unit]
+Description=Weld Defect Vision inference service (Jetson edge node)
+Documentation=https://github.com/KIM3310/weld-defect-vision
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=weld-defect
+Group=weld-defect
+WorkingDirectory=/opt/weld-defect-vision
+EnvironmentFile=-/etc/weld-defect/env
+
+ExecStartPre=/usr/bin/docker compose -f /opt/weld-defect-vision/serving/triton/docker-compose.yml pull
+ExecStart=/usr/bin/docker compose -f /opt/weld-defect-vision/serving/triton/docker-compose.yml up --abort-on-container-exit
+ExecStop=/usr/bin/docker compose -f /opt/weld-defect-vision/serving/triton/docker-compose.yml down --timeout 30
+
+# Restart policy tuned for plant-floor conditions.
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+# Resource bounds. Orin AGX 64 GB; Triton and capture daemon together are
+# bounded to ~32 GB to leave headroom for model loads and camera buffers.
+MemoryMax=32G
+MemoryHigh=24G
+TasksMax=4096
+
+# Hardening. Edge node is single-purpose; these reduce the blast radius
+# of any in-container RCE.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/weld-defect-vision/logs /opt/weld-defect-vision/image-archive /var/lib/docker
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=true
+
+# Logging to journald; plant ops scrapes journald into their aggregator.
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=weld-defect
+
+[Install]
+WantedBy=multi-user.target

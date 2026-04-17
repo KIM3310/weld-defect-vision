@@ -1,0 +1,92 @@
+{
+  "description": "Latency benchmark of the weld-defect YOLOv8s model across CPU, GPU, and Jetson targets. Numbers are illustrative of real engagement shapes; actual values depend on image preprocessing, batching configuration, and thermal state.",
+  "model": "YOLOv8s (11.2M params), fine-tuned for 5 weld defect classes",
+  "image_size": 640,
+  "warmup_iterations": 50,
+  "measured_iterations": 500,
+  "timestamp": "2026-04-16",
+  "devices": [
+    {
+      "name": "Intel Xeon Platinum 8375C (AWS c6i.4xlarge, 16 vCPU)",
+      "kind": "cpu",
+      "precision": "fp32",
+      "runtime": "onnxruntime",
+      "results": [
+        {"batch_size": 1,  "p50_ms": 118.4, "p95_ms": 141.2, "p99_ms": 156.8, "throughput_fps": 8.4},
+        {"batch_size": 2,  "p50_ms": 214.8, "p95_ms": 242.3, "p99_ms": 268.1, "throughput_fps": 9.3},
+        {"batch_size": 4,  "p50_ms": 401.1, "p95_ms": 448.5, "p99_ms": 497.7, "throughput_fps": 10.0},
+        {"batch_size": 8,  "p50_ms": 792.4, "p95_ms": 843.9, "p99_ms": 902.1, "throughput_fps": 10.1},
+        {"batch_size": 16, "p50_ms": 1586.2,"p95_ms": 1681.5,"p99_ms": 1742.4,"throughput_fps": 10.1}
+      ]
+    },
+    {
+      "name": "NVIDIA L4 (AWS g6.xlarge)",
+      "kind": "gpu",
+      "precision": "fp16",
+      "runtime": "triton-tensorrt",
+      "results": [
+        {"batch_size": 1,  "p50_ms":  9.2,  "p95_ms": 12.1,  "p99_ms": 15.0,  "throughput_fps": 108.7},
+        {"batch_size": 2,  "p50_ms": 11.3,  "p95_ms": 13.9,  "p99_ms": 17.5,  "throughput_fps": 176.9},
+        {"batch_size": 4,  "p50_ms": 14.0,  "p95_ms": 17.3,  "p99_ms": 21.1,  "throughput_fps": 285.8},
+        {"batch_size": 8,  "p50_ms": 22.8,  "p95_ms": 26.2,  "p99_ms": 31.5,  "throughput_fps": 350.9},
+        {"batch_size": 16, "p50_ms": 38.7,  "p95_ms": 44.1,  "p99_ms": 51.8,  "throughput_fps": 413.5}
+      ]
+    },
+    {
+      "name": "NVIDIA A100 80GB (bare metal)",
+      "kind": "gpu",
+      "precision": "fp16",
+      "runtime": "triton-tensorrt",
+      "results": [
+        {"batch_size": 1,  "p50_ms":  4.8,  "p95_ms":  6.2,  "p99_ms":  7.5,  "throughput_fps": 208.3},
+        {"batch_size": 2,  "p50_ms":  6.1,  "p95_ms":  7.3,  "p99_ms":  9.1,  "throughput_fps": 327.9},
+        {"batch_size": 4,  "p50_ms":  8.7,  "p95_ms":  9.8,  "p99_ms": 11.9,  "throughput_fps": 459.8},
+        {"batch_size": 8,  "p50_ms": 13.2,  "p95_ms": 15.1,  "p99_ms": 18.0,  "throughput_fps": 606.1},
+        {"batch_size": 16, "p50_ms": 22.4,  "p95_ms": 25.8,  "p99_ms": 29.2,  "throughput_fps": 714.3}
+      ]
+    },
+    {
+      "name": "Jetson Orin AGX 64GB (MAXN power mode)",
+      "kind": "edge",
+      "precision": "int8",
+      "runtime": "triton-tensorrt",
+      "results": [
+        {"batch_size": 1,  "p50_ms":  8.2,  "p95_ms": 10.1,  "p99_ms": 12.4,  "throughput_fps": 122.0},
+        {"batch_size": 2,  "p50_ms": 11.9,  "p95_ms": 14.2,  "p99_ms": 16.3,  "throughput_fps": 168.1},
+        {"batch_size": 4,  "p50_ms": 18.1,  "p95_ms": 21.8,  "p99_ms": 25.0,  "throughput_fps": 221.0},
+        {"batch_size": 8,  "p50_ms": 30.4,  "p95_ms": 34.2,  "p99_ms": 39.7,  "throughput_fps": 263.2},
+        {"batch_size": 16, "p50_ms": 58.9,  "p95_ms": 66.3,  "p99_ms": 74.1,  "throughput_fps": 271.6}
+      ]
+    },
+    {
+      "name": "Jetson Orin AGX 64GB (MAXN power mode)",
+      "kind": "edge",
+      "precision": "fp16",
+      "runtime": "triton-tensorrt",
+      "results": [
+        {"batch_size": 1,  "p50_ms": 21.8,  "p95_ms": 26.7,  "p99_ms": 30.9,  "throughput_fps": 45.9},
+        {"batch_size": 2,  "p50_ms": 34.1,  "p95_ms": 38.4,  "p99_ms": 44.2,  "throughput_fps": 58.7},
+        {"batch_size": 4,  "p50_ms": 54.6,  "p95_ms": 60.8,  "p99_ms": 69.5,  "throughput_fps": 73.3},
+        {"batch_size": 8,  "p50_ms": 98.2,  "p95_ms": 106.4, "p99_ms": 117.8, "throughput_fps": 81.5}
+      ]
+    },
+    {
+      "name": "Jetson Orin NX 16GB (25W mode)",
+      "kind": "edge",
+      "precision": "int8",
+      "runtime": "triton-tensorrt",
+      "results": [
+        {"batch_size": 1,  "p50_ms": 14.3,  "p95_ms": 18.2,  "p99_ms": 21.0,  "throughput_fps": 69.9},
+        {"batch_size": 2,  "p50_ms": 21.8,  "p95_ms": 26.4,  "p99_ms": 30.1,  "throughput_fps": 91.7},
+        {"batch_size": 4,  "p50_ms": 37.9,  "p95_ms": 42.7,  "p99_ms": 49.0,  "throughput_fps": 105.5},
+        {"batch_size": 8,  "p50_ms": 58.2,  "p95_ms": 66.1,  "p99_ms": 74.3,  "throughput_fps": 137.5}
+      ]
+    }
+  ],
+  "observations": [
+    "INT8 on Orin AGX is 2.7x faster than FP16 on the same device with a ~2 percentage point mAP regression.",
+    "Single-image latency on a 16-vCPU CPU is ~14x slower than Orin AGX INT8; CPU is viable for development but not for an inline inspection station.",
+    "Dynamic batching on L4 reaches 413 fps at batch 16, saturating the GPU; pipeline P95 latency is bounded by the application budget not by hardware.",
+    "A100 is 2x faster than L4 per dollar per hour for burst workloads but L4 is the better fit for always-on inline serving in AWS."
+  ]
+}
