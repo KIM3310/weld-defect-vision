@@ -7,14 +7,6 @@ on:
         description: Path to the .pt checkpoint (relative to repo root)
         required: true
         default: checkpoints/best.pt
-      quantize:
-        description: Apply INT8 quantization
-        required: false
-        default: "false"
-        type: choice
-        options:
-          - "false"
-          - "true"
   schedule:
     # Nightly regeneration at 02:30 UTC when a model is available
     - cron: "30 2 * * *"
@@ -22,6 +14,8 @@ on:
 jobs:
   export:
     runs-on: ubuntu-latest
+    env:
+      CHECKPOINT_PATH: ${{ github.event.inputs.checkpoint || 'checkpoints/best.pt' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,25 +32,34 @@ jobs:
           pip install onnx onnxruntime onnx-simplifier
 
       - name: Check checkpoint exists
+        id: checkpoint
         run: |
-          if [ ! -f "${{ github.event.inputs.checkpoint || 'checkpoints/best.pt' }}" ]; then
-            echo "Checkpoint not found. This workflow expects a trained model to be committed or downloaded."
-            echo "Scheduled runs will silently skip; manual runs will fail."
-            if [ "${{ github.event_name }}" = "schedule" ]; then
-              exit 0
-            else
-              exit 1
-            fi
+          if [ -f "$CHECKPOINT_PATH" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+          echo "Checkpoint not found at $CHECKPOINT_PATH. This workflow expects a trained model to be committed or downloaded."
+          echo "Scheduled runs will skip export; manual runs will fail."
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            exit 0
+          fi
+          exit 1
+
+      - name: Skip export when no checkpoint is available
+        if: github.event_name == 'schedule' && steps.checkpoint.outputs.exists != 'true'
+        run: echo "Skipping scheduled ONNX export because $CHECKPOINT_PATH is missing."
+
       - name: Export ONNX
+        if: steps.checkpoint.outputs.exists == 'true'
         run: |
           python serving/export_onnx.py \
-            --checkpoint "${{ github.event.inputs.checkpoint || 'checkpoints/best.pt' }}" \
-            --output "artifacts/weld_defect.onnx" \
-            ${{ github.event.inputs.quantize == 'true' && '--quantize' || '' }}
+            --checkpoint "$CHECKPOINT_PATH" \
+            --output "artifacts/weld_defect.onnx"
 
       - name: Validate ONNX graph
+        if: steps.checkpoint.outputs.exists == 'true'
         run: |
           python -c "
           import onnx
@@ -66,6 +69,7 @@ jobs:
           "
 
       - name: Smoke test inference
+        if: steps.checkpoint.outputs.exists == 'true'
         run: |
           python -c "
           import numpy as np
@@ -78,6 +82,7 @@ jobs:
           "
 
       - name: Upload artifact
+        if: steps.checkpoint.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: weld-defect-onnx
