@@ -8,7 +8,6 @@ import cv2
 import numpy as np
 import yaml
 
-from src.config import TrainConfig
 
 
 def validate_dataset(data_yaml: Path) -> dict:

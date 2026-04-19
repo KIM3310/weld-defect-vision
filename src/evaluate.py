@@ -8,7 +8,6 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 from ultralytics import YOLO
 
 from src.config import DEFECT_LABELS, TrainConfig

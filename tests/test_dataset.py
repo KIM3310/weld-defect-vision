@@ -1,6 +1,5 @@
 """Tests for dataset preparation and validation."""
 
-import pytest
 from pathlib import Path
 
 from src.dataset import create_synthetic_dataset, validate_dataset
