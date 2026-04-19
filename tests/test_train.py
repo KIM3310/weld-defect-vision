@@ -1,6 +1,5 @@
 """Tests for training configuration."""
 
-
 from src.config import TrainConfig, DEFECT_LABELS
 
 

@@ -53,12 +53,14 @@ class WeldDefectDetector:
                 cls_id = int(boxes.cls[i].cpu().item())
                 conf = float(boxes.conf[i].cpu().item())
 
-                detections.append({
-                    "bbox": [round(c, 1) for c in bbox],
-                    "class_id": cls_id,
-                    "class_name": DEFECT_LABELS.get(cls_id, f"class_{cls_id}"),
-                    "confidence": round(conf, 4),
-                })
+                detections.append(
+                    {
+                        "bbox": [round(c, 1) for c in bbox],
+                        "class_id": cls_id,
+                        "class_name": DEFECT_LABELS.get(cls_id, f"class_{cls_id}"),
+                        "confidence": round(conf, 4),
+                    }
+                )
 
         detections.sort(key=lambda d: d["confidence"], reverse=True)
         return detections
@@ -91,12 +93,14 @@ class WeldDefectDetector:
                 bbox = boxes.xyxy[i].cpu().numpy().tolist()
                 cls_id = int(boxes.cls[i].cpu().item())
                 conf = float(boxes.conf[i].cpu().item())
-                detections.append({
-                    "bbox": [round(c, 1) for c in bbox],
-                    "class_id": cls_id,
-                    "class_name": DEFECT_LABELS.get(cls_id, f"class_{cls_id}"),
-                    "confidence": round(conf, 4),
-                })
+                detections.append(
+                    {
+                        "bbox": [round(c, 1) for c in bbox],
+                        "class_id": cls_id,
+                        "class_name": DEFECT_LABELS.get(cls_id, f"class_{cls_id}"),
+                        "confidence": round(conf, 4),
+                    }
+                )
             batch_detections.append(detections)
 
         return batch_detections

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
@@ -46,13 +47,18 @@ def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> 
     }
 
     per_class = {}
-    if hasattr(results.box, "ap_class_index") and results.box.ap_class_index is not None:
+    if (
+        hasattr(results.box, "ap_class_index")
+        and results.box.ap_class_index is not None
+    ):
         for i, cls_idx in enumerate(results.box.ap_class_index):
             cls_name = DEFECT_LABELS.get(int(cls_idx), f"class_{cls_idx}")
             per_class[cls_name] = {
                 "precision": float(results.box.p[i]) if i < len(results.box.p) else 0.0,
                 "recall": float(results.box.r[i]) if i < len(results.box.r) else 0.0,
-                "ap50": float(results.box.ap50[i]) if i < len(results.box.ap50) else 0.0,
+                "ap50": (
+                    float(results.box.ap50[i]) if i < len(results.box.ap50) else 0.0
+                ),
                 "ap": float(results.box.ap[i]) if i < len(results.box.ap) else 0.0,
             }
 
@@ -75,7 +81,9 @@ def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> 
     print(f"{'='*50}")
 
     for cls_name, cls_metrics in per_class.items():
-        print(f"  {cls_name}: AP50={cls_metrics['ap50']:.3f} P={cls_metrics['precision']:.3f} R={cls_metrics['recall']:.3f}")
+        print(
+            f"  {cls_name}: AP50={cls_metrics['ap50']:.3f} P={cls_metrics['precision']:.3f} R={cls_metrics['recall']:.3f}"
+        )
 
     print(f"\nResults saved: {results_path}")
 
@@ -116,5 +124,6 @@ def _plot_metrics_bar(per_class: dict, output_path: Path) -> None:
 
 if __name__ == "__main__":
     import sys
+
     ckpt = sys.argv[1] if len(sys.argv) > 1 else "checkpoints/best.pt"
     evaluate(ckpt)
