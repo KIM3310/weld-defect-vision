@@ -3,7 +3,6 @@
 import io
 from pathlib import Path
 
-import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import Response
 from PIL import Image

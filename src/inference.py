@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
-from src.config import DEFECT_LABELS, TrainConfig
+from src.config import DEFECT_LABELS
 
 
 class WeldDefectDetector:

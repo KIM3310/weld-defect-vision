@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-from src.config import DEFECT_COLORS, DEFECT_LABELS
+from src.config import DEFECT_COLORS
 
 
 def draw_detections(
