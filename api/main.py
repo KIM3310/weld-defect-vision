@@ -25,7 +25,10 @@ def get_detector() -> WeldDefectDetector:
     global detector
     if detector is None:
         if not CHECKPOINT_PATH.exists():
-            raise HTTPException(status_code=503, detail="Model checkpoint not found. Train the model first.")
+            raise HTTPException(
+                status_code=503,
+                detail="Model checkpoint not found. Train the model first.",
+            )
         detector = WeldDefectDetector(CHECKPOINT_PATH)
     return detector
 
@@ -77,6 +80,7 @@ async def detect_and_visualize(file: UploadFile = File(...)) -> Response:
     detections = det.detect(image)
 
     import cv2
+
     annotated = draw_detections(image, detections)
     _, buffer = cv2.imencode(".png", annotated)
 

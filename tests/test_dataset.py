@@ -72,6 +72,8 @@ class TestValidateDataset:
 
     def test_validate_missing_dir(self, tmp_path: Path):
         yaml_path = tmp_path / "empty.yaml"
-        yaml_path.write_text("path: nonexistent\ntrain: images/train\nval: images/val\ntest: images/test\nnc: 5\nnames:\n  0: a\n")
+        yaml_path.write_text(
+            "path: nonexistent\ntrain: images/train\nval: images/val\ntest: images/test\nnc: 5\nnames:\n  0: a\n"
+        )
         stats = validate_dataset(yaml_path)
         assert stats["total_images"] == 0

@@ -11,7 +11,9 @@ class TrainConfig:
     checkpoint_dir: Path = Path("checkpoints")
 
     # Model
-    base_model: str = "yolov8n.pt"  # nano for fast training, swap to yolov8s/m for production
+    base_model: str = (
+        "yolov8n.pt"  # nano for fast training, swap to yolov8s/m for production
+    )
     num_classes: int = 5
 
     # Training
@@ -59,9 +61,9 @@ DEFECT_LABELS = {
 }
 
 DEFECT_COLORS = {
-    0: (255, 0, 0),      # Red
-    1: (0, 255, 0),      # Green
-    2: (0, 0, 255),      # Blue
-    3: (255, 165, 0),    # Orange
-    4: (128, 0, 128),    # Purple
+    0: (255, 0, 0),  # Red
+    1: (0, 255, 0),  # Green
+    2: (0, 0, 255),  # Blue
+    3: (255, 165, 0),  # Orange
+    4: (128, 0, 128),  # Purple
 }

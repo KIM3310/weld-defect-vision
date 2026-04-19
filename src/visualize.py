@@ -4,6 +4,7 @@ from pathlib import Path
 
 import cv2
 import matplotlib
+
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
@@ -45,7 +46,15 @@ def draw_detections(
 
         (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
         cv2.rectangle(img, (x1, y1 - th - 8), (x1 + tw + 4, y1), color, -1)
-        cv2.putText(img, label, (x1 + 2, y1 - 4), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.putText(
+            img,
+            label,
+            (x1 + 2, y1 - 4),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (255, 255, 255),
+            1,
+        )
 
     return img
 

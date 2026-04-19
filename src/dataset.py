@@ -9,7 +9,6 @@ import numpy as np
 import yaml
 
 
-
 def validate_dataset(data_yaml: Path) -> dict:
     """Validate YOLO dataset structure and return statistics.
 
@@ -48,7 +47,9 @@ def validate_dataset(data_yaml: Path) -> dict:
                         split_classes[cls] = split_classes.get(cls, 0) + 1
 
             img_stem = label_file.stem
-            has_image = any((img_dir / f"{img_stem}{ext}").exists() for ext in [".jpg", ".png"])
+            has_image = any(
+                (img_dir / f"{img_stem}{ext}").exists() for ext in [".jpg", ".png"]
+            )
             if not has_image:
                 orphaned += 1
 
@@ -88,7 +89,9 @@ def split_dataset(
     """
     random.seed(seed)
 
-    image_files = sorted(list(images_dir.glob("*.jpg")) + list(images_dir.glob("*.png")))
+    image_files = sorted(
+        list(images_dir.glob("*.jpg")) + list(images_dir.glob("*.png"))
+    )
     random.shuffle(image_files)
 
     n = len(image_files)
@@ -119,7 +122,9 @@ def split_dataset(
     return counts
 
 
-def create_synthetic_dataset(output_dir: Path, n_images: int = 200, seed: int = 42) -> None:
+def create_synthetic_dataset(
+    output_dir: Path, n_images: int = 200, seed: int = 42
+) -> None:
     """Generate synthetic weld defect images with YOLO annotations for pipeline testing.
 
     Creates images with colored shapes simulating different defect types.
@@ -172,16 +177,22 @@ def create_synthetic_dataset(output_dir: Path, n_images: int = 200, seed: int = 
                     for _ in range(3):
                         px = random.randint(x1, x2)
                         py = random.randint(y1, y2)
-                        cv2.circle(img, (px, py), random.randint(3, 8), cfg["color"], -1)
+                        cv2.circle(
+                            img, (px, py), random.randint(3, 8), cfg["color"], -1
+                        )
                 elif cfg["shape"] == "dots":
                     for _ in range(5):
                         px = random.randint(x1, x2)
                         py = random.randint(y1, y2)
-                        cv2.circle(img, (px, py), random.randint(1, 4), cfg["color"], -1)
+                        cv2.circle(
+                            img, (px, py), random.randint(1, 4), cfg["color"], -1
+                        )
                 elif cfg["shape"] == "groove":
                     cv2.rectangle(img, (x1, y1), (x2, y2), cfg["color"], 2)
                 elif cfg["shape"] == "blob":
-                    cv2.ellipse(img, (cx, cy), (bw // 2, bh // 2), 0, 0, 360, cfg["color"], -1)
+                    cv2.ellipse(
+                        img, (cx, cy), (bw // 2, bh // 2), 0, 0, 360, cfg["color"], -1
+                    )
 
                 # YOLO format: class x_center y_center width height (normalized)
                 annotations.append(f"{cls} {cx/w:.6f} {cy/h:.6f} {bw/w:.6f} {bh/h:.6f}")
@@ -202,6 +213,7 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1:
         stats = validate_dataset(Path(sys.argv[1]))
         import json
+
         print(json.dumps(stats, indent=2))
     else:
         print("Usage:")
