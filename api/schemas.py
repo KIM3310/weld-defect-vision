@@ -20,3 +20,7 @@ class DetectionResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     model_loaded: bool
+
+
+class ClassesResponse(BaseModel):
+    classes: dict[int, str]

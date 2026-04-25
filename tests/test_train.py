@@ -1,7 +1,5 @@
 """Tests for training configuration."""
 
-import pytest
-
 from src.config import TrainConfig, DEFECT_LABELS
 
 

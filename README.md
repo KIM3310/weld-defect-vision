@@ -141,8 +141,14 @@ docker compose --profile training run train
 ### Tests
 
 ```bash
-pytest -v
+python -m ruff check src api tests benchmarks
+python -m pytest tests/ -v --cov=src --cov=api --cov-report=xml
 ```
+
+The API returns `400` for both non-image uploads and corrupt image payloads before
+loading the model checkpoint, so malformed requests do not trigger expensive model
+initialization. Dataset validation follows the YOLO `path:` root when present,
+including relative roots resolved from the YAML file location.
 
 ## Defect Classes
 

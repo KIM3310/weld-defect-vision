@@ -46,7 +46,9 @@ def run_validation(
     )
 
     per_class: list[dict] = []
-    class_names = list(metrics.names.values()) if hasattr(metrics, "names") else DEFECT_CLASSES
+    class_names = (
+        list(metrics.names.values()) if hasattr(metrics, "names") else DEFECT_CLASSES
+    )
 
     box = getattr(metrics, "box", None)
     if box is not None:

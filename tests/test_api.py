@@ -1,6 +1,5 @@
 """Tests for FastAPI detection endpoints."""
 
-import pytest
 from fastapi.testclient import TestClient
 
 from api.main import app
@@ -36,3 +35,19 @@ class TestDetectEndpoint:
             files={"file": ("test.txt", b"not an image", "text/plain")},
         )
         assert response.status_code == 400
+
+    def test_detect_rejects_corrupt_image_payload(self):
+        response = client.post(
+            "/detect",
+            files={"file": ("broken.png", b"not really a png", "image/png")},
+        )
+        assert response.status_code == 400
+        assert response.json()["detail"] == "File must be a valid image"
+
+    def test_visualize_rejects_corrupt_image_payload(self):
+        response = client.post(
+            "/detect/visualize",
+            files={"file": ("broken.png", b"not really a png", "image/png")},
+        )
+        assert response.status_code == 400
+        assert response.json()["detail"] == "File must be a valid image"

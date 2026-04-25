@@ -55,13 +55,16 @@ def train(config: TrainConfig | None = None) -> Path:
 
     if best_path.exists():
         import shutil
+
         dst = config.checkpoint_dir / "best.pt"
         shutil.copy2(best_path, dst)
         print(f"\nBest model copied to: {dst}")
 
     # Save training summary
     summary = {
-        "epochs_completed": results.epoch if hasattr(results, "epoch") else config.epochs,
+        "epochs_completed": (
+            results.epoch if hasattr(results, "epoch") else config.epochs
+        ),
         "best_model": str(best_path),
         "base_model": config.base_model,
         "img_size": config.img_size,

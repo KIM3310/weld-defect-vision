@@ -8,7 +8,23 @@ import cv2
 import numpy as np
 import yaml
 
-from src.config import TrainConfig
+
+def _resolve_dataset_root(data_yaml: Path, config: dict) -> Path:
+    configured_path = config.get("path")
+    if not configured_path:
+        return data_yaml.parent
+
+    root = Path(configured_path)
+    if not root.is_absolute():
+        root = data_yaml.parent / root
+    return root.resolve()
+
+
+def _resolve_config_path(root: Path, value: str | None, default: str) -> Path:
+    path = Path(value or default)
+    if path.is_absolute():
+        return path
+    return root / path
 
 
 def validate_dataset(data_yaml: Path) -> dict:
@@ -23,12 +39,12 @@ def validate_dataset(data_yaml: Path) -> dict:
     with open(data_yaml) as f:
         config = yaml.safe_load(f)
 
-    base_path = data_yaml.parent
+    dataset_root = _resolve_dataset_root(data_yaml, config)
     stats = {"total_images": 0, "total_labels": 0, "class_counts": {}, "splits": {}}
 
     for split in ["train", "val", "test"]:
-        img_dir = base_path / config.get(split, f"images/{split}")
-        label_dir = base_path / "labels" / split
+        img_dir = _resolve_config_path(dataset_root, config.get(split), f"images/{split}")
+        label_dir = dataset_root / "labels" / split
 
         if not img_dir.exists():
             stats["splits"][split] = {"status": "missing", "images": 0, "labels": 0}
@@ -49,7 +65,9 @@ def validate_dataset(data_yaml: Path) -> dict:
                         split_classes[cls] = split_classes.get(cls, 0) + 1
 
             img_stem = label_file.stem
-            has_image = any((img_dir / f"{img_stem}{ext}").exists() for ext in [".jpg", ".png"])
+            has_image = any(
+                (img_dir / f"{img_stem}{ext}").exists() for ext in [".jpg", ".png"]
+            )
             if not has_image:
                 orphaned += 1
 
@@ -89,7 +107,9 @@ def split_dataset(
     """
     random.seed(seed)
 
-    image_files = sorted(list(images_dir.glob("*.jpg")) + list(images_dir.glob("*.png")))
+    image_files = sorted(
+        list(images_dir.glob("*.jpg")) + list(images_dir.glob("*.png"))
+    )
     random.shuffle(image_files)
 
     n = len(image_files)
@@ -120,7 +140,9 @@ def split_dataset(
     return counts
 
 
-def create_synthetic_dataset(output_dir: Path, n_images: int = 200, seed: int = 42) -> None:
+def create_synthetic_dataset(
+    output_dir: Path, n_images: int = 200, seed: int = 42
+) -> None:
     """Generate synthetic weld defect images with YOLO annotations for pipeline testing.
 
     Creates images with colored shapes simulating different defect types.
@@ -173,16 +195,22 @@ def create_synthetic_dataset(output_dir: Path, n_images: int = 200, seed: int = 
                     for _ in range(3):
                         px = random.randint(x1, x2)
                         py = random.randint(y1, y2)
-                        cv2.circle(img, (px, py), random.randint(3, 8), cfg["color"], -1)
+                        cv2.circle(
+                            img, (px, py), random.randint(3, 8), cfg["color"], -1
+                        )
                 elif cfg["shape"] == "dots":
                     for _ in range(5):
                         px = random.randint(x1, x2)
                         py = random.randint(y1, y2)
-                        cv2.circle(img, (px, py), random.randint(1, 4), cfg["color"], -1)
+                        cv2.circle(
+                            img, (px, py), random.randint(1, 4), cfg["color"], -1
+                        )
                 elif cfg["shape"] == "groove":
                     cv2.rectangle(img, (x1, y1), (x2, y2), cfg["color"], 2)
                 elif cfg["shape"] == "blob":
-                    cv2.ellipse(img, (cx, cy), (bw // 2, bh // 2), 0, 0, 360, cfg["color"], -1)
+                    cv2.ellipse(
+                        img, (cx, cy), (bw // 2, bh // 2), 0, 0, 360, cfg["color"], -1
+                    )
 
                 # YOLO format: class x_center y_center width height (normalized)
                 annotations.append(f"{cls} {cx/w:.6f} {cy/h:.6f} {bw/w:.6f} {bh/h:.6f}")
@@ -203,6 +231,7 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1:
         stats = validate_dataset(Path(sys.argv[1]))
         import json
+
         print(json.dumps(stats, indent=2))
     else:
         print("Usage:")

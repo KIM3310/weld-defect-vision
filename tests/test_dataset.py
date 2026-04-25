@@ -1,6 +1,5 @@
 """Tests for dataset preparation and validation."""
 
-import pytest
 from pathlib import Path
 
 from src.dataset import create_synthetic_dataset, validate_dataset
@@ -71,8 +70,36 @@ class TestValidateDataset:
         assert stats["total_images"] > 0
         assert stats["total_labels"] > 0
 
+    def test_validate_respects_relative_dataset_root(self, tmp_path: Path):
+        dataset_root = tmp_path / "datasets" / "weld"
+        create_synthetic_dataset(dataset_root, n_images=30, seed=42)
+
+        config_dir = tmp_path / "configs"
+        config_dir.mkdir()
+        yaml_path = config_dir / "weld_defect.yaml"
+        yaml_path.write_text(
+            "path: ../datasets/weld\n"
+            "train: images/train\n"
+            "val: images/val\n"
+            "test: images/test\n"
+            "nc: 5\n"
+            "names:\n"
+            "  0: crack\n"
+            "  1: porosity\n"
+            "  2: spatter\n"
+            "  3: undercut\n"
+            "  4: overlap\n"
+        )
+
+        stats = validate_dataset(yaml_path)
+
+        assert stats["total_images"] > 0
+        assert stats["total_labels"] > 0
+
     def test_validate_missing_dir(self, tmp_path: Path):
         yaml_path = tmp_path / "empty.yaml"
-        yaml_path.write_text("path: nonexistent\ntrain: images/train\nval: images/val\ntest: images/test\nnc: 5\nnames:\n  0: a\n")
+        yaml_path.write_text(
+            "path: nonexistent\ntrain: images/train\nval: images/val\ntest: images/test\nnc: 5\nnames:\n  0: a\n"
+        )
         stats = validate_dataset(yaml_path)
         assert stats["total_images"] == 0
