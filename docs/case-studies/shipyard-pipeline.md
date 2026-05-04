@@ -33,7 +33,7 @@ The 18% miss rate is the high-level figure that triggered the project. Yard-K's 
 
 Three options were considered:
 
-1. **Add more CWIs.** Rejected on cost and because there is a hiring shortage for qualified welding inspectors in the region (labor market is tight; similar shipyards in the area cannot staff the second shift).
+1. **Add more CWIs.** Rejected on cost and because the region has limited availability of qualified welding inspectors (labor capacity is tight; similar shipyards in the area cannot staff the second shift).
 2. **Automated radiographic/ultrasonic testing.** Rejected as primary solution because coverage cost is high and it misses surface-only defects that are the main contributor to the miss rate.
 3. **Vision-based ML inspection at the welding station itself.** Chosen: catches surface defects at the point and moment of welding, augments rather than replaces CWIs, and provides a structured data feed for process improvement.
 
