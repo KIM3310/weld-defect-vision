@@ -195,7 +195,7 @@ Each deployment records the following sign-offs at cutover:
 - Customer QA lead (ownership of thresholds).
 - Customer welding engineer (process implications).
 - Labor representation or HR (operator monitoring implications).
-- ML team lead (model readiness).
+- ML owner (model readiness).
 
 Upstream (this repo) does not carry customer-specific sign-offs; that lives in per-deployment documentation.
 

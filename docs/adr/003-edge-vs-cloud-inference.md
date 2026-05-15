@@ -2,7 +2,7 @@
 
 - **Status**: Accepted
 - **Date**: 2026-03-28
-- **Deciders**: ML team lead; Plant IT lead (customer, shipyard)
+- **Deciders**: ML owner; Plant IT owner (customer, shipyard)
 
 ## Context
 

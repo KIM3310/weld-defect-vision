@@ -2,7 +2,7 @@
 
 - **Status**: Accepted
 - **Date**: 2026-03-20
-- **Deciders**: ML team lead, Plant IT lead (customer-side, shipyard deployment)
+- **Deciders**: ML owner, Plant IT owner (customer-side, shipyard deployment)
 
 ## Context
 
