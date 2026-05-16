@@ -11,6 +11,9 @@ on:
     # Nightly regeneration at 02:30 UTC when a model is available
     - cron: "30 2 * * *"
 
+permissions:
+  contents: read
+
 jobs:
   export:
     runs-on: ubuntu-latest
