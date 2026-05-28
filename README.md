@@ -4,6 +4,18 @@ Industrial weld defect detection using **YOLOv8 fine-tuning**. Detects 5 types o
 
 Technical review pack: [`docs/technical-review-pack.md`](docs/technical-review-pack.md)
 
+## Product and Review Surface
+
+An industrial inspection AI workflow that sells value through validation, serving posture, and operator-readable evidence.
+
+| Lens | Definition |
+|---|---|
+| Buyer or user | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment reviewers. |
+| Commercial route | Package as an inspection proof-of-concept, model-validation study, or edge-serving readiness assessment. |
+| Review signal | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and review pack. |
+| Safety boundary | Prototype outputs need human inspection review; production use requires site-specific validation and acceptance criteria. |
+| Fast proof | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
+
 ## Architecture
 
 ```
