@@ -23,6 +23,10 @@ An industrial inspection AI workflow that sells value through validation, servin
 - **Verification:** Run `pytest -v`; keep human inspection review explicit when presenting outputs.
 - **Commercial read:** Use it as an industrial inspection PoC and validation-readiness case study.
 
+## Commercialization Playbook
+
+- [Monetization and GTM playbook](docs/monetization-playbook.md) maps the repository to buyer segments, offer ladder, pricing hypotheses, proof gates, and risk boundaries.
+
 ## Architecture
 
 ```
