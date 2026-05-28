@@ -16,6 +16,13 @@ An industrial inspection AI workflow that sells value through validation, servin
 | Safety boundary | Prototype outputs need human inspection review; production use requires site-specific validation and acceptance criteria. |
 | Fast proof | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
 
+## Reviewer Fast Path
+
+- **First minute:** Read the model card and validation notes before checking detections.
+- **Local demo:** Start the API with `uvicorn api.main:app --host 0.0.0.0 --port 8000`, then test `/detect` or `/detect/visualize`.
+- **Verification:** Run `pytest -v`; keep human inspection review explicit when presenting outputs.
+- **Commercial read:** Use it as an industrial inspection PoC and validation-readiness case study.
+
 ## Architecture
 
 ```
