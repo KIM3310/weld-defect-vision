@@ -49,9 +49,9 @@ This note specializes the repository for service launch. It combines product str
 
 ## Conversion Path
 
-- Risk-reversing entry: Inspection PoC ($5k-$15k PoC) with one acceptance metric.
-- Pilot: Model validation study ($20k-$70k validation) using buyer-approved data and named operators.
-- Recurring layer: Edge-serving readiness assessment ($3k-$15k/month model ops support) for monitoring, governance, support, or managed review.
+- Risk-reversing entry: Inspection PoC (scope after buyer intake) with one acceptance metric.
+- Pilot: Model validation study (scope after buyer intake) using buyer-approved data and named operators.
+- Recurring layer: Edge-serving readiness assessment (scope after buyer intake) for monitoring, governance, support, or managed review.
 
 ## Scope Frame
 

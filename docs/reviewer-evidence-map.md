@@ -49,9 +49,9 @@ Use this page as the short path through the repository. It keeps the review grou
 
 | Possible offer | Working scope assumption |
 |---|---|
-| Inspection PoC | $5k-$15k PoC |
-| Model validation study | $20k-$70k validation |
-| Edge-serving readiness assessment | $3k-$15k/month model ops support |
+| Inspection PoC | Scope after buyer intake |
+| Model validation study | Scope after buyer intake |
+| Edge-serving readiness assessment | Scope after buyer intake |
 
 ## Boundaries
 

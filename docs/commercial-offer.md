@@ -12,7 +12,7 @@ This is the buyer-ready version of the repository. It turns the technical proof 
 | Buyer | Manufacturing quality teams, welding inspection groups, industrial AI, and edge deployment reviewers. |
 | Pain wedge | YOLOv8 defect workflow with model governance, serving, and operator-readable evidence. |
 | Front-door offer | Inspection PoC |
-| Entry scope | $5k-$15k PoC |
+| Entry scope | Scope after buyer intake |
 | Proof before pitch | pytest passes |
 | Next buyer action | Review one proof artifact, then choose diagnostic, workshop, pilot, support, or revival path. |
 
@@ -20,9 +20,9 @@ This is the buyer-ready version of the repository. It turns the technical proof 
 
 | Offer | Scope assumption | Buyer-facing scope |
 |---|---|---|
-| Inspection PoC | $5k-$15k PoC | Publish model-card walkthrough |
-| Model validation study | $20k-$70k validation | Create sample defect report |
-| Edge-serving readiness assessment | $3k-$15k/month model ops support | Offer validation sprint |
+| Inspection PoC | Scope after buyer intake | Publish model-card walkthrough |
+| Model validation study | Scope after buyer intake | Create sample defect report |
+| Edge-serving readiness assessment | Scope after buyer intake | Offer validation sprint |
 
 ## Close Path
 
