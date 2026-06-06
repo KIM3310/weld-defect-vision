@@ -1,5 +1,10 @@
 # Weld Defect Vision
 
+## Live Demo
+
+- [Open the public GitHub Pages demo](https://kim3310.github.io/weld-defect-vision/)
+- Scope: credential-free, synthetic-data demo for reviewers and evaluators.
+
 Industrial weld defect detection using **YOLOv8 fine-tuning**. Detects 5 types of welding defects: Crack, Porosity, Spatter, Undercut, and Overlap. Features a complete pipeline from data preparation to model serving via REST API.
 
 Technical review pack: [`docs/technical-review-pack.md`](docs/technical-review-pack.md)
