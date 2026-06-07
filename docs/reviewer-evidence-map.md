@@ -45,13 +45,13 @@ Use this page as the short path through the repository. It keeps the review grou
 - Model card exists
 - API detection path is documented
 
-## Commercial Notes
+## Review Notes
 
 | Possible offer | Working scope assumption |
 |---|---|
-| Inspection PoC | Scope after buyer intake |
-| Model validation study | Scope after buyer intake |
-| Edge-serving readiness assessment | Scope after buyer intake |
+| Inspection PoC | Scope after reviewer intake |
+| Model validation study | Scope after reviewer intake |
+| Edge-serving readiness assessment | Scope after reviewer intake |
 
 ## Boundaries
 
