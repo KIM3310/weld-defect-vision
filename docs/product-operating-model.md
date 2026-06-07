@@ -14,7 +14,7 @@ Weld defect detection using YOLOv8 fine-tuning with FastAPI inference server
 
 This repository is packaged as a concrete system surface, not a loose code sample. The enterprise value is a narrow proof that can be inspected, run, tested, and converted into a reviewed implementation motion.
 
-## Buyer And Service Path
+## Audience And Service Path
 
 | Area | Position |
 | --- | --- |
