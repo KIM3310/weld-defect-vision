@@ -17,7 +17,7 @@ An industrial inspection AI workflow that sells value through validation, servin
 |---|---|
 | Audience | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment reviewers. |
 | Review path | Validate the demo, README, architecture notes, and quality gate before deeper workflow review. |
-| Review signal | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and review pack. |
+| Architecture signal | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and review pack. |
 | Safety boundary | Prototype outputs need human inspection review; production use requires site-specific validation and acceptance criteria. |
 | Fast proof | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
 
@@ -272,6 +272,10 @@ This repository includes a neutral cloud and AI engineering blueprint that maps 
 ## Enterprise Productization
 
 - [Product operating model](docs/product-operating-model.md) defines the reviewer, trust boundary, trust boundary, operating checks, and service path for this repository.
+
+## System Architecture
+
+- [System architecture](docs/system-architecture.md) maps the runtime boundary, data/control flow, cloud or local deployment surface, and operating assumptions for this repository.
 
 ## Service Architecture
 
