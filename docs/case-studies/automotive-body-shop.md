@@ -320,15 +320,15 @@ When the system asserts `Stop`, the line lead is paged. The line lead's tablet s
 - The class and confidence.
 - Two options: `Confirm — route to red-tag cell` (body out of line for detailed rework), or `Override — pass body` (with a mandatory comment).
 
-Override is logged and monitored. An override rate above 8% for any single week triggers a review of thresholds (no individual override rate was above 3% in the first 90 days).
+Override is logged and monitored. An override rate above 8% for any single week triggers a architecture of thresholds (no individual override rate was above 3% in the first 90 days).
 
 ### 9.2 Rework cell tablet
 
 Rework cell operators see the rework queue with per-body detection details. They confirm or disagree with each detection after reworking. Their confirm/disagree signal is the primary feedback into the retraining labeling queue.
 
-### 9.3 Daily shift review
+### 9.3 Daily shift architecture
 
-Production engineer reviews the per-shift dashboard each morning. Looks for trends: rising class-specific defect rate, specific welder-cell with anomalous rate, class distribution drift.
+Production engineer architectures the per-shift dashboard each morning. Looks for trends: rising class-specific defect rate, specific welder-cell with anomalous rate, class distribution drift.
 
 ---
 
@@ -364,7 +364,7 @@ The 1-week shadow mode caught the water-spot-as-porosity issue that would have c
 
 ### 10.8 Gauge R&R
 
-Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human reviewers on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
+Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human technical readers on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
 
 ---
 

@@ -1,6 +1,6 @@
 # Contributing to weld-defect-vision
 
-Thanks for helping improve this project. Keep changes small, documented, and easy to review.
+Thanks for helping improve this project. Keep changes small, documented, and easy to architecture.
 
 ## Development Workflow
 
@@ -25,7 +25,7 @@ Keep the subject line under 72 characters when practical. Use the body to explai
 
 ## Quality Bar
 
-Before requesting review:
+Before requesting architecture:
 
 - Run the fastest relevant local check first.
 - Run the full test suite when touching shared logic or public behavior.

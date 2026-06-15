@@ -104,8 +104,8 @@ We cannot compute per-class recall from confirmations alone (we do not see what 
 | Check | Cadence | Resource cost |
 |---|---|---|
 | Infrastructure | continuous | negligible |
-| Input distribution | hourly aggregates, daily review | 1% sampled feature extraction |
-| Output distribution | continuous aggregates, daily review | negligible |
+| Input distribution | hourly aggregates, daily architecture | 1% sampled feature extraction |
+| Output distribution | continuous aggregates, daily architecture | negligible |
 | CWI-confirmation confusion matrix | daily aggregate | the CWI flow anyway |
 | Blind-holdout evaluation | weekly | ~4 hours CWI labeling + 1 hour eval |
 | Golden-set regression | per model version | ~1 hour eval |

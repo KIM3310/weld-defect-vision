@@ -104,7 +104,7 @@
         <div class="quick" aria-label="Demo facts">
           <span>Credential-free</span>
           <span>Synthetic data</span>
-          <span>Reviewer-safe</span>
+          <span>Public-safe</span>
           <span>GitHub Pages</span>
         </div>
         <div class="actions">
@@ -135,12 +135,12 @@
             <article class="metric">
               <span id="scenario-title">Defect board</span>
               <strong id="scenario-metric">5 defect types</strong>
-              <p id="scenario-detail">Shows synthetic crack, porosity, spatter, undercut, and overlap cases in one reviewer board.</p>
+              <p id="scenario-detail">Shows synthetic crack, porosity, spatter, undercut, and overlap cases in one architecture board.</p>
             </article>
             <article class="timeline">
               <h3>Review flow</h3>
               <div class="step"><b>1</b><span>Open a synthetic scenario that matches the repository's core workflow.</span></div>
-              <div class="step"><b>2</b><span>Inspect the signal, boundary, and reviewer-facing output without credentials.</span></div>
+              <div class="step"><b>2</b><span>Inspect the signal, boundary, and architecture-facing output without credentials.</span></div>
               <div class="step"><b>3</b><span>Use the source repository and local verification command for implementation-level review.</span></div>
             </article>
           </div>
@@ -150,7 +150,7 @@
 
     <section class="below" aria-label="Review details">
       <article class="notice">
-        <h3>Target reviewer</h3>
+        <h3>Target users</h3>
         <p>Industrial inspection and quality teams</p>
       </article>
       <article class="notice">
@@ -165,7 +165,7 @@
   </main>
 
   <script>
-    const scenarios = [{"title":"Defect board","metric":"5 defect types","detail":"Shows synthetic crack, porosity, spatter, undercut, and overlap cases in one reviewer board."},{"title":"Severity report","metric":"2 high-priority cases","detail":"Prioritizes inspection outcomes and flags cases that need human review."},{"title":"Serving readiness","metric":"model card linked","detail":"Documents inference path, confidence boundaries, and validation needs before deployment."}];
+    const scenarios = [{"title":"Defect board","metric":"5 defect types","detail":"Shows synthetic crack, porosity, spatter, undercut, and overlap cases in one architecture board."},{"title":"Severity report","metric":"2 high-priority cases","detail":"Prioritizes inspection outcomes and flags cases that need human review."},{"title":"Serving readiness","metric":"model card linked","detail":"Documents inference path, confidence boundaries, and validation needs before deployment."}];
     const buttons = Array.from(document.querySelectorAll('.scenario-button'));
     const title = document.getElementById('scenario-title');
     const metric = document.getElementById('scenario-metric');

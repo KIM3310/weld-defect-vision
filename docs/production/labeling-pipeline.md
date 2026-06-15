@@ -97,7 +97,7 @@ Operator disposition (confirm/disagree)       │
 
 ### 3.2 Label schema versioning
 
-The 5 classes from `src/config.py` are the stable schema. Any change to class definitions (e.g., adding `burn-through` as a 6th class) is a schema version bump that invalidates old labels unless they are reviewed for compatibility.
+The 5 classes from `src/config.py` are the stable schema. Any change to class definitions (e.g., adding `burn-through` as a 6th class) is a schema version bump that invalidates old labels unless compatibility is explicitly approved.
 
 ### 3.3 Provenance
 
@@ -106,7 +106,7 @@ Each label records:
 - Timestamp of label.
 - Tool version (CVAT version, config).
 - Source image id (back-references to production or archive).
-- Review status (primary, reviewed, disputed).
+- Disposition status (primary, reviewed, disputed).
 
 Provenance is auditable. For deployments in regulated plants (ISO 9001, IATF 16949 for automotive) the audit trail is a compliance requirement, not a nice-to-have.
 
@@ -171,7 +171,7 @@ Gate violations are surfaced to the ML lead; the deployment does not auto-procee
 From the shipyard deployment, first 90 days:
 
 - Production detections: 117,400.
-- Operator-reviewed dispositions: 113,200.
+- Operator-checked dispositions: 113,200.
 - Confirmed positives: 98,800.
 - Rejected positives (false positive): 14,400.
 - Blind-relabel samples: 1,620 (18 weekly cycles x ~90 per cycle, minus a few missed cycles).

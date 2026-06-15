@@ -2,7 +2,7 @@
 
 - **Status**: Accepted
 - **Date**: 2026-03-25
-- **Deciders**: ML owner; input from NVIDIA solution architect (unaffiliated, informal review)
+- **Deciders**: ML owner; input from NVIDIA solution architect (unaffiliated, informal architecture)
 
 ## Context
 

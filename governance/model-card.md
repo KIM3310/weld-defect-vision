@@ -48,7 +48,7 @@ April 2026 (this card). Per-deployment training dates vary.
 - **Replacing a certified welding inspector** in any jurisdiction where certified inspection is mandated (ISO 9606, AWS D1.1, ABS / KR / DNV class rules, etc.). The model is an augmentation layer, not a replacement.
 - **Detection of subsurface defects**. The model sees surface only; porosity below the weld face, lack of fusion interior to the joint, and inclusions are outside of scope. Subsurface QA requires UT / RT / MT.
 - **Primary safety decisions** where a single missed detection could cause loss of life. The model's recall is not high enough to be the sole layer for safety-critical decisions.
-- **Performance evaluation of individual welders** without explicit labor / ethics review at the deploying site. See [`governance/ethics-review.md`](./ethics-review.md).
+- **Performance evaluation of individual welders** without explicit labor / ethics architecture at the deploying site. See [`governance/ethics-architecture.md`](./ethics-architecture.md).
 - **Detection of weld defect classes outside the 5 trained classes** (e.g. lack of fusion, burn-through, slag inclusion). These are outside the model's vocabulary and will either be ignored or misclassified.
 
 ---
@@ -70,7 +70,7 @@ Production evaluation should stratify by:
 - Welding process.
 - Consumable lot (if available).
 - Base material grade.
-- Shift / operator cohort (with ethics review on per-operator analysis).
+- Shift / operator cohort (with ethics architecture on per-operator analysis).
 
 ---
 
@@ -157,9 +157,9 @@ Representative of the shipyard training run; actual numbers for your deployment 
 
 ## Ethical considerations
 
-See [`governance/ethics-review.md`](./ethics-review.md) for the full review. In summary:
+See [`governance/ethics-architecture.md`](./ethics-architecture.md) for the full architecture. In summary:
 
-1. **Labor implications**: system is framed as augmenting CWIs, not replacing them. Per-operator performance reporting requires explicit labor review at the deployment site.
+1. **Labor implications**: system is framed as augmenting CWIs, not replacing them. Per-operator performance reporting requires explicit labor architecture at the deployment site.
 2. **False-positive cost vs false-negative cost**: decision thresholds are tradeoffs with real safety and economic consequences. Escalation policy is set collaboratively with the customer's QA and welding engineering leads.
 3. **Data consent**: weld images are not PII in most interpretations, but body-shop images may contain VIN stickers; these are redacted.
 4. **Use in surveillance contexts**: out of scope. Deployments that could be used to penalize operators require labor engagement.
@@ -188,7 +188,7 @@ See [`governance/ethics-review.md`](./ethics-review.md) for the full review. In 
 ## Cross-references in this repo
 
 - Data sheet: [`governance/data-sheet.md`](./data-sheet.md).
-- Ethics review: [`governance/ethics-review.md`](./ethics-review.md).
+- Ethics architecture: [`governance/ethics-architecture.md`](./ethics-architecture.md).
 - Training code: [`src/train.py`](../src/train.py).
 - Evaluation code: [`src/evaluate.py`](../src/evaluate.py).
 - Accuracy benchmark: [`benchmarks/accuracy_benchmark.py`](../benchmarks/accuracy_benchmark.py).

@@ -10,7 +10,7 @@ Customer is anonymized as **"Yard-K"** at their request. Numbers in this documen
 
 Yard-K operates three building docks and delivers roughly 18-22 hulls per year. The bottleneck in the QA pipeline is the hull block assembly stage, specifically the fillet and butt welds joining stiffener webs to plate. A single block is 12 m x 4 m x 3 m and contains approximately 240 linear meters of weld, distributed across approximately 1,800 individual weld segments. Welding is a mix of SAW (submerged arc, for the long straight runs) and GMAW (gas metal arc, for positional and stiffener work). Robotic welding handles around 62% of the linear meterage; the remainder is manual.
 
-Historically, inspection is performed by two certified CWI (Certified Welding Inspectors) per shift who walk each block and visually check welds, mark defects with paint pen, and write rework tickets. Critical welds also receive MT (magnetic particle) or UT (ultrasonic) testing per ABS and KR class rules. Visual inspection alone cannot catch subsurface defects, but the customer's own post-incident review showed that approximately 73% of the defects causing rework in the last 24 months were surface-visible defects (porosity clusters, undercut, crack initiation, overlap) that should have been caught at visual inspection stage.
+Historically, inspection is performed by two certified CWI (Certified Welding Inspectors) per shift who walk each block and visually check welds, mark defects with paint pen, and write rework tickets. Critical welds also receive MT (magnetic particle) or UT (ultrasonic) testing per ABS and KR class rules. Visual inspection alone cannot catch subsurface defects, but the customer's own post-incident architecture showed that approximately 73% of the defects causing rework in the last 24 months were surface-visible defects (porosity clusters, undercut, crack initiation, overlap) that should have been caught at visual inspection stage.
 
 ### 1.1 The measured problem
 
@@ -125,7 +125,7 @@ Porosity and Spatter are common and numerous; Crack is rare. We used Yard-K's pr
 ### Week 1-2: discovery and baseline
 
 - Walked the block assembly floor with the QA manager and a lead welder. Identified Station R-7 as the pilot site because it is the highest-throughput SAW cell and the welds are straight runs (easier for the initial vision problem; curved and corner welds would come later).
-- Reviewed the last 12 months of NCRs (non-conformance reports) and extracted defect class distribution.
+- Examined the last 12 months of NCRs (non-conformance reports) and extracted defect class distribution.
 - Established baseline metrics: miss rate 18%, mean time-to-flag 4.7 hours, inspection coverage 68%.
 - Identified the OPC-UA tag namespace exposed by the Siemens PLC and confirmed read access from a test VM.
 
@@ -168,11 +168,11 @@ INT8 selected for production. Latency budget per weld segment (from arc-off trig
 
 - Wrote MQTT → MES webhook bridge. MES ticket creation verified.
 - Wired Andon tower to the Class-2-flagged topic via the plant PLC (separate PLC from the robot's; this is the plant-floor Andon PLC). PLC pulse on MQTT event triggers the orange flasher.
-- Escalation flow: any "crack" class with confidence above 0.60 triggers red light (senior CWI immediate review). Class-2 with confidence above 0.45 triggers orange (queue for next CWI sweep). All detections, regardless of class, are logged to the inspection queue and the historian.
+- Escalation flow: any "crack" class with confidence above 0.60 triggers red light (senior CWI immediate architecture). Class-2 with confidence above 0.45 triggers orange (queue for next CWI sweep). All detections, regardless of class, are logged to the inspection queue and the historian.
 
 ### Week 10-11: shadow mode
 
-- Ran the system in shadow mode for two weeks: detections logged and ticketed, but Andon not wired. CWIs reviewed every ticket and marked it as "agree" or "false positive" in the MES. This produced 1,140 reviewed detections from which we computed:
+- Ran the system in shadow mode for two weeks: detections logged and ticketed, but Andon not wired. CWIs checked every ticket and marked it as "agree" or "false positive" in the MES. This produced 1,140 checked detections from which we computed:
 
 | Metric | Value |
 |---|---|
@@ -186,7 +186,7 @@ INT8 selected for production. Latency budget per weld segment (from arc-off trig
 
 - Cutover Monday of week 12. Andon wired. CWIs briefed.
 - First week post-cutover: 412 blocks inspected, 1,708 detections, 2 crack escalations (one confirmed, one false positive). No missed cracks found by CWI follow-up.
-- Second week: added Camera 2 overview feed to the CWI's tablet so they can see the context image when reviewing a ticket. CWI review time dropped from 52 seconds per ticket to 18 seconds.
+- Second week: added Camera 2 overview feed to the CWI's tablet so they can see the context image when architectureing a ticket. CWI architecture time dropped from 52 seconds per ticket to 18 seconds.
 
 ---
 
@@ -270,7 +270,7 @@ CWIs retain full authority. If a CWI marks a ticket as false positive, the MES r
 | Crack class, conf 0.45-0.60 | Orange Andon + CWI ticket | CWI |
 | Class-2 cluster (>=3 porosity boxes in one image) | Orange Andon + rework candidate flag | CWI |
 | Undercut, conf >= 0.50, bbox area > 12 mm2 equivalent | Orange Andon + ticket | CWI |
-| Any other detection | Log-only ticket | CWI batch review |
+| Any other detection | Log-only ticket | CWI batch architecture |
 
 The thresholds were set through a joint workshop with the Yard-K QA head, the Senior CWI, and the line supervisor. The explicit framing: "each threshold is a bet about false positive cost vs false negative cost; we can retune."
 
@@ -298,7 +298,7 @@ The CWIs were initially concerned that the system was being introduced to replac
 
 ### 6.5 False positive cost
 
-A false positive in this setting is not free. Every false positive that gets escalated to "crack" is a welder who has to stop, a senior welder paged to review, and a block moved in the schedule. The FPR of 12.7% in shadow mode would have been unacceptable in live mode; the 8.4% after the seam-suppression rule was the minimum acceptable figure for cutover. Class-level precision thresholds are the main lever; we set them conservatively and loosened them only as confidence in specific classes grew.
+A false positive in this setting is not free. Every false positive that gets escalated to "crack" is a welder who has to stop, a senior welder paged to architecture, and a block moved in the schedule. The FPR of 12.7% in shadow mode would have been unacceptable in live mode; the 8.4% after the seam-suppression rule was the minimum acceptable figure for cutover. Class-level precision thresholds are the main lever; we set them conservatively and loosened them only as confidence in specific classes grew.
 
 ### 6.6 Gauge R&R
 
@@ -326,7 +326,7 @@ In the spirit of honesty:
 - **Add Station R-4** (pulsed GMAW positional welds, harder visual domain) as the second site. Expected model fine-tune rather than greenfield training.
 - **Expand to subsurface defects** by fusing the vision model output with the UT sensor data at the same station. Two-sensor late-fusion rather than end-to-end model.
 - **Closed-loop parameter adjustment.** If the model detects rising porosity rate in a shift, automatically adjust shielding gas flow rate within a predefined envelope. Requires change control with the welding engineer; 6-month horizon.
-- **Per-operator performance review.** Only with explicit agreement from labor representatives; this is an ethics and HR question before it is a technical one. See [`governance/ethics-review.md`](../../governance/ethics-review.md).
+- **Per-operator performance architecture.** Only with explicit agreement from labor representatives; this is an ethics and HR question before it is a technical one. See [`governance/ethics-architecture.md`](../../governance/ethics-architecture.md).
 
 ---
 
