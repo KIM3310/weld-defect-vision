@@ -1,0 +1,73 @@
+{
+  "name": "Weld Defect Vision",
+  "slug": "weld-defect-vision",
+  "canonical_url": "https://kim3310.github.io/weld-defect-vision/",
+  "repository_url": "https://github.com/KIM3310/weld-defect-vision",
+  "architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md",
+  "revenue_architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md",
+  "lead_capture_url": "mailto:ehdjs1351@gmail.com?subject=Weld%20Defect%20Vision%20private%20workspace&body=I%20am%20interested%20in%20paid%20private%20dataset%20evaluation%2C%20model%20card%2Freport%20pack%2C%20and%20edge%20deployment%20package%20for%20Weld%20Defect%20Vision.",
+  "productized_offer": "weld defect detection demo with dataset validation, model serving, and explainable inspection report",
+  "first_paid_sku": "paid private dataset evaluation, model card/report pack, and edge deployment package",
+  "free_lead_magnet": "free static inspection demo and architecture page",
+  "search_positioning": {
+    "primary_query": "Weld Defect Vision detection dataset validation",
+    "secondary_queries": [
+      "Weld Defect Vision demo",
+      "Weld Defect Vision system architecture",
+      "Weld Defect Vision business tool",
+      "weld defect detection demo with dataset validation, model serving, and explainable inspection report service"
+    ],
+    "audience_intent": "Find a runnable demo, inspect the system architecture, and decide whether a private workspace or implementation package is useful."
+  },
+  "monetization_boundary": {
+    "free": "free static inspection demo and architecture page",
+    "paid": "paid private dataset evaluation, model card/report pack, and edge deployment package",
+    "metering_hooks": [
+      "workspace_id",
+      "plan",
+      "quota_day",
+      "export_count",
+      "lead_source"
+    ],
+    "cost_guardrails": [
+      "static first",
+      "edge functions",
+      "customer API keys",
+      "cached AI outputs",
+      "synthetic public data"
+    ]
+  },
+  "structured_data": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Weld Defect Vision",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, serverless, and local development environments",
+    "url": "https://kim3310.github.io/weld-defect-vision/",
+    "codeRepository": "https://github.com/KIM3310/weld-defect-vision",
+    "description": "Weld Defect Vision: weld defect detection demo with dataset validation, model serving, and explainable inspection report. Free entry point: free static inspection demo and architecture page. Paid path: paid private.",
+    "creator": {
+      "@type": "Person",
+      "name": "KIM3310",
+      "url": "https://github.com/KIM3310"
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "free static inspection demo and architecture page",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://kim3310.github.io/weld-defect-vision/"
+      },
+      {
+        "@type": "Offer",
+        "name": "paid private dataset evaluation, model card/report pack, and edge deployment package",
+        "availability": "https://schema.org/LimitedAvailability",
+        "url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md"
+      }
+    ],
+    "isAccessibleForFree": true,
+    "keywords": "weld-defect-vision, Weld, Defect, Vision, weld, defect, detection, dataset, validation, model, serving, explainable, inspection, evaluation, card, pack, edge, deployment, package, static, architecture"
+  }
+}

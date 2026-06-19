@@ -1,0 +1,12 @@
+# Weld Defect Vision
+
+Purpose: weld defect detection demo with dataset validation, model serving, and explainable inspection report
+Free entry point: free static inspection demo and architecture page
+Paid boundary: paid private dataset evaluation, model card/report pack, and edge deployment package
+Canonical URL: https://kim3310.github.io/weld-defect-vision/
+Repository: https://github.com/KIM3310/weld-defect-vision
+System architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md
+Revenue architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md
+Lead capture: mailto:ehdjs1351@gmail.com?subject=Weld%20Defect%20Vision%20private%20workspace&body=I%20am%20interested%20in%20paid%20private%20dataset%20evaluation%2C%20model%20card%2Freport%20pack%2C%20and%20edge%20deployment%20package%20for%20Weld%20Defect%20Vision.
+
+Use this project as a runnable or inspectable reference for Weld Defect Vision demo, Weld Defect Vision system architecture, Weld Defect Vision business tool, weld defect detection demo with dataset validation, model serving, and explainable inspection report service.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kim3310.github.io/weld-defect-vision/sitemap.xml
