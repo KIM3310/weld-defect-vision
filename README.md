@@ -288,7 +288,7 @@ This repository includes a neutral cloud and AI engineering blueprint that maps 
 - Public entry: free static inspection demo and architecture page
 - Paid boundary: paid private dataset evaluation, model card/report pack, and edge deployment package
 - Canonical URL: https://kim3310.github.io/weld-defect-vision/
-- Lead capture: mailto:ehdjs1351@gmail.com?subject=Weld%20Defect%20Vision%20private%20workspace&body=I%20am%20interested%20in%20paid%20private%20dataset%20evaluation%2C%20model%20card%2Freport%20pack%2C%20and%20edge%20deployment%20package%20for%20Weld%20Defect%20Vision.
+- Lead capture: https://github.com/KIM3310/weld-defect-vision/issues/new?template=service-inquiry.yml&title=Private+workspace+inquiry%3A+Weld+Defect+Vision
 - Machine-readable offer: [docs/service-offer.json](docs/service-offer.json)
 - Search growth implementation: [docs/search-growth-implementation.md](docs/search-growth-implementation.md)
 - Revenue architecture: [docs/revenue-architecture.md](docs/revenue-architecture.md)
