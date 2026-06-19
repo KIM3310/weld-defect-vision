@@ -17,7 +17,7 @@ Repository-local proof surface for applied model pipelines and evidence-backed i
 
 ```mermaid
 flowchart LR
-    User["User or technical reader"] --> Surface["Public demo, CLI, package, or README surface"]
+    User["User or architecture inspection"] --> Surface["Public demo, CLI, package, or README surface"]
     Surface --> Runtime["Runtime boundary: Python service or lab runtime, Container build surface, Local compose environment, GitHub Actions validation"]
     Runtime --> Control["Control plane: configuration, policies, adapters, and jobs"]
     Control --> Data["Data and artifacts: fixtures, reports, logs, exports, or model outputs"]

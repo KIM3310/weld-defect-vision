@@ -364,7 +364,7 @@ The 1-week shadow mode caught the water-spot-as-porosity issue that would have c
 
 ### 10.8 Gauge R&R
 
-Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human technical readers on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
+Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human architecture inspection paths on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
 
 ---
 

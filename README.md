@@ -3,7 +3,7 @@
 ## Live Demo
 
 - [Open the public GitHub Pages demo](https://kim3310.github.io/weld-defect-vision/)
-- Scope: credential-free, synthetic-data demo for technical readers and evaluators.
+- Scope: credential-free, synthetic-data demo for architecture inspection paths and evaluators.
 
 Industrial weld defect detection using **YOLOv8 fine-tuning**. Detects 5 types of welding defects: Crack, Porosity, Spatter, Undercut, and Overlap. Features a complete pipeline from data preparation to model serving via REST API.
 
@@ -15,7 +15,7 @@ An industrial inspection AI workflow that sells value through validation, servin
 
 | Lens | Definition |
 |---|---|
-| Audience | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment technical readers. |
+| Audience | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment architecture inspection paths. |
 | Architecture path | Validate the demo, README, architecture notes, and quality gate before deeper workflow architecture. |
 | System signal | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and architecture pack. |
 | Safety boundary | Prototype outputs need human inspection architecture; production use requires site-specific validation and acceptance criteria. |
@@ -271,7 +271,7 @@ This repository includes a neutral cloud and AI engineering blueprint that maps 
 
 ## Enterprise Productization
 
-- [Product operating model](docs/product-operating-model.md) defines the technical reader, trust boundary, trust boundary, operating checks, and service path for this repository.
+- [Product operating model](docs/product-operating-model.md) defines the architecture inspection, trust boundary, trust boundary, operating checks, and service path for this repository.
 
 ## System Architecture
 

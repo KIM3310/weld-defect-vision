@@ -10,7 +10,7 @@ Use this page as the short path through the repository. It keeps the architectur
 |---|---|
 | Lane | B2B industrial AI validation |
 | Core idea | YOLOv8 defect workflow with model governance, serving, and operator-readable evidence. |
-| Primary reader | Manufacturing quality teams, welding inspection groups, industrial AI, and edge deployment technical readers. |
+| Primary reader | Manufacturing quality teams, welding inspection groups, industrial AI, and edge deployment architecture inspection paths. |
 | Stack | Python, Docker |
 
 ## Open First
