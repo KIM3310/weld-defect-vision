@@ -157,7 +157,7 @@ Before cutover, verify each:
 
 - [ ] Model version deployed matches the version signed off by QA.
 - [ ] Calibration cache produced on the target device is in use.
-- [ ] Numerical parity with the PyTorch model verified on a 50-image holdout.
+- [ ] Numerical parity with the PyTorch model confirmed on a 50-image holdout.
 - [ ] P95 latency measured and within budget.
 - [ ] Triton and capture daemon start on boot.
 - [ ] MQTT publish confirmed; MES receives the test event.
