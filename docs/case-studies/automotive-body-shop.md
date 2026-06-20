@@ -320,7 +320,7 @@ When the system asserts `Stop`, the line lead is paged. The line lead's tablet s
 - The class and confidence.
 - Two options: `Confirm — route to red-tag cell` (body out of line for detailed rework), or `Override — pass body` (with a mandatory comment).
 
-Override is logged and monitored. An override rate above 8% for any single week triggers a architecture of thresholds (no individual override rate was above 3% in the first 90 days).
+Override is logged and monitored. An override rate above 8% for any single week triggers a review of thresholds (no individual override rate was above 3% in the first 90 days).
 
 ### 9.2 Rework cell tablet
 
