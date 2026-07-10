@@ -3,13 +3,35 @@
 import random
 import shutil
 from pathlib import Path
+from typing import TypedDict
 
 import cv2
 import numpy as np
 import yaml
 
 
-def validate_dataset(data_yaml: Path) -> dict:
+class SplitStats(TypedDict, total=False):
+    status: str
+    images: int
+    labels: int
+    orphaned_labels: int
+    class_distribution: dict[int, int]
+
+
+class DatasetStats(TypedDict):
+    total_images: int
+    total_labels: int
+    class_counts: dict[int, int]
+    splits: dict[str, SplitStats]
+
+
+class DefectConfig(TypedDict):
+    name: str
+    color: tuple[int, int, int]
+    shape: str
+
+
+def validate_dataset(data_yaml: Path) -> DatasetStats:
     """Validate YOLO dataset structure and return statistics.
 
     Checks:
@@ -22,7 +44,12 @@ def validate_dataset(data_yaml: Path) -> dict:
         config = yaml.safe_load(f)
 
     base_path = data_yaml.parent
-    stats = {"total_images": 0, "total_labels": 0, "class_counts": {}, "splits": {}}
+    stats: DatasetStats = {
+        "total_images": 0,
+        "total_labels": 0,
+        "class_counts": {},
+        "splits": {},
+    }
 
     for split in ["train", "val", "test"]:
         img_dir = base_path / config.get(split, f"images/{split}")
@@ -132,7 +159,7 @@ def create_synthetic_dataset(
     random.seed(seed)
     np.random.seed(seed)
 
-    defect_configs = {
+    defect_configs: dict[int, DefectConfig] = {
         0: {"name": "crack", "color": (0, 0, 200), "shape": "line"},
         1: {"name": "porosity", "color": (0, 200, 0), "shape": "circles"},
         2: {"name": "spatter", "color": (200, 0, 0), "shape": "dots"},

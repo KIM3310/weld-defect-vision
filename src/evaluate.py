@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from typing import TypedDict
 
 import matplotlib
 
@@ -14,7 +15,24 @@ from ultralytics import YOLO
 from src.config import DEFECT_LABELS, TrainConfig
 
 
-def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> dict:
+class ClassMetrics(TypedDict):
+    precision: float
+    recall: float
+    ap50: float
+    ap: float
+
+
+class EvaluationMetrics(TypedDict):
+    mAP50: float
+    mAP50_95: float
+    precision: float
+    recall: float
+    per_class: dict[str, ClassMetrics]
+
+
+def evaluate(
+    checkpoint_path: str | Path, config: TrainConfig | None = None
+) -> EvaluationMetrics:
     """Evaluate YOLOv8 model on test set.
 
     Computes mAP@50, mAP@50-95, per-class precision/recall, and generates
@@ -39,14 +57,15 @@ def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> 
         verbose=True,
     )
 
-    metrics = {
+    per_class: dict[str, ClassMetrics] = {}
+    metrics: EvaluationMetrics = {
         "mAP50": float(results.box.map50),
         "mAP50_95": float(results.box.map),
         "precision": float(results.box.mp),
         "recall": float(results.box.mr),
+        "per_class": per_class,
     }
 
-    per_class = {}
     if (
         hasattr(results.box, "ap_class_index")
         and results.box.ap_class_index is not None
@@ -61,8 +80,6 @@ def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> 
                 ),
                 "ap": float(results.box.ap[i]) if i < len(results.box.ap) else 0.0,
             }
-
-    metrics["per_class"] = per_class
 
     output_dir = Path("outputs")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -90,7 +107,7 @@ def evaluate(checkpoint_path: str | Path, config: TrainConfig | None = None) -> 
     return metrics
 
 
-def _plot_metrics_bar(per_class: dict, output_path: Path) -> None:
+def _plot_metrics_bar(per_class: dict[str, ClassMetrics], output_path: Path) -> None:
     """Generate per-class metrics bar chart."""
     if not per_class:
         return

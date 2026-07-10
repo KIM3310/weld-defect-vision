@@ -1,6 +1,7 @@
 """Visualization utilities for detection results."""
 
 from pathlib import Path
+from typing import TypedDict
 
 import cv2
 import matplotlib
@@ -12,11 +13,18 @@ import numpy as np
 from PIL import Image
 
 from src.config import DEFECT_COLORS
+from src.inference import Detection
+
+
+class DetectionSummary(TypedDict):
+    count: int
+    avg_confidence: float
+    max_confidence: float
 
 
 def draw_detections(
     image: np.ndarray | Image.Image,
-    detections: list[dict],
+    detections: list[Detection],
     line_thickness: int = 2,
 ) -> np.ndarray:
     """Draw bounding boxes and labels on an image.
@@ -90,7 +98,9 @@ def save_detection_grid(
     print(f"Detection grid saved: {output_path}")
 
 
-def create_detection_summary(detections: list[dict]) -> dict:
+def create_detection_summary(
+    detections: list[Detection],
+) -> dict[str, DetectionSummary]:
     """Summarize detections by defect type."""
     summary: dict[str, list[float]] = {}
     for det in detections:

@@ -22,7 +22,10 @@ class TestHealthEndpoint:
 
 class TestWatchdogHealthUrl:
     def test_validate_health_url_keeps_loopback_default(self):
-        assert validate_health_url("http://localhost:8000/health") == "http://localhost:8000/health"
+        assert (
+            validate_health_url("http://localhost:8000/health")
+            == "http://localhost:8000/health"
+        )
 
     def test_validate_health_url_rejects_file_scheme(self):
         with pytest.raises(ValueError, match="http or https"):
@@ -46,7 +49,9 @@ class TestWatchdogHealthUrl:
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         try:
-            healthy, detail = check_http_health(f"http://127.0.0.1:{server.server_port}/health", 1.0)
+            healthy, detail = check_http_health(
+                f"http://127.0.0.1:{server.server_port}/health", 1.0
+            )
 
             assert healthy is False
             assert "unsafe redirect" in detail
@@ -74,7 +79,9 @@ class TestWatchdogHealthUrl:
         class RedirectHandler(BaseHTTPRequestHandler):
             def do_GET(self):
                 self.send_response(302)
-                self.send_header("Location", f"http://127.0.0.1:{target.server_port}/health")
+                self.send_header(
+                    "Location", f"http://127.0.0.1:{target.server_port}/health"
+                )
                 self.end_headers()
 
             def log_message(self, *_args):

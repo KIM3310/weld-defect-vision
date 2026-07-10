@@ -1,12 +1,26 @@
 """Single-image inference pipeline for weld defect detection."""
 
 from pathlib import Path
+from typing import TypedDict
 
 import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
 from src.config import DEFECT_LABELS
+
+
+class Detection(TypedDict):
+    bbox: list[float]
+    class_id: int
+    class_name: str
+    confidence: float
+
+
+class DetectionResult(TypedDict):
+    image_path: str
+    num_detections: int
+    detections: list[Detection]
 
 
 class WeldDefectDetector:
@@ -28,7 +42,7 @@ class WeldDefectDetector:
         self.iou_threshold = iou_threshold
         self.device = device
 
-    def detect(self, image: Image.Image | np.ndarray) -> list[dict]:
+    def detect(self, image: Image.Image | np.ndarray) -> list[Detection]:
         """Detect weld defects in a single image.
 
         Returns list of detections, each with:
@@ -45,9 +59,11 @@ class WeldDefectDetector:
             verbose=False,
         )
 
-        detections = []
+        detections: list[Detection] = []
         for result in results:
             boxes = result.boxes
+            if boxes is None:
+                continue
             for i in range(len(boxes)):
                 bbox = boxes.xyxy[i].cpu().numpy().tolist()
                 cls_id = int(boxes.cls[i].cpu().item())
@@ -65,7 +81,7 @@ class WeldDefectDetector:
         detections.sort(key=lambda d: d["confidence"], reverse=True)
         return detections
 
-    def detect_from_path(self, image_path: str | Path) -> dict:
+    def detect_from_path(self, image_path: str | Path) -> DetectionResult:
         """Detect defects from a file path."""
         image = Image.open(image_path).convert("RGB")
         detections = self.detect(image)
@@ -75,7 +91,7 @@ class WeldDefectDetector:
             "detections": detections,
         }
 
-    def detect_batch(self, images: list[Image.Image]) -> list[list[dict]]:
+    def detect_batch(self, images: list[Image.Image]) -> list[list[Detection]]:
         """Detect defects in a batch of images."""
         results = self.model.predict(
             source=images,
@@ -85,10 +101,13 @@ class WeldDefectDetector:
             verbose=False,
         )
 
-        batch_detections = []
+        batch_detections: list[list[Detection]] = []
         for result in results:
-            detections = []
+            detections: list[Detection] = []
             boxes = result.boxes
+            if boxes is None:
+                batch_detections.append(detections)
+                continue
             for i in range(len(boxes)):
                 bbox = boxes.xyxy[i].cpu().numpy().tolist()
                 cls_id = int(boxes.cls[i].cpu().item())
