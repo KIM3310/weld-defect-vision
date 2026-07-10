@@ -17,7 +17,7 @@ Repository-local proof surface for applied model pipelines and evidence-backed i
 
 ```mermaid
 flowchart LR
-    User["User or architecture inspection"] --> Surface["Public demo, CLI, package, or README surface"]
+    User["Operator or quality reviewer"] --> Surface["Public demo, CLI, package, or README surface"]
     Surface --> Runtime["Runtime boundary: Python service or lab runtime, Container build surface, Local compose environment, GitHub Actions validation"]
     Runtime --> Control["Control plane: configuration, policies, adapters, and jobs"]
     Control --> Data["Data and artifacts: fixtures, reports, logs, exports, or model outputs"]
@@ -69,7 +69,7 @@ Operating model: dataset checks, model evaluation, explainability artifacts, ser
 ### Engineering patterns
 
 - Track dataset splits, model artifacts, inference outputs, and explainability evidence as first-class assets
-- Pair quality metrics with failure modes, human architecture states, and rollback-ready serving boundaries
+- Pair quality metrics with failure modes, human review states, and rollback-ready serving boundaries
 - Separate deterministic checks from model-generated output so the system remains testable without external credentials
 - Capture prompts, inputs, outputs, and decision metadata as inspectable artifacts instead of hidden side effects
 - Gate model-assisted actions with policy, confidence, and fallback states before they reach an operator path

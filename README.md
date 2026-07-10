@@ -3,37 +3,37 @@
 ## Live Demo
 
 - [Open the public GitHub Pages demo](https://kim3310.github.io/weld-defect-vision/)
-- Scope: credential-free, synthetic-data demo for architecture inspection paths and evaluators.
+- Scope: credential-free, synthetic-data demo for quality reviewers and evaluators.
 
 Industrial weld defect detection using **YOLOv8 fine-tuning**. Detects 5 types of welding defects: Crack, Porosity, Spatter, Undercut, and Overlap. Features a complete pipeline from data preparation to model serving via REST API.
 
-Architecture pack: [`docs/architecture-pack.md`](docs/architecture-pack.md)
+Technical review pack: [`docs/architecture-pack.md`](docs/architecture-pack.md)
 
-## Product and System Surface
+## System Overview
 
 An industrial inspection AI workflow that sells value through validation, serving posture, and operator-readable evidence.
 
-| Lens | Definition |
+| Area | Details |
 |---|---|
-| Audience | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment architecture inspection paths. |
-| Architecture path | Validate the demo, README, architecture notes, and quality gate before deeper workflow architecture. |
-| System signal | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and architecture pack. |
-| Safety boundary | Prototype outputs need human inspection architecture; production use requires site-specific validation and acceptance criteria. |
-| Fast path | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
+| Users | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment quality reviewers. |
+| Technical path | Validate the demo, README, architecture notes, and quality gate before deeper workflow review. |
+| System scope | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and technical review pack. |
+| Operating boundary | Prototype outputs need human inspector review; production use requires site-specific validation and acceptance criteria. |
+| Evaluation path | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
 
-## System Fast Path
+## Evaluation Path
 
-- **First minute:** Read the model card and validation notes before checking detections.
+- **Start here:** Read the model card and validation notes before checking detections.
 - **Local demo:** Start the API with `uvicorn api.main:app --host 0.0.0.0 --port 8000`, then test `/detect` or `/detect/visualize`.
-- **Verification:** Run `pytest -v`; keep human inspection architecture explicit when presenting outputs.
+- **Checks:** Run `pytest -v`; keep human inspector review explicit when presenting outputs.
 
 ## Service Launch Playbook
 
-- [Service launch playbook](docs/service-launch-playbook.md) maps the repository to architecture audiences, operating gates, operating boundaries, and risk controls.
+- [Service launch playbook](docs/service-launch-playbook.md) maps the repository to its product scope, operating gates, operating boundaries, and risk controls.
 
 ## Architecture Notes
 
-- [Architecture guide](docs/architecture-evidence-map.md) summarizes the project angle, first files to inspect, runtime commands, and known boundaries.
+- [Architecture guide](docs/architecture-evidence-map.md) summarizes the system scope, first files to inspect, runtime commands, and known boundaries.
 - [Quality notes](docs/quality-gate.md) lists the local checks, CI surface, and release expectations for this repository.
 - [Enterprise readiness notes](docs/enterprise-readiness.md) outlines security, data, operations, integration, and handoff expectations.
 
@@ -237,7 +237,7 @@ Both are composite narratives with fabricated but plausible numbers, written in 
 
 - [model-card.md](governance/model-card.md) — Google-style Model Card (intended use, training data, evaluation, limitations).
 - [data-sheet.md](governance/data-sheet.md) — Gebru-style Datasheet for Datasets.
-- [ethics-architecture.md](governance/ethics-architecture.md) — worker-monitoring implications, false-positive/negative cost framing.
+- [Ethics review](governance/ethics-architecture.md) — worker-monitoring implications, false-positive/negative cost framing.
 
 ## Benchmarks
 
@@ -263,15 +263,13 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 
 ## Cloud + AI Architecture
 
-This repository includes a neutral cloud and AI engineering blueprint that maps the current proof surface to runtime boundaries, data contracts, model-risk controls, deployment posture, and validation hooks.
-
 - [Cloud + AI architecture blueprint](docs/cloud-ai-architecture.md)
 - [Machine-readable architecture manifest](docs/architecture/blueprint.json)
 - Validation command: `python3 scripts/validate_architecture_blueprint.py`
 
 ## Enterprise Productization
 
-- [Product operating model](docs/product-operating-model.md) defines the architecture inspection, trust boundary, trust boundary, operating checks, and service path for this repository.
+- [Product operating model](docs/product-operating-model.md) defines the product scope, trust boundary, operating checks, and service path for this repository.
 
 ## System Architecture
 

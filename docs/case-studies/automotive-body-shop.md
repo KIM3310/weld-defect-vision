@@ -246,12 +246,12 @@ Added the water-spot class to the ignored-classes list for two specific ROIs. Lo
 | Escapes (defects reaching paint) per 1,000 bodies | 8.4 | 2.1 | -75% |
 | Warranty-correlated weld defects per 10,000 bodies | 3.2 | 0.9 | -72% |
 | Bodies sent to rework at BIW exit | 4.1% | 2.8% | -32% |
-| Rework rework (bodies re-reworked) | 0.6% | 0.2% | -67% |
+| Repeat rework (bodies re-reworked) | 0.6% | 0.2% | -67% |
 | Mean rework-resolution time | 18 min | 9 min | -50% |
 | Takt-time hit (line stops caused by inspection) | 1.1% | 0.8% | -27% |
 | Inspection station dwell time used | 10.2s / 14.0s | 11.8s / 14.0s | +1.6s |
 
-The "-67% rework rework" figure is the one Plant-C QA cares about most: it means the defects caught and routed to rework are the right defects, rather than escaping rework and returning.
+The "-67% repeat rework" figure is the one Plant-C QA cares about most: it means the defects caught and routed to rework are the right defects, rather than escaping rework and returning.
 
 ### 7.2 Per-class production performance
 
@@ -326,9 +326,9 @@ Override is logged and monitored. An override rate above 8% for any single week 
 
 Rework cell operators see the rework queue with per-body detection details. They confirm or disagree with each detection after reworking. Their confirm/disagree signal is the primary feedback into the retraining labeling queue.
 
-### 9.3 Daily shift architecture
+### 9.3 Daily shift review
 
-Production engineer architectures the per-shift dashboard each morning. Looks for trends: rising class-specific defect rate, specific welder-cell with anomalous rate, class distribution drift.
+The production engineer reviews the per-shift dashboard each morning. They look for trends such as a rising class-specific defect rate, a specific welder-cell with an anomalous rate, or class-distribution drift.
 
 ---
 
@@ -364,7 +364,7 @@ The 1-week shadow mode caught the water-spot-as-porosity issue that would have c
 
 ### 10.8 Gauge R&R
 
-Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human architecture inspection paths on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
+Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human appraisers on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
 
 ---
 

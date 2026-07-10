@@ -1,24 +1,19 @@
 # Commercialization Index
 
-Generated: 2026-06-26
-
 This index keeps the revenue, deployment, payments, privacy, and support surface aligned for `KIM3310/weld-defect-vision`. It is operational planning and launch governance, not legal, tax, financial, medical, security, or revenue-guarantee advice.
 
-## Status snapshot
+## Commercial position
 
-- Portfolio status: **Active/main-published**
-- Priority: **P1-proof-asset**
-- Monetization path: **portfolio proof asset**
-- Secondary path: **public demo/readme polish candidate**
-- Readiness score: **80/100**
-- Visibility: **public**
-- Archived: **false**
+- Commercial role: **technical proof asset**
+- Monetization path: **technical credibility for consulting and partnerships**
+- Secondary path: **public product demonstration**
+- Repository visibility: **public**
 
 ## Aligned document map
 
 | Surface | File | Purpose |
 | --- | --- | --- |
-| Revenue readiness | [`REVENUE_READINESS.md`](REVENUE_READINESS.md) | Positioning, monetization path, resource needs, and next revenue action. |
+| Revenue strategy | [`REVENUE_READINESS.md`](REVENUE_READINESS.md) | Positioning, monetization path, resource needs, and next revenue action. |
 | Business operations | [`BUSINESS_OPERATIONS.md`](BUSINESS_OPERATIONS.md) | Deployment, payment, privacy, and support lanes. |
 | Deployment activation | [`DEPLOYMENT_ACTIVATION.md`](DEPLOYMENT_ACTIVATION.md) | Preview/production sequencing, hosting references, and secret rules. |
 | Privacy draft | [`PRIVACY_POLICY_DRAFT.md`](PRIVACY_POLICY_DRAFT.md) | Owner-input privacy policy draft and pre-launch data commitments. |
@@ -28,15 +23,15 @@ This index keeps the revenue, deployment, payments, privacy, and support surface
 ## Launch sequence
 
 1. **Review** — confirm `REVENUE_READINESS.md` and `BUSINESS_OPERATIONS.md` still match the current repo state.
-2. **Sanitize** — resolve or document redacted secret-pattern audit findings before publishing or deploying.
+2. **Sanitize** — run a redacted secret scan and address any findings before publishing or deploying.
 3. **Package** — make the buyer/user promise explicit without unsupported revenue, legal, medical, financial, or security claims.
 4. **Operate** — define support owner, privacy contact path, refund/support terms, and deployment rollback owner.
 5. **Activate** — only after owner approval, enable payment, analytics, contact capture, custom domain/DNS, and production traffic.
 
 ## Required gates
 
-- [ ] Repo verification command passes or is explicitly documented as unavailable.
-- [ ] Generated docs contain no secrets, credentials, customer data, payment details, or private logs.
+- [ ] Use the repository's documented verification command before release.
+- [ ] Commercialization docs contain no secrets, credentials, customer data, payment details, or private logs.
 - [ ] Privacy/contact path is owner-approved before collecting personal data.
 - [ ] Payment/KYC/tax/refund/support terms are approved before accepting money.
 - [ ] Production deployment/custom domain/DNS/analytics/contact capture are approved before launch.
@@ -44,18 +39,14 @@ This index keeps the revenue, deployment, payments, privacy, and support surface
 
 ## Current resource needs
 
-- README proof positioning
-- portfolio backlink
-- minimal demo evidence
-
-## Current blockers / risk notes
-
-- normal
+- clear product positioning
+- product website or contact path
+- demonstration evidence
 
 ## Support posture
 
 See `../SUPPORT.md` for public intake and private-channel rules.
 
-## Portfolio alignment rule
+## Maintenance rule
 
-All commercialization docs should stay consistent with this order: **positioning → operations → privacy/payment/support → deployment → customer activation**. If the product scope changes, regenerate the portfolio audit/dashboard first, then update this index.
+Keep commercialization docs consistent with this order: **positioning → operations → privacy/payment/support → deployment → customer activation**. Update this index whenever the product scope or operating assumptions change.

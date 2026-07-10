@@ -3,7 +3,7 @@
 ## Public Demo
 
 - URL: https://kim3310.github.io/weld-defect-vision/
-- Scope: credential-free synthetic demo surface for quick architecture inspection inspection.
+- Scope: credential-free synthetic demo surface for quick evaluator review.
 
 Repository: `weld-defect-vision`
 Last updated: 2026-06-03 KST

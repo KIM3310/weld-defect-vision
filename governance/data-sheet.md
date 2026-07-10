@@ -206,6 +206,6 @@ Yes. Preprocessed tensors are produced on-the-fly from the original image files;
 ## Cross-references
 
 - Model card: [`governance/model-card.md`](./model-card.md).
-- Ethics architecture: [`governance/ethics-architecture.md`](./ethics-architecture.md).
+- Ethics review: [`governance/ethics-architecture.md`](./ethics-architecture.md).
 - Training config: [`src/config.py`](../src/config.py), [`data/weld_defect.yaml`](../data/weld_defect.yaml).
 - Labeling pipeline: [`docs/production/labeling-pipeline.md`](../docs/production/labeling-pipeline.md).

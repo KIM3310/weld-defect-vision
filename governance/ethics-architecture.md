@@ -1,6 +1,6 @@
-# Ethics Architecture: Weld Defect Vision
+# Ethics Review: Weld Defect Vision
 
-Deploying computer vision in a manufacturing plant has ethical implications beyond the technical ones. This document records the architecture conducted for this project: the questions asked, the positions taken, and the residual risks. It is not a legal document and does not substitute for a per-deployment architecture at the customer site.
+Deploying computer vision in a manufacturing plant has ethical implications beyond the technical ones. This document records the review conducted for this project: the questions asked, the positions taken, and the residual risks. It is not a legal document and does not substitute for a per-deployment review at the customer site.
 
 ---
 
@@ -15,7 +15,7 @@ Can the detection telemetry be used to rank, rate, or discipline individual weld
 **No without labor engagement.** Per-operator performance analysis requires, at minimum:
 
 1. Explicit agreement with labor representation (union, works council, or equivalent).
-2. A defined use policy that describes what the data is used for (e.g. "process improvement only; not input to performance architectures") and what it is not used for.
+2. A defined use policy that describes what the data is used for (e.g. "process improvement only; not input to performance reviews") and what it is not used for.
 3. Worker awareness: operators are informed the system is in place and what it measures.
 4. A grievance process if a welder believes they are being unfairly evaluated.
 
@@ -43,14 +43,14 @@ Welders who are repeatedly (and wrongly) told their welds are defective lose con
 - Conservative thresholds at cutover; loosen only as confidence grows.
 - Clear operator-facing UX showing the confidence level and the inspection image.
 - Fast override path: operator or CWI can override the model's call with a logged comment.
-- Weekly architecture of override rates by class; if override rate is consistently high for any class, threshold re-tune.
+- Weekly review of override rates by class; if override rate is consistently high for any class, threshold re-tune.
 
 ### The quality cost
 
 Chronically high false-positive rates cause "alert fatigue": operators start ignoring alerts, including the true positives. This is the single most dangerous failure mode of a production ML system. Monitoring for it requires:
 
 - Tracking operator action-latency (time from alert to acknowledge/override) as a proxy for attention.
-- Mandatory weekly architecture of the false-positive rate; any single-class rate above 15% for two consecutive weeks is a retraining priority.
+- Mandatory weekly review of the false-positive rate; any single-class rate above 15% for two consecutive weeks is a retraining priority.
 
 ---
 
@@ -154,7 +154,7 @@ The upstream repo does not include customer data. Customer datasets remain custo
 - **ISO 9001** (quality management): applies to the customer's overall QA process; the model is an input, not a standalone compliance tool.
 - **IATF 16949** (automotive): stricter per-part traceability; requires that inspection decisions be auditable and repeatable. Deterministic inference + versioned models + full label/decision history meets this bar.
 - **ABS / KR / DNV** (shipbuilding class rules): the model does not alter the class requirements. Certified inspection remains required; the model raises coverage.
-- **Export control**: YOLOv8 is permissively licensed; no export-control issues in the default configuration. Deployments to entities on sanctions lists require case-by-case architecture.
+- **Export control**: YOLOv8 is permissively licensed; no export-control issues in the default configuration. Deployments to entities on sanctions lists require case-by-case review.
 
 ---
 
@@ -178,13 +178,13 @@ The following risks are acknowledged and not fully mitigated:
 
 ---
 
-## 11. Architecture cadence
+## 11. Review cadence
 
-- Ethics architecture is updated when:
+- The ethics review is updated when:
   - A new deployment type or use case is added.
   - A material change is made to the model or the decision thresholds.
   - Regulatory environment changes (new labor law, new industry standard).
-- A scheduled architecture is conducted annually at minimum.
+- A scheduled review is conducted annually at minimum.
 
 ---
 

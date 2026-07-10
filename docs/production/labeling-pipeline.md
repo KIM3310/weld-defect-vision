@@ -171,7 +171,7 @@ Gate violations are surfaced to the ML lead; the deployment does not auto-procee
 From the shipyard deployment, first 90 days:
 
 - Production detections: 117,400.
-- Operator-checked dispositions: 113,200.
+- Operator-reviewed dispositions: 113,200.
 - Confirmed positives: 98,800.
 - Rejected positives (false positive): 14,400.
 - Blind-relabel samples: 1,620 (18 weekly cycles x ~90 per cycle, minus a few missed cycles).

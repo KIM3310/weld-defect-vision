@@ -34,6 +34,7 @@ import signal
 import subprocess
 import sys
 import time
+import urllib.parse
 from dataclasses import dataclass, field
 from typing import Callable
 
@@ -49,12 +50,48 @@ class WatchdogState:
     fault_history: list[dict] = field(default_factory=list)
 
 
+def validate_health_url(url: str) -> str:
+    cleaned = str(url or "").strip()
+    parsed = urllib.parse.urlsplit(cleaned)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError("health URL must use http or https")
+    if parsed.username or parsed.password:
+        raise ValueError("health URL must not contain userinfo")
+    if not parsed.hostname:
+        raise ValueError("health URL must include a host")
+    return cleaned
+
+
+def _origin(url: str) -> tuple[str, str, int | None]:
+    parsed = urllib.parse.urlsplit(url)
+    return (parsed.scheme, (parsed.hostname or "").lower(), parsed.port)
+
+
 def check_http_health(url: str, timeout: float) -> tuple[bool, str]:
     try:
+        import urllib.error
         import urllib.request
 
+        class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+                return None
+
+        validate_health_url(url)
         req = urllib.request.Request(url, method="GET")
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        opener = urllib.request.build_opener(_NoRedirectHandler)
+        try:
+            resp_ctx = opener.open(req, timeout=timeout)  # nosec B310
+        except urllib.error.HTTPError as exc:
+            if 300 <= exc.code < 400:
+                location = exc.headers.get("Location", "")
+                redirect_url = urllib.parse.urljoin(url, location)
+                try:
+                    validate_health_url(redirect_url)
+                except ValueError as validation_exc:
+                    return False, f"unsafe redirect: {validation_exc}"
+                return False, f"unsafe redirect: status {exc.code} to {redirect_url}"
+            raise
+        with resp_ctx as resp:
             code = resp.getcode()
             body = resp.read(512).decode("utf-8", errors="replace")
             if 200 <= code < 300:
@@ -259,6 +296,11 @@ def main() -> int:
         level=args.log_level.upper(),
         format="%(asctime)s %(name)s %(levelname)s %(message)s",
     )
+    try:
+        health_url = validate_health_url(args.health_url)
+    except ValueError as exc:
+        log.error("Invalid --health-url: %s", exc)
+        return 2
 
     mqtt = MqttPublisher(
         broker=args.mqtt_broker,
@@ -277,7 +319,7 @@ def main() -> int:
 
     try:
         run_watchdog(
-            health_url=args.health_url,
+            health_url=health_url,
             health_timeout=args.health_timeout,
             restart_cmd=args.restart_cmd,
             process_pattern=args.process_pattern,

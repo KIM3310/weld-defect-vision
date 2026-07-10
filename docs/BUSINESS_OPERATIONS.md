@@ -1,15 +1,13 @@
-# Business Operations Readiness
+# Business Operations Plan
 
-This document turns the demo/repository into an operating business checklist without performing irreversible actions. It was generated on 2026-06-26 from the portfolio audit and current public docs. It is operational planning, not legal, tax, or financial advice.
+This checklist translates the repository's current product and operating docs into concrete launch tasks. It is planning guidance, not legal, tax, or financial advice.
 
 ## Commercial position
 
-- Priority: **P1-proof-asset**
-- Monetization path: **portfolio proof asset**
-- Secondary path: **public demo/readme polish candidate**
-- Readiness score: **80/100**
-- Visibility: **public**
-- Archived: **false**
+- Commercial role: **technical proof asset**
+- Monetization path: **technical credibility for consulting and partnerships**
+- Secondary path: **public product demonstration**
+- Repository visibility: **public**
 
 ## Deployment lane: static-preview-first
 
@@ -35,19 +33,19 @@ This document turns the demo/repository into an operating business checklist wit
 
 ## Launch blockers that must stay explicit
 
-- Payment/KYC/tax setup requires account-owner action; no payment link is live from this automation.
+- Activate payment only after account ownership, KYC, tax, refund, and support terms are confirmed.
 - Privacy policy/terms/refund language requires owner/legal review before customer data or money collection.
-- Production launch, custom domain/DNS, analytics, and support inbox changes require explicit approval.
+- Assign an owner for production deployment, domain/DNS, analytics, and support-channel changes before launch.
 
 ## Pre-launch checklist
 
-- [ ] Repo-specific verification passes locally and/or in CI.
-- [ ] Secret-pattern audit findings are reviewed and resolved or documented as false positives.
+- [ ] Run the repo-specific verification command before release.
+- [ ] Run a redacted secret scan before release and resolve or document any findings.
 - [ ] Public copy avoids revenue guarantees and unsupported legal/medical/financial/security claims.
 - [ ] Privacy policy, terms/refund policy, and support scope are approved by the owner before publication.
 - [ ] Payment account/KYC/tax configuration is complete before accepting money.
 - [ ] Support inbox, escalation owner, response window, and customer-data handling are ready.
-- [ ] Production deployment, custom domain/DNS, analytics, and email capture are explicitly approved.
+- [ ] Production deployment, custom domain/DNS, analytics, and email capture have named owners and rollback plans.
 
 ## Support macros
 
