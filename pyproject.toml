@@ -5,10 +5,11 @@ description = "Weld defect detection using YOLOv8 fine-tuning with FastAPI infer
 requires-python = ">=3.11"
 dependencies = [
     "ultralytics>=8.3.0",
-    "torch>=2.2.0",
-    "torchvision>=0.17.0",
+    "torch>=2.13.0",
+    "torchvision>=0.28.0",
     "opencv-python-headless>=4.9.0",
-    "pillow>=10.2.0",
+    "pillow>=12.3.0",
+    "setuptools>=83.0.0",
     "numpy>=1.26.0",
     "pandas>=2.2.0",
     "matplotlib>=3.8.0",
