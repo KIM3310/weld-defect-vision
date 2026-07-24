@@ -5,9 +5,20 @@ from typing import TypedDict
 
 import numpy as np
 from PIL import Image
+from torch import Tensor
 from ultralytics import YOLO
+from ultralytics.engine.results import Results
 
 from src.config import DEFECT_LABELS
+
+
+def _require_detection_result(result: Results | Tensor) -> Results:
+    """Return a detection result or reject Ultralytics embedding output."""
+    if isinstance(result, Results):
+        return result
+    raise TypeError(
+        "Expected Ultralytics Results for detection, but received a Tensor embedding."
+    )
 
 
 class Detection(TypedDict):
@@ -60,7 +71,8 @@ class WeldDefectDetector:
         )
 
         detections: list[Detection] = []
-        for result in results:
+        for prediction in results:
+            result = _require_detection_result(prediction)
             boxes = result.boxes
             if boxes is None:
                 continue
@@ -102,7 +114,8 @@ class WeldDefectDetector:
         )
 
         batch_detections: list[list[Detection]] = []
-        for result in results:
+        for prediction in results:
+            result = _require_detection_result(prediction)
             detections: list[Detection] = []
             boxes = result.boxes
             if boxes is None:
