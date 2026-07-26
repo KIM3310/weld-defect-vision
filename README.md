@@ -287,6 +287,7 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 - Paid boundary: paid private dataset evaluation, model card/report pack, and edge deployment package
 - Canonical URL: https://kim3310.github.io/weld-defect-vision/
 - Lead capture: https://github.com/KIM3310/weld-defect-vision/issues/new?template=service-inquiry.yml&title=Private+workspace+inquiry%3A+Weld+Defect+Vision
+- Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers
 - Machine-readable offer: [docs/service-offer.json](docs/service-offer.json)
 - Search growth implementation: [docs/search-growth-implementation.md](docs/search-growth-implementation.md)
 - Revenue architecture: [docs/revenue-architecture.md](docs/revenue-architecture.md)
