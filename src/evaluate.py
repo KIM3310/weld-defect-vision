@@ -120,7 +120,7 @@ def _plot_metrics_bar(per_class: dict[str, ClassMetrics], output_path: Path) -> 
     x = np.arange(len(classes))
     width = 0.25
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    _fig, ax = plt.subplots(figsize=(12, 6))
     ax.bar(x - width, ap50, width, label="AP@50", color="#2196F3")
     ax.bar(x, precision, width, label="Precision", color="#4CAF50")
     ax.bar(x + width, recall, width, label="Recall", color="#FF9800")

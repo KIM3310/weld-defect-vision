@@ -3,8 +3,8 @@
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 from api.main import app
 from edge.common.watchdog import check_http_health, validate_health_url

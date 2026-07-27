@@ -2,6 +2,7 @@
 
 import io
 from pathlib import Path
+from typing import Annotated
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import Response
@@ -44,7 +45,7 @@ def get_classes() -> dict:
 
 
 @app.post("/detect")
-async def detect(file: UploadFile = File(...)) -> dict:
+async def detect(file: Annotated[UploadFile, File(...)]) -> dict:
     """Detect weld defects in an uploaded image.
 
     Returns bounding boxes, class labels, and confidence scores
@@ -68,7 +69,7 @@ async def detect(file: UploadFile = File(...)) -> dict:
 
 
 @app.post("/detect/visualize")
-async def detect_and_visualize(file: UploadFile = File(...)) -> Response:
+async def detect_and_visualize(file: Annotated[UploadFile, File(...)]) -> Response:
     """Detect defects and return annotated image with bounding boxes drawn."""
     if not file.content_type or not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="File must be an image")

@@ -77,7 +77,7 @@ def save_detection_grid(
     n = len(images)
     rows = (n + cols - 1) // cols
 
-    fig, axes = plt.subplots(rows, cols, figsize=(6 * cols, 5 * rows))
+    _fig, axes = plt.subplots(rows, cols, figsize=(6 * cols, 5 * rows))
     if rows == 1 and cols == 1:
         axes = np.array([[axes]])
     elif rows == 1 or cols == 1:
