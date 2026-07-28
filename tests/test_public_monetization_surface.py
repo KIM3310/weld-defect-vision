@@ -48,11 +48,11 @@ def test_static_site_is_cloudflare_and_adsense_ready() -> None:
     sitemap = (ROOT / "site/sitemap.xml").read_text()
     assert "Sitemap: https://weld-defect-vision.pages.dev/sitemap.xml" in robots
     for route in [
-        "guide.html",
-        "architecture.html",
-        "verification.html",
-        "publisher.html",
-        "privacy.html",
-        "terms.html",
+        "guide",
+        "architecture",
+        "verification",
+        "publisher",
+        "privacy",
+        "terms",
     ]:
         assert f"https://weld-defect-vision.pages.dev/{route}" in sitemap
