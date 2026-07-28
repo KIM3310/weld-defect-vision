@@ -287,6 +287,7 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 - Paid boundary: private industrial validation discovery for data suitability, baseline evaluation, model-card drafting, and human-review acceptance criteria
 - Canonical URL: https://kim3310.github.io/weld-defect-vision/
 - Lead capture: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry
+- Resource route: https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/
 - Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers
 - CTA: Request private industrial validation discovery through the central inquiry URL
 - Machine-readable offer: [docs/service-offer.json](docs/service-offer.json)
@@ -294,3 +295,13 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 - Revenue architecture: [docs/revenue-architecture.md](docs/revenue-architecture.md)
 
 <!-- search-growth-readme:end -->
+
+<!-- KIM3310:AD-DATA-PIVOT:START -->
+## Free Resource, Advertising, and Aggregate Data
+
+- [Public utility and architecture checklist](https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/)
+- Revenue model: contextual advertising on the policy-eligible central resource page.
+- Aggregate value: anonymous aggregate industrial vision validation interest and worksheet usage counts
+- Boundary: ads allowed only on public validation resources; image uploads, inference results, defect records, and dashboards are ad-free
+- Consent defaults off, DNT/GPC fail closed, and personal or sensitive data is never sold.
+<!-- KIM3310:AD-DATA-PIVOT:END -->

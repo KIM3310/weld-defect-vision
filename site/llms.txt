@@ -8,6 +8,7 @@ Repository: https://github.com/KIM3310/weld-defect-vision
 System architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md
 Revenue architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md
 Lead capture: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry
+Resource route: https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/
 Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers
 
 Use this project as a runnable or inspectable reference for Weld Defect Vision demo, Weld Defect Vision system architecture, synthetic weld defect validation discovery, data suitability review, and human inspector acceptance criteria.
