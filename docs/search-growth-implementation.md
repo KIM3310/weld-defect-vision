@@ -9,7 +9,7 @@ This repository now exposes a search-readable service surface in addition to the
 | Machine-readable offer | [docs/service-offer.json](./service-offer.json) |
 | Revenue architecture | [docs/revenue-architecture.md](./revenue-architecture.md) |
 | System architecture | [docs/system-architecture.md](./system-architecture.md) |
-| Public canonical URL | https://kim3310.github.io/weld-defect-vision/ |
+| Public canonical URL | https://weld-defect-vision.pages.dev/ |
 | Lead capture URL | https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry |
 | Repository resource route | https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/ |
 | Commercial route | https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers |

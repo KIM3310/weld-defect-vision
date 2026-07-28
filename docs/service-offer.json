@@ -1,7 +1,7 @@
 {
   "name": "Weld Defect Vision",
   "slug": "weld-defect-vision",
-  "canonical_url": "https://kim3310.github.io/weld-defect-vision/",
+  "canonical_url": "https://weld-defect-vision.pages.dev/",
   "repository_url": "https://github.com/KIM3310/weld-defect-vision",
   "architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md",
   "revenue_architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md",
@@ -43,7 +43,7 @@
     "name": "Weld Defect Vision",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web, serverless, and local development environments",
-    "url": "https://kim3310.github.io/weld-defect-vision/",
+    "url": "https://weld-defect-vision.pages.dev/",
     "codeRepository": "https://github.com/KIM3310/weld-defect-vision",
     "description": "Weld Defect Vision is a synthetic-data weld-defect detection demo for industrial validation discovery, data suitability review, and human inspector acceptance criteria.",
     "creator": {
@@ -58,7 +58,7 @@
         "price": "0",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
-        "url": "https://kim3310.github.io/weld-defect-vision/"
+        "url": "https://weld-defect-vision.pages.dev/"
       },
       {
         "@type": "Offer",

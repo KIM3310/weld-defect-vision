@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-- [Open the public GitHub Pages demo](https://kim3310.github.io/weld-defect-vision/)
+- [Open the public GitHub Pages demo](https://weld-defect-vision.pages.dev/)
 - Scope: credential-free, synthetic-data demo for industrial validation discovery and quality evaluators.
 
 Industrial weld defect detection research sandbox using **YOLOv8 fine-tuning**. It demonstrates 5 defect labels: Crack, Porosity, Spatter, Undercut, and Overlap. The repository is a synthetic-data validation discovery surface, not evidence of plant-floor performance.
@@ -285,7 +285,7 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 
 - Public entry: free static inspection demo and architecture page
 - Paid boundary: private industrial validation discovery for data suitability, baseline evaluation, model-card drafting, and human-review acceptance criteria
-- Canonical URL: https://kim3310.github.io/weld-defect-vision/
+- Canonical URL: https://weld-defect-vision.pages.dev/
 - Lead capture: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry
 - Resource route: https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/
 - Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers

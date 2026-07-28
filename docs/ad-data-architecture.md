@@ -8,7 +8,7 @@ Free industrial vision validation model-card worksheet for weld-defect review bo
 
 - Audience: manufacturing AI validation teams
 - Central resource: https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/
-- Live system: https://kim3310.github.io/weld-defect-vision/
+- Live system: https://weld-defect-vision.pages.dev/
 - Advertising boundary: ads allowed only on public validation resources; image uploads, inference results, defect records, and dashboards are ad-free
 - Current ad state: code-ready on the central resource; serving depends on Google AdSense site approval and consent policy.
 

@@ -3,7 +3,7 @@
 Purpose: synthetic-data weld-defect detection demo for industrial validation discovery, data suitability review, and human inspector acceptance criteria
 Free entry point: free synthetic-data inspection demo and architecture page
 Paid boundary: private industrial validation discovery for data suitability, baseline evaluation, model-card draft, and human-review acceptance criteria
-Canonical URL: https://kim3310.github.io/weld-defect-vision/
+Canonical URL: https://weld-defect-vision.pages.dev/
 Repository: https://github.com/KIM3310/weld-defect-vision
 System architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md
 Revenue architecture: https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md

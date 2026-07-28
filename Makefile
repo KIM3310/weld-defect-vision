@@ -4,7 +4,7 @@ VENV ?= .venv
 VENV_PYTHON := $(VENV)/bin/python
 VENV_STAMP := $(VENV)/.installed-dev
 
-.PHONY: check-python install lint format-check typecheck test repository-verify verify
+.PHONY: check-python install lint format-check typecheck test repository-verify verify deploy-cloudflare-pages
 
 check-python:
 	@interpreter="$(PYTHON)"; \
@@ -43,3 +43,6 @@ repository-verify: install
 	$(VENV_PYTHON) scripts/validate_architecture_blueprint.py
 
 verify: lint format-check typecheck test repository-verify
+
+deploy-cloudflare-pages:
+	npx --yes wrangler@latest pages deploy site --project-name weld-defect-vision

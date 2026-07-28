@@ -6,7 +6,7 @@
   "audience": "manufacturing AI validation teams",
   "public_resource": {
     "url": "https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-defect-vision/",
-    "live_demo": "https://kim3310.github.io/weld-defect-vision/",
+    "live_demo": "https://weld-defect-vision.pages.dev/",
     "readiness_checklist": [
       "Architecture Summary",
       "Runtime And Data Flow",
