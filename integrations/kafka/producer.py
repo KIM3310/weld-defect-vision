@@ -62,7 +62,7 @@ class WeldDefectKafkaProducer:
         self._producer: Any = None
 
     @classmethod
-    def from_env(cls) -> "WeldDefectKafkaProducer":
+    def from_env(cls) -> WeldDefectKafkaProducer:
         return cls(KafkaConfig())
 
     async def start(self) -> None:
@@ -148,7 +148,7 @@ class WeldDefectKafkaProducer:
                     ("source", b"weld-defect-vision"),
                 ],
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             log.error("kafka produce failed weld_id=%s: %s", weld_id, exc)
             raise
 

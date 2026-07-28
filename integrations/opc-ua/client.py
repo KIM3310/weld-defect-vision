@@ -125,8 +125,8 @@ class MqttPublisher:
             try:
                 self.client.loop_stop()
                 self.client.disconnect()
-            except Exception:  # noqa: BLE001
-                pass
+            except Exception as exc:  # noqa: BLE001
+                log.debug("MQTT shutdown failed: %s", exc)
 
 
 class TritonClientWrapper:
@@ -262,7 +262,7 @@ async def run(cfg: ClientConfig, demo: bool) -> None:
         def __init__(self, plc_client: Any) -> None:
             self.plc_client = plc_client
 
-        async def datachange_notification(self, node, val, data) -> None:  # noqa: D401
+        async def datachange_notification(self, node, val, data) -> None:
             if not val:
                 return  # only act on rising edge
             weld_id_node = self.plc_client.get_node(cfg.node_weld_id)

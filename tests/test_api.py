@@ -1,15 +1,26 @@
 """Tests for FastAPI detection endpoints."""
 
+import io
 import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import pytest
 from fastapi.testclient import TestClient
+from PIL import Image
 
-from api.main import app
+import api.main as api_main
+from api.main import INVALID_IMAGE_DETAIL, app
 from edge.common.watchdog import check_http_health, validate_health_url
 
 client = TestClient(app)
+
+
+def image_bytes(width: int = 32, height: int = 32) -> bytes:
+    buffer = io.BytesIO()
+    Image.new("RGB", (width, height), color="white").save(buffer, format="PNG")
+    return buffer.getvalue()
 
 
 class TestHealthEndpoint:
@@ -126,3 +137,125 @@ class TestDetectEndpoint:
             files={"file": ("test.txt", b"not an image", "text/plain")},
         )
         assert response.status_code == 400
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_unidentified_image_before_model_loading(self, path):
+        response = client.post(
+            path,
+            files={"file": ("broken.png", b"not really a png", "image/png")},
+        )
+
+        assert response.status_code == 422
+        assert response.json() == {"detail": INVALID_IMAGE_DETAIL}
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_upload_over_byte_limit(self, monkeypatch, path):
+        monkeypatch.setattr(api_main, "MAX_UPLOAD_BYTES", 4)
+
+        response = client.post(
+            path,
+            files={"file": ("large.png", b"12345", "image/png")},
+        )
+
+        assert response.status_code == 413
+        assert response.json()["detail"] == "Image exceeds the 4-byte upload limit"
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_upload_by_content_length_before_multipart_parsing(
+        self, monkeypatch, path
+    ):
+        monkeypatch.setattr(api_main, "MAX_UPLOAD_BYTES", 4)
+        monkeypatch.setattr(api_main, "MULTIPART_OVERHEAD_BYTES", 0)
+
+        response = client.post(
+            path,
+            files={"file": ("small.png", b"x", "image/png")},
+        )
+
+        assert response.status_code == 413
+        assert (
+            response.json()["detail"] == "Request body exceeds the image upload limit"
+        )
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_streamed_upload_without_content_length(self, monkeypatch, path):
+        monkeypatch.setattr(api_main, "MAX_UPLOAD_BYTES", 4)
+        monkeypatch.setattr(api_main, "MULTIPART_OVERHEAD_BYTES", 0)
+        boundary = "weld-boundary"
+        body = (
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="file"; filename="weld.png"\r\n'
+            "Content-Type: image/png\r\n\r\n"
+        ).encode()
+        body += b"12345"
+        body += f"\r\n--{boundary}--\r\n".encode()
+
+        response = client.post(
+            path,
+            content=iter([body]),
+            headers={"content-type": f"multipart/form-data; boundary={boundary}"},
+        )
+
+        assert response.status_code == 413
+        assert (
+            response.json()["detail"] == "Request body exceeds the image upload limit"
+        )
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_excessive_decoded_pixels(self, monkeypatch, path):
+        monkeypatch.setattr(api_main, "MAX_IMAGE_PIXELS", 4)
+
+        response = client.post(
+            path,
+            files={"file": ("large-dimensions.png", image_bytes(), "image/png")},
+        )
+
+        assert response.status_code == 413
+        assert response.json()["detail"] == "Image exceeds the 4-pixel limit"
+
+    @pytest.mark.parametrize("path", ["/detect", "/detect/visualize"])
+    def test_rejects_truncated_image_before_model_loading(self, path):
+        buffer = io.BytesIO()
+        Image.new("RGB", (32, 32), color="white").save(buffer, format="PNG")
+        truncated_png = buffer.getvalue()[:48]
+
+        response = client.post(
+            path,
+            files={"file": ("truncated.png", truncated_png, "image/png")},
+        )
+
+        assert response.status_code == 422
+        assert response.json() == {"detail": INVALID_IMAGE_DETAIL}
+
+    def test_inference_concurrency_is_bounded(self, monkeypatch):
+        class SlowDetector:
+            def __init__(self):
+                self.active = 0
+                self.max_active = 0
+                self.lock = threading.Lock()
+
+            def detect(self, _image):
+                with self.lock:
+                    self.active += 1
+                    self.max_active = max(self.max_active, self.active)
+                time.sleep(0.05)
+                with self.lock:
+                    self.active -= 1
+                return []
+
+        detector = SlowDetector()
+        monkeypatch.setattr(api_main, "get_detector", lambda: detector)
+        monkeypatch.setattr(api_main, "_inference_slots", threading.BoundedSemaphore(1))
+
+        def request_detection():
+            with TestClient(app) as request_client:
+                return request_client.post(
+                    "/detect",
+                    files={"file": ("weld.png", image_bytes(), "image/png")},
+                )
+
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            responses = list(executor.map(lambda _index: request_detection(), range(2)))
+
+        assert [response.status_code for response in responses] == [200, 200]
+        assert detector.max_active == 1

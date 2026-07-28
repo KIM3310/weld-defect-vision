@@ -35,8 +35,8 @@ import subprocess
 import sys
 import time
 import urllib.parse
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Callable
 
 log = logging.getLogger("weld-watchdog")
 
@@ -314,8 +314,8 @@ def main() -> int:
             try:
                 mqtt.client.loop_stop()
                 mqtt.client.disconnect()
-            except Exception:  # noqa: BLE001
-                pass
+            except Exception as exc:  # noqa: BLE001
+                log.debug("MQTT shutdown failed: %s", exc)
 
     try:
         run_watchdog(

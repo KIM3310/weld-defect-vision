@@ -40,8 +40,8 @@ def preprocess(image_path: Path, img_size: int = 640):
         raise FileNotFoundError(f"Image not found: {image_path}")
     h, w = img.shape[:2]
     scale = img_size / max(h, w)
-    new_h = int(round(h * scale))
-    new_w = int(round(w * scale))
+    new_h = round(h * scale)
+    new_w = round(w * scale)
     resized = cv2.resize(img, (new_w, new_h))
     canvas = np.full((img_size, img_size, 3), 114, dtype=np.uint8)
     canvas[:new_h, :new_w] = resized

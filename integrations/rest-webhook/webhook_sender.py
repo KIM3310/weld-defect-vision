@@ -66,7 +66,7 @@ class WebhookSender:
         self._client: Any = None
 
     @classmethod
-    def from_env(cls) -> "WebhookSender":
+    def from_env(cls) -> WebhookSender:
         return cls(WebhookConfig())
 
     def _ensure_client(self) -> Any:

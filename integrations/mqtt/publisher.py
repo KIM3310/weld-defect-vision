@@ -60,7 +60,7 @@ class WeldDefectPublisher:
         self._configure_client()
 
     @classmethod
-    def from_env(cls) -> "WeldDefectPublisher":
+    def from_env(cls) -> WeldDefectPublisher:
         return cls(MqttConfig())
 
     def _configure_client(self) -> None:

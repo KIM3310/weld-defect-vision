@@ -3,22 +3,22 @@
 ## Live Demo
 
 - [Open the public GitHub Pages demo](https://kim3310.github.io/weld-defect-vision/)
-- Scope: credential-free, synthetic-data demo for quality reviewers and evaluators.
+- Scope: credential-free, synthetic-data demo for industrial validation discovery and quality evaluators.
 
-Industrial weld defect detection using **YOLOv8 fine-tuning**. Detects 5 types of welding defects: Crack, Porosity, Spatter, Undercut, and Overlap. Features a complete pipeline from data preparation to model serving via REST API.
+Industrial weld defect detection research sandbox using **YOLOv8 fine-tuning**. It demonstrates 5 defect labels: Crack, Porosity, Spatter, Undercut, and Overlap. The repository is a synthetic-data validation discovery surface, not evidence of plant-floor performance.
 
 Technical review pack: [`docs/architecture-pack.md`](docs/architecture-pack.md)
 
 ## System Overview
 
-An industrial inspection AI workflow that sells value through validation, serving posture, and operator-readable evidence.
+An industrial inspection AI workflow that sells value through validation discovery, data-suitability review, and operator-readable evidence.
 
 | Area | Details |
 |---|---|
 | Users | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment quality reviewers. |
 | Technical path | Validate the demo, README, architecture notes, and quality gate before deeper workflow review. |
-| System scope | YOLOv8 workflow, case studies, Triton/Jetson notes, MES/SCADA integration framing, model governance, and technical review pack. |
-| Operating boundary | Prototype outputs need human inspector review; production use requires site-specific validation and acceptance criteria. |
+| System scope | YOLOv8 workflow, synthetic scenarios, Triton/Jetson notes, MES/SCADA integration framing, model governance, and technical review pack. |
+| Operating boundary | Prototype outputs need human inspector review; production use, yield claims, and customer outcomes require site-specific validation and acceptance criteria. |
 | Evaluation path | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
 
 ## Evaluation Path
@@ -206,7 +206,7 @@ pytest -v
 
 ## Case Studies
 
-See `docs/case-studies/` for composite customer narratives:
+See `docs/case-studies/` for composite narratives. They are illustrative discovery material, not proof from a live site:
 
 - [Shipyard pipeline](docs/case-studies/shipyard-pipeline.md) — 2-camera station integrated with PLC signals, Jetson Orin edge deployment, 90-day rollout with before/after metrics.
 - [Automotive body shop](docs/case-studies/automotive-body-shop.md) — line-of-sight inspection at 1 weld / 2s throughput, integration with Andon systems.
@@ -215,7 +215,7 @@ Both are composite narratives with fabricated but plausible numbers, written in 
 
 ## Production Deployment
 
-`docs/production/` covers the operational edge of a real deployment:
+`docs/production/` covers deployment considerations that would need site-specific validation before use:
 
 | Runbook | Topic |
 |---------|-------|
@@ -284,10 +284,11 @@ Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson
 ## Search And Service Surface
 
 - Public entry: free static inspection demo and architecture page
-- Paid boundary: paid private dataset evaluation, model card/report pack, and edge deployment package
+- Paid boundary: private industrial validation discovery for data suitability, baseline evaluation, model-card drafting, and human-review acceptance criteria
 - Canonical URL: https://kim3310.github.io/weld-defect-vision/
-- Lead capture: https://github.com/KIM3310/weld-defect-vision/issues/new?template=service-inquiry.yml&title=Private+workspace+inquiry%3A+Weld+Defect+Vision
+- Lead capture: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry
 - Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers
+- CTA: Request private industrial validation discovery through the central inquiry URL
 - Machine-readable offer: [docs/service-offer.json](docs/service-offer.json)
 - Search growth implementation: [docs/search-growth-implementation.md](docs/search-growth-implementation.md)
 - Revenue architecture: [docs/revenue-architecture.md](docs/revenue-architecture.md)

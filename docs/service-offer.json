@@ -5,23 +5,23 @@
   "repository_url": "https://github.com/KIM3310/weld-defect-vision",
   "architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/system-architecture.md",
   "revenue_architecture_url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md",
-  "lead_capture_url": "https://github.com/KIM3310/weld-defect-vision/issues/new?template=service-inquiry.yml&title=Private+workspace+inquiry%3A+Weld+Defect+Vision",
-  "productized_offer": "weld defect detection demo with dataset validation, model serving, and explainable inspection report",
-  "first_paid_sku": "paid private dataset evaluation, model card/report pack, and edge deployment package",
-  "free_lead_magnet": "free static inspection demo and architecture page",
+  "lead_capture_url": "https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry",
+  "productized_offer": "synthetic-data weld-defect detection demo for industrial validation discovery, data suitability review, and human inspector acceptance criteria",
+  "first_paid_sku": "private industrial validation discovery for data suitability, baseline evaluation, model-card draft, and human-review acceptance criteria",
+  "free_lead_magnet": "free synthetic-data inspection demo and architecture page",
   "search_positioning": {
-    "primary_query": "Weld Defect Vision detection dataset validation",
+    "primary_query": "Weld Defect Vision industrial validation discovery",
     "secondary_queries": [
       "Weld Defect Vision demo",
       "Weld Defect Vision system architecture",
-      "Weld Defect Vision business tool",
-      "weld defect detection demo with dataset validation, model serving, and explainable inspection report service"
+      "Weld Defect Vision synthetic inspection demo",
+      "weld defect data suitability validation discovery"
     ],
-    "audience_intent": "Find a runnable demo, inspect the system architecture, and decide whether a private workspace or implementation package is useful."
+    "audience_intent": "Find a runnable synthetic demo, inspect the system architecture, and decide whether private validation discovery is useful."
   },
   "monetization_boundary": {
-    "free": "free static inspection demo and architecture page",
-    "paid": "paid private dataset evaluation, model card/report pack, and edge deployment package",
+    "free": "free synthetic-data inspection demo and architecture page",
+    "paid": "private industrial validation discovery for data suitability, baseline evaluation, model-card draft, and human-review acceptance criteria",
     "metering_hooks": [
       "workspace_id",
       "plan",
@@ -45,7 +45,7 @@
     "operatingSystem": "Web, serverless, and local development environments",
     "url": "https://kim3310.github.io/weld-defect-vision/",
     "codeRepository": "https://github.com/KIM3310/weld-defect-vision",
-    "description": "Weld Defect Vision: weld defect detection demo with dataset validation, model serving, and explainable inspection report. Free entry point: free static inspection demo and architecture page. Paid path: paid private.",
+    "description": "Weld Defect Vision is a synthetic-data weld-defect detection demo for industrial validation discovery, data suitability review, and human inspector acceptance criteria.",
     "creator": {
       "@type": "Person",
       "name": "KIM3310",
@@ -54,7 +54,7 @@
     "offers": [
       {
         "@type": "Offer",
-        "name": "free static inspection demo and architecture page",
+        "name": "free synthetic-data inspection demo and architecture page",
         "price": "0",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
@@ -62,30 +62,30 @@
       },
       {
         "@type": "Offer",
-        "name": "paid private dataset evaluation, model card/report pack, and edge deployment package",
+        "name": "private industrial validation discovery",
         "availability": "https://schema.org/LimitedAvailability",
-        "url": "https://github.com/KIM3310/weld-defect-vision/blob/main/docs/revenue-architecture.md"
+        "url": "https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry"
       }
     ],
     "isAccessibleForFree": true,
-    "keywords": "weld-defect-vision, Weld, Defect, Vision, weld, defect, detection, dataset, validation, model, serving, explainable, inspection, evaluation, card, pack, edge, deployment, package, static, architecture"
+    "keywords": "weld-defect-vision, weld defect detection, synthetic data, industrial validation discovery, data suitability, model card, human inspector review, private inquiry"
   },
   "commerce": {
     "gateway_url": "https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers",
-    "lane_id": "industrial-regulated-validation-pack",
-    "lane_name": "Industrial Regulated Validation Pack",
+    "lane_id": "industrial-validation-discovery",
+    "lane_name": "Industrial Validation Discovery",
     "billing_mode": "quote",
-    "price_unit": "scope-before-invoice for dataset, regulated review, and model-card work",
-    "fulfillment_kind": "synthetic control-tower review, model-card report, approval-gate map, and limitations note",
+    "price_unit": "discovery scope from USD 2,500",
+    "fulfillment_kind": "data suitability review, baseline evaluation, model-card draft, human-review boundary, and pilot acceptance criteria",
     "risk_bucket": "industrial-high-trust",
     "checkout": {
-      "provider": "lemon-squeezy",
-      "status": "account-onboarding-required",
-      "fallback_url": "https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers"
+      "provider": null,
+      "status": "not-configured",
+      "fallback_url": "https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry"
     },
     "sponsorship": {
       "provider": "github-sponsors",
-      "eligible": true,
+      "eligible": false,
       "status": "sponsors-listing-not-configured"
     },
     "advertising": {

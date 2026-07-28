@@ -20,6 +20,28 @@ ARCH_DOC = ROOT / "docs" / "cloud-ai-architecture.md"
 ARCH_MANIFEST = ROOT / "docs" / "architecture" / "blueprint.json"
 ARCH_VALIDATOR = ROOT / "scripts" / "validate_architecture_blueprint.py"
 ARCH_WORKFLOW = ROOT / ".github" / "workflows" / "architecture-blueprint.yml"
+DOC_SERVICE_OFFER = ROOT / "docs" / "service-offer.json"
+SITE_SERVICE_OFFER = ROOT / "site" / "service-offer.json"
+SITE_INDEX = ROOT / "site" / "index.html"
+SITE_LLMS = ROOT / "site" / "llms.txt"
+DISCOVERY_LANE_ID = "industrial-validation-discovery"
+PRIVATE_INQUIRY_URL = (
+    "https://kim3310-doeon-kim-portfolio.pages.dev/"
+    "?offer=weld-defect-vision&inquiry=industrial-validation-discovery#private-inquiry"
+)
+DISCOVERY_PHRASES = (
+    "synthetic",
+    "industrial validation discovery",
+    "human inspector",
+)
+PUBLIC_OVERCLAIMS = (
+    "production-ready",
+    "edge-ready",
+    "yield improvement",
+    "yield impact",
+    "customer outcome evidence",
+    "paid private dataset evaluation",
+)
 
 REQUIRED_FILES = (
     README,
@@ -29,6 +51,10 @@ REQUIRED_FILES = (
     ARCH_MANIFEST,
     ARCH_VALIDATOR,
     ARCH_WORKFLOW,
+    DOC_SERVICE_OFFER,
+    SITE_SERVICE_OFFER,
+    SITE_INDEX,
+    SITE_LLMS,
 )
 
 BANNED_TERMS = {
@@ -208,6 +234,104 @@ def load_manifest() -> dict[str, Any]:
     return cast(dict[str, Any], loaded)
 
 
+def load_json(path: Path) -> dict[str, Any]:
+    try:
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"invalid JSON in {path.relative_to(ROOT)}: {exc}")
+    if not isinstance(loaded, dict):
+        fail(f"{path.relative_to(ROOT)} root must be an object")
+    return cast(dict[str, Any], loaded)
+
+
+def check_service_offer(path: Path) -> None:
+    offer = load_json(path)
+    commerce = offer.get("commerce")
+    structured_data = offer.get("structured_data")
+    if not isinstance(commerce, dict):
+        fail(f"{path.relative_to(ROOT)} missing commerce object")
+    if not isinstance(structured_data, dict):
+        fail(f"{path.relative_to(ROOT)} missing structured_data object")
+
+    if offer.get("lead_capture_url") != PRIVATE_INQUIRY_URL:
+        fail(f"{path.relative_to(ROOT)} lead_capture_url must use central private inquiry")
+    if commerce.get("lane_id") != DISCOVERY_LANE_ID:
+        fail(f"{path.relative_to(ROOT)} commerce.lane_id must be {DISCOVERY_LANE_ID}")
+    checkout = commerce.get("checkout")
+    if not isinstance(checkout, dict) or checkout.get("fallback_url") != PRIVATE_INQUIRY_URL:
+        fail(f"{path.relative_to(ROOT)} checkout fallback must use central private inquiry")
+
+    paid_text = " ".join(
+        str(value)
+        for value in (
+            offer.get("first_paid_sku", ""),
+            offer.get("productized_offer", ""),
+            structured_data.get("description", ""),
+        )
+    ).lower()
+    for phrase in DISCOVERY_PHRASES:
+        if phrase not in paid_text:
+            fail(f"{path.relative_to(ROOT)} missing discovery phrase: {phrase}")
+
+    offers = structured_data.get("offers")
+    if not isinstance(offers, list) or len(offers) < 2:
+        fail(f"{path.relative_to(ROOT)} structured_data.offers must include free and private offers")
+    paid_offer = offers[1]
+    if not isinstance(paid_offer, dict) or paid_offer.get("url") != PRIVATE_INQUIRY_URL:
+        fail(f"{path.relative_to(ROOT)} private offer must link to central private inquiry")
+
+
+def extract_jsonld(site_html: str) -> dict[str, Any]:
+    match = re.search(
+        r'<script type="application/ld\+json">(?P<payload>.*?)</script>',
+        site_html,
+        re.DOTALL,
+    )
+    if match is None:
+        fail("site/index.html missing JSON-LD block")
+    try:
+        loaded = json.loads(match.group("payload"))
+    except json.JSONDecodeError as exc:
+        fail(f"site/index.html has invalid JSON-LD: {exc}")
+    if not isinstance(loaded, dict):
+        fail("site/index.html JSON-LD root must be an object")
+    return cast(dict[str, Any], loaded)
+
+
+def check_public_service_surface() -> None:
+    check_service_offer(DOC_SERVICE_OFFER)
+    check_service_offer(SITE_SERVICE_OFFER)
+
+    public_text = "\n".join(
+        read_text(path)
+        for path in (
+            README,
+            ROOT / "docs" / "search-growth-implementation.md",
+            SITE_INDEX,
+            SITE_LLMS,
+        )
+    )
+    lowered = public_text.lower()
+    for phrase in DISCOVERY_PHRASES:
+        if phrase not in lowered:
+            fail(f"public surface missing discovery phrase: {phrase}")
+    if PRIVATE_INQUIRY_URL not in public_text:
+        fail("public surface missing central private inquiry URL")
+    if "Request private discovery" not in read_text(SITE_INDEX):
+        fail("site/index.html missing private discovery CTA")
+    for phrase in PUBLIC_OVERCLAIMS:
+        if phrase in lowered:
+            fail(f"public surface contains overclaiming phrase: {phrase}")
+
+    jsonld = extract_jsonld(read_text(SITE_INDEX))
+    offers = jsonld.get("offers")
+    if not isinstance(offers, list) or len(offers) < 2:
+        fail("site/index.html JSON-LD must include free and private offers")
+    paid_offer = offers[1]
+    if not isinstance(paid_offer, dict) or paid_offer.get("url") != PRIVATE_INQUIRY_URL:
+        fail("site/index.html JSON-LD private offer must use central private inquiry")
+
+
 def check_architecture_surface() -> None:
     manifest = load_manifest()
     required = {
@@ -240,6 +364,7 @@ def main() -> None:
     if not read_text(README).strip():
         fail("README.md is empty")
     check_architecture_surface()
+    check_public_service_surface()
     check_markdown_links()
     scan_positioning_terms()
     print("repository surface validation ok")
