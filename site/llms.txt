@@ -12,3 +12,9 @@ Resource route: https://kim3310-doeon-kim-portfolio.pages.dev/resources/weld-def
 Commercial route: https://kim3310-doeon-kim-portfolio.pages.dev/?offer=weld-defect-vision#service-offers
 
 Use this project as a runnable or inspectable reference for Weld Defect Vision demo, Weld Defect Vision system architecture, synthetic weld defect validation discovery, data suitability review, and human inspector acceptance criteria.
+# ADSENSE-PUBLICATION:START
+Editorial guide: https://weld-defect-vision.pages.dev/guide.html
+Architecture article: https://weld-defect-vision.pages.dev/architecture.html
+Verification article: https://weld-defect-vision.pages.dev/verification.html
+Publisher information: https://weld-defect-vision.pages.dev/publisher.html
+# ADSENSE-PUBLICATION:END
