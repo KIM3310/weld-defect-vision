@@ -4,8 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      day: "friday"
+      time: "11:20"
       timezone: "Asia/Seoul"
     open-pull-requests-limit: 5
     groups:
@@ -24,7 +24,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "09:00"
+      time: "11:30"
       timezone: "Asia/Seoul"
     open-pull-requests-limit: 5
     groups:
@@ -42,8 +42,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      day: "tuesday"
+      time: "11:30"
       timezone: "Asia/Seoul"
     open-pull-requests-limit: 5
     groups:
@@ -62,8 +62,8 @@ updates:
     directory: "/edge/jetson-orin"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      day: "wednesday"
+      time: "11:30"
       timezone: "Asia/Seoul"
     open-pull-requests-limit: 5
     groups:
