@@ -1,18 +1,20 @@
 # Benchmarks
 
-Latency and accuracy benchmarks for the weld-defect model across hardware targets and defect classes.
+Runnable latency and accuracy benchmark scripts for user-supplied model artifacts and datasets.
+
+> **Evidence boundary:** the two JSON files currently committed under `results/` are hand-authored, fictional planning fixtures. They were not emitted by these scripts, were not collected on the named hardware, and are **not measured benchmark evidence**. Do not cite their values as model or device performance. Only output produced by running the commands below with a documented checkpoint, dataset, environment, and command is empirical evidence.
 
 ## Scripts
 
 - [`latency_benchmark.py`](./latency_benchmark.py) — measures p50 / p95 / p99 inference latency across batch sizes on the current device (CPU, GPU, or Jetson, auto-detected).
 - [`accuracy_benchmark.py`](./accuracy_benchmark.py) — per-class precision, recall, mAP, and confusion matrix against a labeled test set.
 
-## Sample results (committed)
+## Illustrative fixtures (committed, not measured)
 
-- [`results/cpu-vs-gpu-vs-jetson.json`](./results/cpu-vs-gpu-vs-jetson.json) — latency across three hardware targets and three precisions.
-- [`results/class-balance-impact.json`](./results/class-balance-impact.json) — how per-class precision and recall change with different class-balancing strategies at training time.
+- [`results/cpu-vs-gpu-vs-jetson.json`](./results/cpu-vs-gpu-vs-jetson.json) — fictional latency values used to discuss hardware trade-offs.
+- [`results/class-balance-impact.json`](./results/class-balance-impact.json) — fictional class-balance values used to discuss evaluation design.
 
-These results are illustrative of real engagement shapes; reproducing on your hardware will give similar relative numbers but will vary absolutely.
+No checkpoint, source dataset, raw timing log, runner output, or hardware record supports these numbers. They make no promise about absolute **or relative** performance.
 
 ## Running
 
@@ -38,16 +40,6 @@ python benchmarks/accuracy_benchmark.py \
     --output benchmarks/results/my-accuracy.json
 ```
 
-## Expectations
+## Interpreting output
 
-For the Jetson Orin AGX targets described in [`docs/production/edge-deployment.md`](../docs/production/edge-deployment.md), expect:
-
-| Device | Precision | Batch 1 P95 (ms) | Batch 8 P95 (ms) |
-|---|---|---|---|
-| CPU (x86 16-core) | FP32 | 120 | 840 |
-| NVIDIA L4 (AWS g6) | FP16 | 12 | 26 |
-| NVIDIA A100 (bare metal) | FP16 | 6 | 18 |
-| Jetson Orin AGX 64 GB | INT8 | 10 | 34 |
-| Jetson Orin NX 16 GB | INT8 | 18 | 62 |
-
-See the [`results/`](./results/) JSON files for full breakdowns.
+Do not carry a latency or accuracy number from one device, precision, model export, thermal state, or dataset to another. Record the model checksum, dataset provenance, dependency versions, full command, device details, warmup count, and raw samples with any measured report. The committed fixtures may help design a test matrix, but they are not acceptance thresholds.

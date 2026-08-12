@@ -1,8 +1,8 @@
-# Case Study: Automotive Body Shop Spot-and-MIG Weld QA
+# Illustrative Scenario: Automotive Body Shop Spot-and-MIG Weld QA
 
-Deployment of `weld-defect-vision` in an automotive body-in-white (BIW) line at a Tier-1 OEM's domestic plant. This is a higher-throughput, higher-cadence deployment than the shipyard case: one vehicle passes through the weld inspection station every 42 seconds, with the target being a defect classification decision every ~2 seconds per weld region of interest.
+> **Fictional scenario — not customer or benchmark evidence.** “Plant-C” is invented; no anonymized customer, engagement, deployment, customer-supplied dataset, hardware run, or plant outcome described here exists. Every quantity, metric, cost, timeline, quote, and before/after value in this document is fabricated and **was not measured**. Terms such as “deployed,” “live,” “measured,” and “results” describe only the hypothetical narrative. Do not cite this scenario as evidence of model, hardware, integration, safety, or business performance.
 
-Customer is anonymized as **"Plant-C"**. Volumes, takt times, and numbers are representative of a real engagement shape and not a literal audit of any single customer.
+This architecture exercise explores how `weld-defect-vision` might be scoped for a hypothetical automotive body-in-white (BIW) line. It is useful for requirements review and failure-mode discussion only.
 
 ---
 
@@ -62,7 +62,7 @@ Unlike the shipyard case (one Orin per station), Plant-C wanted centralized infe
 - **Batching**: dynamic batching enabled with max batch size 16 and 10 ms queue delay. Since 6 cameras fire roughly synchronously when a body enters the station, the batch fills within the queue delay.
 - **Network**: 10 GbE from cameras (GigE Vision) to station server; 1 GbE to plant MES.
 
-Measured inference latency:
+The fictional design uses the following invented latency assumptions; no L4/Triton benchmark produced them:
 
 | Batch size | P50 (ms) | P95 (ms) | P99 (ms) |
 |---|---|---|---|
@@ -167,7 +167,7 @@ Integration is via the plant's existing Andon PLC over OPC-UA. The aggregator wr
 - `Andon.Inspection.Rework` (BOOL)
 - `Andon.Inspection.Stop` (BOOL)
 
-The PLC takes those values and drives the physical tower lights and the line-stop interlock. The inspection station is the only node allowed to assert `Stop`; other stations can request rework. Latency from Triton detection to PLC tag write is measured at 38 ms median, 55 ms p95.
+The PLC takes those values and drives the physical tower lights and the line-stop interlock. The inspection station is the only node allowed to assert `Stop`; other stations can request rework. The fictional timing budget assigns 38 ms median and 55 ms p95 from detection to PLC write; these values were not measured.
 
 ---
 
@@ -192,7 +192,7 @@ See [`serving/README.md`](../../serving/README.md) for the full configuration wa
 
 ### Week 1-3: data collection
 
-Captured 22,000 labeled ROIs across 45 shifts. Labeling done in CVAT by a mix of Plant-C's QA engineers and an external labeling vendor. QC step: 15% double-labeled by two independent labelers; inter-labeler agreement measured at 0.82 Cohen's kappa, which was acceptable.
+The fictional rollout assumes 22,000 labeled ROIs across 45 shifts, with 15% double-labeling and an invented Cohen’s kappa of 0.82. No images, shifts, labelers, or agreement study support these values.
 
 ### Week 4-6: model training and accuracy validation
 
@@ -214,9 +214,9 @@ Accuracy acceptance gate was set by Plant-C's QA: aggregate precision >= 0.85 on
 - Ran the station in shadow mode while the existing teach-in system remained authoritative.
 - Tuned: 5 ROIs were remapped after finding their crops were drifting with body-position variance; fixed by using the body's reference-pin position (read from MES) to re-center crops on-the-fly.
 
-### Week 9: shadow mode measurement
+### Week 9: illustrative shadow-mode assumptions
 
-Shadow mode ran for one week, with all detections logged and periodically audited against the existing teach-in system and against rework-cell ground truth. 1 week = ~24,000 bodies = ~1.15M ROIs evaluated. Shadow mode results:
+The fictional scenario assigns one week, about 24,000 bodies, and about 1.15M ROIs to an illustrative shadow-mode exercise. The following values are fabricated; no detections, audits, or rework-cell labels were collected:
 
 - ML system agreement with teach-in on pass/fail: 94.1%.
 - On disagreements (5.9%): rework cell followup showed ML was correct 71% of the time, teach-in was correct 19% of the time, neither caught the real issue 10% of the time.
@@ -237,9 +237,9 @@ Added the water-spot class to the ignored-classes list for two specific ROIs. Lo
 
 ---
 
-## 7. Results (first 90 days)
+## 7. Illustrative projected results (fictional 90-day scenario)
 
-### 7.1 Headline numbers
+### 7.1 Fabricated planning values
 
 | Metric | Before | After | Delta |
 |---|---|---|---|
@@ -251,11 +251,11 @@ Added the water-spot class to the ignored-classes list for two specific ROIs. Lo
 | Takt-time hit (line stops caused by inspection) | 1.1% | 0.8% | -27% |
 | Inspection station dwell time used | 10.2s / 14.0s | 11.8s / 14.0s | +1.6s |
 
-The "-67% repeat rework" figure is the one Plant-C QA cares about most: it means the defects caught and routed to rework are the right defects, rather than escaping rework and returning.
+The fictional -67% repeat-rework value illustrates a possible outcome metric; it is not a customer result or forecast.
 
-### 7.2 Per-class production performance
+### 7.2 Fabricated per-class scenario values
 
-On first 30 days live:
+For the fictional first-30-day narrative (not a live deployment):
 
 | Class | Recall | Precision |
 |---|---|---|
@@ -267,7 +267,7 @@ On first 30 days live:
 
 ### 7.3 Uptime
 
-Station availability over first 90 days: 99.3%. Downtime breakdown:
+The fictional scenario assigns 99.3% station availability over 90 days. This is not an uptime measurement. Its invented breakdown is:
 
 - Scheduled maintenance: 0.4%.
 - Camera fault (failed pixel run on Camera 4, swapped): 0.2%.
@@ -364,7 +364,7 @@ The 1-week shadow mode caught the water-spot-as-porosity issue that would have c
 
 ### 10.8 Gauge R&R
 
-Plant-C required a formal Gauge R&R study before cutover. The model was treated as one "appraiser" alongside three human appraisers on a 25-body repeat-measurement plan. Repeatability (same-appraiser repeat measurement agreement) for the model was 0.99 (model is deterministic given the same input); reproducibility (appraiser-to-appraiser) against the human pool was 0.86. Both in spec.
+The fictional scenario includes a notional Gauge R&R study with invented repeatability (0.99) and reproducibility (0.86) values to illustrate an acceptance artifact. No bodies or appraisers were evaluated, and neither value is in-spec evidence.
 
 ---
 

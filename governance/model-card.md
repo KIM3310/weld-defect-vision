@@ -1,6 +1,8 @@
-# Model Card: Weld Defect Vision (YOLOv8-based)
+# Model Card Template: Weld Defect Vision (YOLOv8-based)
 
-Following the Model Card structure introduced by Mitchell et al. 2019 and the subsequent Google Model Card Toolkit conventions. This card describes the model shipped from this repository; downstream deployments (e.g. the shipyard and automotive case studies) produce per-deployment model cards that inherit from this one and add deployment-specific context.
+> **Evidence boundary:** this repository ships training/evaluation code and configuration, not a validated weld-defect checkpoint or its source dataset. The shipyard and automotive documents are fictional scenarios. All quantitative values copied from those scenarios or the committed benchmark fixtures are fabricated and unmeasured; they are not model-card results.
+
+Following the Model Card structure introduced by Mitchell et al. 2019 and the subsequent Google Model Card Toolkit conventions, this file is a template for a future trained model. A real release must replace scenario assumptions with checkpoint-specific provenance and measured evaluation.
 
 ---
 
@@ -134,7 +136,9 @@ Key characteristics:
 
 ## Quantitative analyses
 
-### Unitary results (reference YOLOv8s)
+### Illustrative values (fictional, not model results)
+
+The following hand-authored values come from the fictional shipyard narrative. No checkpoint, dataset, or evaluation run supports them.
 
 | Class | mAP@50 | Precision | Recall |
 |---|---|---|---|
@@ -145,7 +149,7 @@ Key characteristics:
 | Overlap | 0.68 | 0.71 | 0.63 |
 | **Aggregate** | **0.81** | **0.80** | **0.77** |
 
-Representative of the shipyard training run; actual numbers for your deployment will differ.
+These values do not represent a training run and must not be used as a baseline, target, or performance claim.
 
 ### Intersectional results
 

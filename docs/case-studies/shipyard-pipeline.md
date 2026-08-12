@@ -1,8 +1,8 @@
-# Case Study: Mid-Size Shipyard Hull Weld Inspection
+# Illustrative Scenario: Mid-Size Shipyard Hull Weld Inspection
 
-Deployment of `weld-defect-vision` on a robotic welding station at a mid-size commercial shipbuilder. The customer builds coastal bulk carriers and OSVs (offshore supply vessels), with hulls assembled from DH36 and AH36 steel plates 8-32 mm thick. This document describes the problem, the pilot, the rollout, the measured outcomes, and the lessons carried into subsequent deployments.
+> **Fictional scenario — not customer or benchmark evidence.** “Yard-K” is invented; no anonymized customer, engagement, deployment, customer-supplied dataset, hardware run, or plant outcome described here exists. Every quantity, metric, cost, timeline, quote, and before/after value in this document is fabricated and **was not measured**. Terms such as “pilot,” “production,” “observed,” and “results” describe only the hypothetical narrative. Do not cite this scenario as evidence of model, hardware, integration, safety, or business performance.
 
-Customer is anonymized as **"Yard-K"** at their request. Numbers in this document are illustrative of a real engagement of this shape; they should be treated as representative rather than a literal audit of any single customer.
+This architecture exercise explores how `weld-defect-vision` might be scoped for a robotic welding station at a hypothetical commercial shipbuilder. It is useful for requirements review and failure-mode discussion only.
 
 ---
 
@@ -12,9 +12,9 @@ Yard-K operates three building docks and delivers roughly 18-22 hulls per year. 
 
 Historically, inspection is performed by two certified CWI (Certified Welding Inspectors) per shift who walk each block and visually check welds, mark defects with paint pen, and write rework tickets. Critical welds also receive MT (magnetic particle) or UT (ultrasonic) testing per ABS and KR class rules. Visual inspection alone cannot catch subsurface defects, but the customer's own post-incident review showed that approximately 73% of the defects causing rework in the last 24 months were surface-visible defects (porosity clusters, undercut, crack initiation, overlap) that should have been caught at visual inspection stage.
 
-### 1.1 The measured problem
+### 1.1 Illustrative baseline assumptions
 
-Over a six-week baseline measurement in the previous year, Yard-K quality engineering team measured:
+For planning discussion, the fictional scenario assigns the following invented baseline values:
 
 | Metric | Baseline |
 |---|---|
@@ -92,7 +92,7 @@ The Nexus-Hive analytics stack (see [`Related Projects`](#related-projects)) con
 
 The starting point was the base YOLOv8n from this repo. During pilot Yard-K supplied 4,820 labeled weld images from their own QA archive (painted bead photos, spanning 14 months, primarily iPhone and GoPro captures from CWIs). Labeling was done in CVAT by Yard-K QA engineers using the 5 classes from `src/config.py`: crack, porosity, spatter, undercut, overlap.
 
-Fine-tuning was run on a single A100 (rented from a local cloud provider) using the pipeline in `src/train.py`. Two model sizes were benchmarked:
+Fine-tuning was run on a single A100 (rented from a local cloud provider) using the pipeline in `src/train.py`. The scenario compares two hypothetical model-size profiles; these timings were not benchmarked:
 
 - **YOLOv8n**: 3.2M params, smaller, ~8 ms on Orin INT8
 - **YOLOv8s**: 11.2M params, ~18 ms on Orin INT8
@@ -153,8 +153,8 @@ Porosity and Spatter are common and numerous; Crack is rare. We used Yard-K's pr
 ### Week 8: edge deployment
 
 - Exported `best.pt` to ONNX (opset 17) via `serving/export_onnx.py`. Verified numerical parity against PyTorch on a 50-image spot check (max per-box IoU delta 0.003).
-- Compiled to TensorRT engine with INT8 calibration using 500 representative images. Measured accuracy regression: mAP@50 from 0.81 (FP32) to 0.79 (INT8). Per-class regression: Crack 0.81 → 0.79 (tolerable), Overlap 0.68 → 0.65 (also tolerable; Overlap was not a gating class).
-- Deployed Triton on Orin. Measured latency:
+- In the fictional rollout, TensorRT INT8 calibration is assigned an illustrative mAP@50 change from 0.81 (FP32) to 0.79 (INT8), with Crack 0.81 → 0.79 and Overlap 0.68 → 0.65. These values are fabricated, not measured regressions.
+- The fictional rollout uses the following invented latency assumptions; no Triton/Orin run produced them:
 
 | Precision | P50 (ms) | P95 (ms) | P99 (ms) |
 |---|---|---|---|
@@ -190,9 +190,9 @@ INT8 selected for production. Latency budget per weld segment (from arc-off trig
 
 ---
 
-## 4. Outcomes (first 90 days post-cutover)
+## 4. Illustrative projected outcomes (fictional 90-day scenario)
 
-### 4.1 Headline numbers
+### 4.1 Fabricated planning values
 
 | Metric | Baseline | Post-deployment | Delta |
 |---|---|---|---|
@@ -204,9 +204,9 @@ INT8 selected for production. Latency budget per weld segment (from arc-off trig
 | Model P95 inference latency | — | 10.1 ms | — |
 | End-to-end latency (arc-off to Andon) | — | ~180 ms | — |
 
-### 4.2 Per-class performance in production
+### 4.2 Fabricated per-class scenario values
 
-Measured against the CWI's final call as ground truth, for the first 30 days of live operation:
+For the fictional first-30-day narrative, the scenario assigns the following invented values; no CWI labels or live operation produced them:
 
 | Class | Recall | Precision | Confidence threshold |
 |---|---|---|---|
@@ -302,7 +302,7 @@ A false positive in this setting is not free. Every false positive that gets esc
 
 ### 6.6 Gauge R&R
 
-Before cutover we ran a small Gauge R&R study: 30 welds, each rated by the model, the lead CWI, and the second-shift CWI, replicated. The result: model vs lead CWI had 91% agreement at the weld-level; lead CWI vs second-shift CWI had 84% agreement; model vs second-shift CWI had 86% agreement. In other words, the model was more consistent than the human-human variability, which is the classic result and the right framing for the cutover conversation with QA leadership.
+The fictional scenario includes a notional Gauge R&R exercise with fabricated agreement values (91%, 84%, and 86%) to show what a real study might report. No welds or appraisers were evaluated, so these numbers establish neither model consistency nor human-human variability.
 
 ### 6.7 FMEA update
 
