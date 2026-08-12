@@ -1,8 +1,10 @@
 # Edge Deployment: Jetson Orin and TensorRT
 
-This document describes how the YOLOv8 weld-defect model is deployed on a Jetson Orin edge node in a production welding cell. It covers the export path (PyTorch → ONNX → TensorRT), the INT8 calibration procedure, the tradeoffs of different precisions, and the runtime pattern.
+> **Evidence boundary:** this is reference design guidance, not a deployment record. The linked shipyard scenario and its latency, accuracy, calibration, and thermal values are fictional and unmeasured. Verify device specifications and generate checkpoint-specific measurements on target hardware before setting an acceptance gate.
 
-The reference deployment context is the shipyard case study in [`docs/case-studies/shipyard-pipeline.md`](../case-studies/shipyard-pipeline.md).
+This document describes a possible export path (PyTorch → ONNX → TensorRT), INT8 calibration procedure, precision trade-off review, and runtime pattern for a Jetson Orin edge node.
+
+The reference context is the fictional shipyard scenario in [`docs/case-studies/shipyard-pipeline.md`](../case-studies/shipyard-pipeline.md).
 
 ---
 

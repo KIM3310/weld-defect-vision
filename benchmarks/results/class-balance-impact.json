@@ -1,6 +1,15 @@
 {
-  "description": "Impact of class balancing strategy on per-class precision and recall. All runs are YOLOv8s fine-tuned from COCO, same hyperparameters, same 4,820-image base dataset from the shipyard deployment, same epoch count (120). The only difference is the class-balancing strategy applied at training time.",
-  "base_dataset": {
+  "artifact_kind": "fictional-planning-fixture",
+  "measured": false,
+  "reproducible": false,
+  "description": "Hand-authored, fictional values for discussing a possible class-balancing experiment. No training runs or shipyard dataset produced these metrics.",
+  "provenance": {
+    "runner_output": false,
+    "model_checkpoint_available": false,
+    "dataset_available": false,
+    "training_logs_available": false
+  },
+  "scenario_base_dataset": {
     "total_images": 4820,
     "total_boxes": 15325,
     "class_distribution_boxes": {
@@ -10,7 +19,7 @@
       "undercut": 740,
       "overlap": 468
     },
-    "notes": "Heavily imbalanced: Crack and Overlap are rare; Porosity and Spatter are common. Rare classes are also the higher-severity classes."
+    "notes": "Fictional class distribution for planning only; it does not describe a collected dataset."
   },
   "strategies": [
     {
@@ -75,11 +84,11 @@
       "notes": "Copy-paste synthetic images closed the recall gap on Crack and Overlap but at the cost of precision; real labels remain the most reliable source."
     }
   ],
-  "takeaways": [
-    "Class-aware sampler is the single most effective lever; ~+6 points aggregate mAP50 from the baseline.",
-    "Loss weighting stacks on top of the sampler but produces smaller marginal gains (+1 point aggregate).",
-    "The extra mosaic pass on rare-class images reliably raises Crack recall at negligible cost to majority-class metrics.",
-    "Synthetic augmentation is a viable last resort for cold-start deployments but real labels dominate once they exist.",
-    "Crack recall is the gating metric for the shipyard deployment; strategies without class-aware sampling do not hit the 0.80 threshold."
+  "scenario_takeaways": [
+    "The fictional values illustrate a hypothesis that a class-aware sampler could improve rare-class metrics; they do not establish an effect size.",
+    "The fictional values illustrate how loss weighting might be compared with sampling; they are not a training result.",
+    "Whether an extra mosaic pass improves Crack recall must be tested on a documented dataset.",
+    "Synthetic augmentation and real-label trade-offs require measured ablations before any deployment decision.",
+    "A safety-critical recall gate must be set and validated for the actual site; the fictional 0.80 value is not an accepted threshold."
   ]
 }

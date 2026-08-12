@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-- [Open the public GitHub Pages demo](https://weld-defect-vision.pages.dev/)
+- [Open the public Cloudflare Pages demo](https://weld-defect-vision.pages.dev/)
 - Scope: credential-free, synthetic-data demo for industrial validation discovery and quality evaluators.
 
 Industrial weld defect detection research sandbox using **YOLOv8 fine-tuning**. It demonstrates 5 defect labels: Crack, Porosity, Spatter, Undercut, and Overlap. The repository is a synthetic-data validation discovery surface, not evidence of plant-floor performance.
@@ -16,7 +16,6 @@ An industrial inspection AI workflow that sells value through validation discove
 | Area | Details |
 |---|---|
 | Users | Manufacturing quality teams, welding inspection groups, industrial AI teams, and edge deployment quality reviewers. |
-| Technical path | Validate the demo, README, architecture notes, and quality gate before deeper workflow review. |
 | System scope | YOLOv8 workflow, synthetic scenarios, Triton/Jetson notes, MES/SCADA integration framing, model governance, and technical review pack. |
 | Operating boundary | Prototype outputs need human inspector review; production use, yield claims, and customer outcomes require site-specific validation and acceptance criteria. |
 | Evaluation path | Inspect the model card, validation notes, serving docs, and deterministic sample outputs. |
@@ -204,14 +203,14 @@ pytest -v
 | Edge Runtime | Jetson Orin + TensorRT (via `edge/`) |
 | Industrial Integration | OPC-UA, MQTT, Kafka, REST webhook |
 
-## Case Studies
+## Fictional Deployment Scenarios
 
-See `docs/case-studies/` for composite narratives. They are illustrative discovery material, not proof from a live site:
+The files under `docs/case-studies/` are architecture exercises, **not customer case studies**. The organizations, engagements, deployments, datasets, benchmarks, and outcomes are fictional; every numeric value is fabricated and unmeasured:
 
-- [Shipyard pipeline](docs/case-studies/shipyard-pipeline.md) — 2-camera station integrated with PLC signals, Jetson Orin edge deployment, 90-day rollout with before/after metrics.
-- [Automotive body shop](docs/case-studies/automotive-body-shop.md) — line-of-sight inspection at 1 weld / 2s throughput, integration with Andon systems.
+- [Shipyard scenario](docs/case-studies/shipyard-pipeline.md) — hypothetical 2-camera, PLC, and Jetson design.
+- [Automotive body-shop scenario](docs/case-studies/automotive-body-shop.md) — hypothetical line-of-sight and Andon integration design.
 
-Both are composite narratives with fabricated but plausible numbers, written in the SE-delivery format.
+Use them to review requirements and failure modes only. Do not cite them as customer, model, hardware, or business evidence.
 
 ## Production Deployment
 
@@ -241,16 +240,18 @@ Both are composite narratives with fabricated but plausible numbers, written in 
 
 ## Benchmarks
 
-`benchmarks/` contains reference benchmarks across devices and configurations. Sample results (see [benchmarks/results/](benchmarks/results/)):
+`benchmarks/` contains runnable latency and accuracy harnesses. The committed files under [`benchmarks/results/`](benchmarks/results/) are explicitly labeled hand-authored fictional fixtures; they are not runner output or performance evidence.
 
-| Device | Batch size | p50 latency (ms) | p95 latency (ms) | FPS |
-|--------|-----------|-------------------|-------------------|-----|
-| CPU (Xeon Gold 6138) | 1 | 420 | 480 | 2.4 |
-| GPU (T4, PyTorch) | 1 | 38 | 52 | 26.3 |
-| GPU (T4, TensorRT FP16) | 1 | 11 | 18 | 90.9 |
-| Jetson Orin Nano (TensorRT INT8) | 1 | 22 | 31 | 45.4 |
+Generate a measured local latency report only when you have a real checkpoint and can record the environment:
 
-Regenerate with `python benchmarks/latency_benchmark.py --devices cpu,gpu,jetson`.
+```bash
+python benchmarks/latency_benchmark.py \
+  --model-path checkpoints/best.pt \
+  --batch-sizes 1 2 4 8 16 \
+  --output benchmarks/results/my-machine-latency.json
+```
+
+See [`benchmarks/README.md`](benchmarks/README.md) for the evidence boundary and accuracy command.
 
 ## Related Projects
 

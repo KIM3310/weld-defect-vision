@@ -1,6 +1,8 @@
-# Datasheet for Datasets: Weld Defect Vision
+# Dataset Datasheet Template: Weld Defect Vision
 
-Following Gebru et al. "Datasheets for Datasets" (2018, revised 2021). This datasheet describes the reference training dataset used by the upstream model. Customer deployments have per-deployment datasheets that describe their own data.
+> **Evidence boundary:** no reference training dataset or customer dataset is included or provenance-verified in this repository. The shipyard and automotive datasets, counts, labeling activities, quality statistics, and customer arrangements described below belong to fictional scenarios and were not collected or measured. This is a planning template, not a datasheet for an existing dataset.
+
+Following Gebru et al. "Datasheets for Datasets" (2018, revised 2021), this template lists questions that a real dataset owner must answer with source-specific evidence before training or evaluation.
 
 ---
 

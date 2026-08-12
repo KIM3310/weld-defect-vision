@@ -1,10 +1,19 @@
 {
-  "description": "Latency benchmark of the weld-defect YOLOv8s model across CPU, GPU, and Jetson targets. Numbers are illustrative of real engagement shapes; actual values depend on image preprocessing, batching configuration, and thermal state.",
-  "model": "YOLOv8s (11.2M params), fine-tuned for 5 weld defect classes",
+  "artifact_kind": "fictional-planning-fixture",
+  "measured": false,
+  "reproducible": false,
+  "description": "Hand-authored, fictional latency values for discussing a possible test matrix. This file was not produced by the benchmark runner and none of its values were measured on the named hardware.",
+  "provenance": {
+    "runner_output": false,
+    "model_checkpoint_available": false,
+    "raw_samples_available": false,
+    "hardware_run_record_available": false
+  },
+  "scenario_model": "Hypothetical YOLOv8s (11.2M params) fine-tuned for 5 weld defect classes",
   "image_size": 640,
-  "warmup_iterations": 50,
-  "measured_iterations": 500,
-  "timestamp": "2026-04-16",
+  "scenario_warmup_iterations": 50,
+  "scenario_iterations": 500,
+  "scenario_date": "2026-04-16",
   "devices": [
     {
       "name": "Intel Xeon Platinum 8375C (AWS c6i.4xlarge, 16 vCPU)",
@@ -83,10 +92,10 @@
       ]
     }
   ],
-  "observations": [
-    "INT8 on Orin AGX is 2.7x faster than FP16 on the same device with a ~2 percentage point mAP regression.",
-    "Single-image latency on a 16-vCPU CPU is ~14x slower than Orin AGX INT8; CPU is viable for development but not for an inline inspection station.",
-    "Dynamic batching on L4 reaches 413 fps at batch 16, saturating the GPU; pipeline P95 latency is bounded by the application budget not by hardware.",
-    "A100 is 2x faster than L4 per dollar per hour for burst workloads but L4 is the better fit for always-on inline serving in AWS."
+  "scenario_observations": [
+    "Within this fictional fixture, INT8 on Orin AGX is 2.7x faster than FP16; this is not an observed speedup or accuracy result.",
+    "Within this fictional fixture, single-image CPU latency is about 14x the Orin AGX INT8 value; this is not a hardware recommendation.",
+    "Within this fictional fixture, dynamic batching on L4 reaches 413 fps at batch 16; no GPU saturation was measured.",
+    "Any cost or hardware-fit comparison requires current prices and an actual benchmark; this fixture provides neither."
   ]
 }
