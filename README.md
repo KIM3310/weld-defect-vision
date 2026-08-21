@@ -1,5 +1,7 @@
 # Weld Defect Vision
 
+[![CI](https://github.com/KIM3310/weld-defect-vision/actions/workflows/ci.yml/badge.svg)](https://github.com/KIM3310/weld-defect-vision/actions/workflows/ci.yml)
+
 ## Live Demo
 
 - [Open the public Cloudflare Pages demo](https://weld-defect-vision.pages.dev/)
@@ -100,8 +102,15 @@ weld-defect-vision/
 ### Setup
 
 ```bash
-pip install -r requirements.txt
+make install  # creates .venv with the first available Python 3.11+ interpreter
+
+# Override interpreter discovery when needed:
+make BOOTSTRAP_PYTHON=/path/to/python3.11 install
 ```
+
+`requirements.txt` remains available for environments that manage their own
+virtual environment. The Make target is the supported contributor setup and
+installs the project dev extras used by CI.
 
 ### Prepare Dataset
 
