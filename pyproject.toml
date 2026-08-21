@@ -29,9 +29,9 @@ dependencies = [
 dev = [
     "pytest>=8.3.0",
     "pytest-cov>=6.0.0",
-    "ruff==0.16.2",
+    "ruff==0.16.3",
     "black==26.5.1",
-    "mypy==2.3.0",
+    "mypy==2.3.1",
     # Starlette 1.x TestClient backend; application code still uses httpx.
     "httpx2>=2.0.0,<3.0.0",
 ]
